@@ -1,0 +1,14 @@
+server:
+  port: 8763
+
+spring:
+  profiles:
+    active: test
+#spring:
+#  profiles:
+#    active: beta
+
+#是否注册到eureka
+
+
+#服务手动下线 delete请求 http://localhost:8763/eureka/apps/MICRO-ORDER/localhost:micro-order:8084

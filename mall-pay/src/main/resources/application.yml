@@ -1,0 +1,8 @@
+server:
+  port: 8188
+spring:
+  profiles:
+    active: test
+goods:
+  pic:
+    domain: http://demo5.tp-shop.cn

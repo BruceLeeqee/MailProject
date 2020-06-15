@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: api-gateway
+  main:
+    allow-bean-definition-overriding: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8763/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 20000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 0
+  MaxAutoRetries: 0
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+    web:
+      exposure:
+        include: "*"
+zuul:
+  thread-pool:
+    #每个路由使用独立的线程池
+    use-separate-thread-pools: true
+    #zuul默认采用信号量隔离策略
+    #设置Hystrix隔离策略为线程池
+  ribbon-isolation-strategy: thread
+  routes:
+    mall-order:
+      path: /order/**
+      serviceId: mall-web-order
+

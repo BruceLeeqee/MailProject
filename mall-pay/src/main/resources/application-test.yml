@@ -1,0 +1,50 @@
+dfs:
+  url: 94.191.83.120:8181
+
+
+wx:
+  appId: xxxxxxxx
+  mchId: xxxxxxxx
+  key: xxxxxxxx
+  certPath:
+  notify_url: http://thesunbig.imwork.net/wx/notify
+  wap_url: https://pay.qq.com
+  spbill_create_ip: 127.0.0.1
+
+zookeeper:
+  url: zookeeper://94.191.83.120:2181
+spring:
+  application:
+    name: mall-pay-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8763/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 10000
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 5000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 0
+  MaxAutoRetries: 0
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+    web:
+      exposure:
+        include: "*"

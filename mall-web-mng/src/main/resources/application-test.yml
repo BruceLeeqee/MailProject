@@ -1,0 +1,75 @@
+dfs:
+  url: 94.191.83.120:8181
+fdfs:
+  connectTimeout: 600
+  soTimeout: 1500
+  thumbImage:
+    height: 150
+    width: 150
+  trackerList:
+    - 94.191.83.120:12050
+
+zookeeper:
+  url: zookeeper://94.191.83.120:2181
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  redis:
+    host: 94.191.83.120
+    port: 6379
+    password: 123456
+  jmx:
+    enabled: false
+  application:
+    name: mall-mng
+  main:
+    allow-bean-definition-overriding: true
+shiro:
+  maxAge:
+    day: 10
+company:
+  images:
+    login-logo:
+    logo:
+    login-bg:
+wx:
+  appid: wxc5eae5bf209e986f
+  appsecret:
+  redirect_uri:
+
+goods:
+  pic:
+    domain: http://demo5.tp-shop.cn
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8763/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 20000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 0
+  MaxAutoRetries: 0
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+    web:
+      exposure:
+        include: "*"

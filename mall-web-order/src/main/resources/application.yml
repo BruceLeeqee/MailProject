@@ -1,0 +1,8 @@
+server:
+  port: 8186
+  servlet:
+    context-path: /mall
+
+spring:
+  profiles:
+    active: test

@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: mall-config
+  cloud:
+    config:
+      server:
+        git:
+          uri: http://ce56aac05471/xiangxue-jack/enjoy-config.git
+          search-paths: config-repo
+          username: xiangxue-jack
+          password: xiangxue-jack
+          #强制从GitHub配置中心中拉取配置信息，不走缓存
+          force-pull: true
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8763/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+    web:
+      exposure:
+        include: "*"

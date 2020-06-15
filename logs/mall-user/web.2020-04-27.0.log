@@ -1,0 +1,791 @@
+2020-04-27 15:53:24.152 [main] INFO  cn.enjoy.users.UserServiceApp - The following profiles are active: beta
+2020-04-27 15:53:25.508 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-27 15:53:25.510 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data MongoDB repositories in DEFAULT mode.
+2020-04-27 15:53:25.540 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 23ms. Found 0 MongoDB repository interfaces.
+2020-04-27 15:53:25.554 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode!
+2020-04-27 15:53:25.555 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2020-04-27 15:53:25.573 [main] INFO  o.s.d.r.config.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 7ms. Found 0 Redis repository interfaces.
+2020-04-27 15:53:25.703 [main] WARN  o.springframework.boot.actuate.endpoint.EndpointId - Endpoint ID 'service-registry' contains invalid characters, please migrate to a valid format.
+2020-04-27 15:53:25.920 [main] INFO  o.springframework.cloud.context.scope.GenericScope - BeanFactory id=16561e5d-3300-3c16-a1fd-e7355042ef67
+2020-04-27 15:53:26.107 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker - Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-27 15:53:27.580 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8184 (http)
+2020-04-27 15:53:27.595 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8184"]
+2020-04-27 15:53:27.596 [main] INFO  org.apache.catalina.core.StandardService - Starting service [Tomcat]
+2020-04-27 15:53:27.597 [main] INFO  org.apache.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.29]
+2020-04-27 15:53:27.781 [main] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2020-04-27 15:53:27.781 [main] INFO  org.springframework.web.context.ContextLoader - Root WebApplicationContext: initialization completed in 3591 ms
+2020-04-27 15:53:28.149 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2020-04-27 15:53:28.149 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-04-27 15:53:28.158 [main] INFO  com.netflix.config.DynamicPropertyFactory - DynamicPropertyFactory is initialized with configuration sources: com.netflix.config.ConcurrentCompositeConfiguration@5814b4fb
+2020-04-27 15:53:28.689 [main] INFO  org.mongodb.driver.cluster - Cluster created with settings {hosts=[94.191.83.120:27017], mode=SINGLE, requiredClusterType=UNKNOWN, serverSelectionTimeout='30000 ms', maxWaitQueueSize=500}
+2020-04-27 15:53:28.907 [cluster-ClusterId{value='5ea68f781faef055d7ac8be2', description='null'}-94.191.83.120:27017] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:1, serverValue:351}] to 94.191.83.120:27017
+2020-04-27 15:53:28.970 [cluster-ClusterId{value='5ea68f781faef055d7ac8be2', description='null'}-94.191.83.120:27017] INFO  org.mongodb.driver.cluster - Monitor thread successfully connected to server with description ServerDescription{address=94.191.83.120:27017, type=STANDALONE, state=CONNECTED, ok=true, version=ServerVersion{versionList=[4, 2, 5]}, minWireVersion=0, maxWireVersion=8, maxDocumentSize=16777216, logicalSessionTimeoutMinutes=30, roundTripTimeNanos=39031170}
+2020-04-27 15:53:31.891 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2020-04-27 15:53:33.821 [main] WARN  com.netflix.config.sources.URLConfigurationSource - No URLs will be polled as dynamic configuration sources.
+2020-04-27 15:53:33.821 [main] INFO  com.netflix.config.sources.URLConfigurationSource - To enable URLs as dynamic configuration sources, define System property archaius.configurationSource.additionalUrls or make config.properties available on classpath.
+2020-04-27 15:53:35.093 [main] INFO  o.s.scheduling.concurrent.ThreadPoolTaskExecutor - Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-27 15:53:38.671 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2020-04-27 15:53:40.023 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2020-04-27 15:53:40.182 [main] WARN  o.s.c.l.c.BlockingLoadBalancerClientAutoConfiguration$BlockingLoadBalancerClientRibbonWarnLogger - You already have RibbonLoadBalancerClient on your classpath. It will be used by default. As Spring Cloud Ribbon is in maintenance mode. We recommend switching to BlockingLoadBalancerClient instead. In order to use it, set the value of `spring.cloud.loadbalancer.ribbon.enabled` to `false` or remove spring-cloud-starter-netflix-ribbon from your project.
+2020-04-27 15:53:40.498 [main] INFO  o.s.b.actuate.endpoint.web.EndpointLinksResolver - Exposing 2 endpoint(s) beneath base path '/actuator'
+2020-04-27 15:53:40.644 [main] INFO  o.s.cloud.netflix.eureka.InstanceInfoFactory - Setting initial instance status as: STARTING
+2020-04-27 15:53:40.717 [main] INFO  com.netflix.discovery.DiscoveryClient - Initializing Eureka in region us-east-1
+2020-04-27 15:53:40.856 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON encoding codec LegacyJacksonJson
+2020-04-27 15:53:40.857 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using JSON decoding codec LegacyJacksonJson
+2020-04-27 15:53:41.307 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using XML encoding codec XStreamXml
+2020-04-27 15:53:41.308 [main] INFO  c.n.discovery.provider.DiscoveryJerseyProvider - Using XML decoding codec XStreamXml
+2020-04-27 15:53:41.835 [main] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Disable delta property : false
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Application is null : false
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Application version is -1: true
+2020-04-27 15:53:42.268 [main] INFO  com.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2020-04-27 15:53:42.655 [main] INFO  com.netflix.discovery.DiscoveryClient - The response status is 200
+2020-04-27 15:53:42.657 [main] INFO  com.netflix.discovery.DiscoveryClient - Starting heartbeat executor: renew interval is: 30
+2020-04-27 15:53:42.659 [main] INFO  com.netflix.discovery.InstanceInfoReplicator - InstanceInfoReplicator onDemand update allowed rate per min is 4
+2020-04-27 15:53:42.662 [main] INFO  com.netflix.discovery.DiscoveryClient - Discovery Client initialized at timestamp 1587974022661 with initial instances count: 0
+2020-04-27 15:53:42.795 [main] INFO  o.s.c.n.e.serviceregistry.EurekaServiceRegistry - Registering application MALL-USER-SERVICE with eureka with status UP
+2020-04-27 15:53:42.796 [main] INFO  com.netflix.discovery.DiscoveryClient - Saw local status change event StatusChangeEvent [timestamp=1587974022796, current=UP, previous=STARTING]
+2020-04-27 15:53:42.798 [DiscoveryClient-InstanceInfoReplicator-0] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_MALL-USER-SERVICE/localhost:mall-user-service:8184: registering service...
+2020-04-27 15:53:42.815 [main] INFO  org.apache.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8184"]
+2020-04-27 15:53:42.847 [main] INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer - Tomcat started on port(s): 8184 (http) with context path ''
+2020-04-27 15:53:42.848 [main] INFO  o.s.c.n.e.s.EurekaAutoServiceRegistration - Updating port to 8184
+2020-04-27 15:53:42.900 [DiscoveryClient-InstanceInfoReplicator-0] INFO  com.netflix.discovery.DiscoveryClient - DiscoveryClient_MALL-USER-SERVICE/localhost:mall-user-service:8184 - registration status: 204
+2020-04-27 15:53:44.177 [main] INFO  org.springframework.cloud.commons.util.InetUtils - Cannot determine local hostname
+2020-04-27 15:53:44.179 [main] INFO  cn.enjoy.users.UserServiceApp - Started UserServiceApp in 23.61 seconds (JVM running for 25.022)
+2020-04-27 15:54:12.657 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Disable delta property : false
+2020-04-27 15:54:12.657 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Single vip registry refresh property : null
+2020-04-27 15:54:12.657 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Force full registry fetch : false
+2020-04-27 15:54:12.657 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Application is null : false
+2020-04-27 15:54:12.657 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Registered Applications size is zero : true
+2020-04-27 15:54:12.658 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Application version is -1: false
+2020-04-27 15:54:12.658 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - Getting all instance registry info from the eureka server
+2020-04-27 15:54:12.701 [DiscoveryClient-CacheRefreshExecutor-0] INFO  com.netflix.discovery.DiscoveryClient - The response status is 200
+2020-04-27 15:54:14.891 [http-nio-8184-exec-1] INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-27 15:54:14.891 [http-nio-8184-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2020-04-27 15:54:14.918 [http-nio-8184-exec-1] INFO  org.springframework.web.servlet.DispatcherServlet - Completed initialization in 27 ms
+2020-04-27 15:54:15.031 [http-nio-8184-exec-1] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-1} inited
+2020-04-27 15:54:15.788 [http-nio-8184-exec-1] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where 1=1 and ( email =? or mobile =? or user_name =? ) and status=1 
+2020-04-27 15:54:15.829 [http-nio-8184-exec-1] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - ==> Parameters: admin(String), admin(String), admin(String)
+2020-04-27 15:54:15.877 [http-nio-8184-exec-1] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - <==      Total: 1
+2020-04-27 15:54:15.881 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==>  Preparing: select r.id, r.role_name, r.role_code, r.role_desc, r.sys_code, r.create_time, r.create_user, r.update_user, r.update_time, r.isDefault from sys_role r,sys_user_role ur where r.id=ur.role_id and ur.user_id = ? 
+2020-04-27 15:54:15.883 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:15.920 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - <==      Total: 1
+2020-04-27 15:54:15.920 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - ==>  Preparing: SELECT u.id, u.user_name, u.real_name, u.mobile, u.email, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.icon, u.qq, u.wx, u.position_level, (SELECT min(dd.cname) from sys_dict_data dd where dd.type='POSITION_LEVEL' and dd.code=u.position_level) AS position, GROUP_CONCAT(d.department_name) department_name FROM sys_user u LEFT JOIN user_department_info udi on u.id = udi.user_id LEFT JOIN department_info d on d.ID = udi.department_id WHERE 1 = 1 and ( u.email =? or u.mobile =? or u.user_name =? ) and u.status=1 group by u.id, u.user_name, u.real_name, u.mobile, u.email, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.qq, u.wx, u.position_level 
+2020-04-27 15:54:15.924 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - ==> Parameters: admin(String), admin(String), admin(String)
+2020-04-27 15:54:15.962 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - <==      Total: 1
+2020-04-27 15:54:16.062 [http-nio-8184-exec-2] INFO  com.alibaba.druid.pool.DruidDataSource - {dataSource-2} inited
+2020-04-27 15:54:16.432 [http-nio-8184-exec-2] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - ==>  Preparing: SELECT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r WHERE r. STATUS = 1 AND r.type = 0 AND (r.parent_id IS NULL OR r.parent_id = '') AND r.id IN ( SELECT rr.resource_id FROM sys_role_resource rr, sys_role sr, sys_user_role ur, sys_user u WHERE rr.role_id = sr.id AND sr.id = ur.role_id and ur.user_id = u.id AND ur.user_id = ? ) ORDER BY r.sort_no 
+2020-04-27 15:54:16.435 [http-nio-8184-exec-2] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:16.467 [http-nio-8184-exec-2] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - <==      Total: 0
+2020-04-27 15:54:16.493 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 15:54:16.494 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:16.528 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 15:54:16.536 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 15:54:16.537 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:16.568 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 15:54:18.762 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:54:18.764 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/personal/getPersonalInfo(String)
+2020-04-27 15:54:18.795 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:54:18.808 [http-nio-8184-exec-6] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where id = ? 
+2020-04-27 15:54:18.809 [http-nio-8184-exec-6] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:18.841 [http-nio-8184-exec-6] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - <==      Total: 1
+2020-04-27 15:54:18.856 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 15:54:18.856 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:18.888 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 15:54:18.892 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 15:54:18.892 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:54:18.924 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 15:54:26.383 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:54:26.383 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:54:26.415 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:54:26.415 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:54:26.416 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/killgoodsSpec/queryByPage(String)
+2020-04-27 15:54:26.448 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:54:48.711 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:54:48.712 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goods/searchList(String)
+2020-04-27 15:54:48.715 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:54:48.715 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:54:48.746 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:54:48.746 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:54:48.746 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodscategory/getCategoryTree3(String)
+2020-04-27 15:54:48.749 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:54:48.778 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:09.468 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:09.469 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodscategory/getCategoryTree(String)
+2020-04-27 15:55:09.474 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:09.475 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodscategory/queryByPage(String)
+2020-04-27 15:55:09.507 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:09.507 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:14.684 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:14.685 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodscategory/queryByPage(String)
+2020-04-27 15:55:14.721 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:21.073 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:21.074 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodscategory/queryByPage(String)
+2020-04-27 15:55:21.111 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:24.782 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:24.783 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/queryByPage(String)
+2020-04-27 15:55:24.819 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:30.541 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:30.541 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:55:30.545 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:30.545 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsAttr/queryByPage(String)
+2020-04-27 15:55:30.577 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:30.578 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:36.241 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:36.242 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:55:36.279 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:55:59.214 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:55:59.215 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsAttr/save(String)
+2020-04-27 15:55:59.251 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:01.073 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:01.074 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsAttr/queryByPage(String)
+2020-04-27 15:56:01.110 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:12.188 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:12.188 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:12.188 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsSpec/queryByPage(String)
+2020-04-27 15:56:12.188 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:56:12.220 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:12.225 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:17.767 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:17.767 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:56:17.803 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:31.501 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:31.501 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsSpec/save(String)
+2020-04-27 15:56:31.540 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:33.339 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:33.339 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsSpec/queryByPage(String)
+2020-04-27 15:56:33.377 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:56:46.855 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:56:46.855 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/queryByPage(String)
+2020-04-27 15:56:46.892 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:57:08.823 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:57:08.823 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsSpec/queryByPage(String)
+2020-04-27 15:57:08.831 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:57:08.831 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:57:08.860 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:57:08.863 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:57:26.354 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:57:26.354 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:57:26.385 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:57:48.188 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:57:48.189 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsSpec/save(String)
+2020-04-27 15:57:48.220 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:57:50.142 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:57:50.143 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsSpec/queryByPage(String)
+2020-04-27 15:57:50.174 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:08.548 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:58:08.549 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/queryByPage(String)
+2020-04-27 15:58:08.581 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:15.029 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:58:15.029 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 15:58:15.061 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:15.083 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:58:15.083 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsAttr/queryByPage(String)
+2020-04-27 15:58:15.119 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:34.161 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:58:34.161 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 15:58:34.165 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:58:34.165 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 15:58:34.196 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:34.198 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:34.205 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:58:34.205 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 15:58:34.205 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 15:58:34.206 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 15:58:34.241 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:58:34.242 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 15:58:34.245 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 15:58:34.246 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 15:58:34.282 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 15:58:42.272 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 15:59:48.625 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:59:48.627 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:59:48.627 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:59:48.629 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 15:59:48.629 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 15:59:48.629 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/personal/getPersonalInfo(String)
+2020-04-27 15:59:48.661 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:59:48.662 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 15:59:48.662 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 15:59:48.666 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:59:48.666 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:59:48.666 [http-nio-8184-exec-1] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where id = ? 
+2020-04-27 15:59:48.667 [http-nio-8184-exec-1] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:59:48.671 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 15:59:48.672 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 15:59:48.693 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 15:59:48.696 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 15:59:48.697 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 15:59:48.705 [http-nio-8184-exec-1] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - <==      Total: 1
+2020-04-27 15:59:48.708 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 15:59:48.710 [http-nio-8184-exec-6] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 15:59:48.710 [http-nio-8184-exec-6] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:59:48.728 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 15:59:48.747 [http-nio-8184-exec-6] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 15:59:48.752 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 15:59:48.753 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 15:59:48.791 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 16:00:11.518 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:11.518 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:11.532 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:11.532 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryLogByOrderId(String)
+2020-04-27 16:00:11.542 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:11.543 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:11.544 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:11.545 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryGoodsByOrderId(String)
+2020-04-27 16:00:11.555 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:11.561 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:11.561 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:00:11.569 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:11.576 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:11.581 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:11.586 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:11.586 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:00:11.597 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:00:11.623 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:00:12.951 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:12.951 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/detail/36(String)
+2020-04-27 16:00:12.989 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:31.890 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:31.890 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/update(String)
+2020-04-27 16:00:31.926 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:33.443 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:33.444 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:33.452 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:33.452 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryLogByOrderId(String)
+2020-04-27 16:00:33.458 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:33.458 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:33.458 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:33.458 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryGoodsByOrderId(String)
+2020-04-27 16:00:33.481 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:33.484 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:33.484 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:00:33.488 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:33.489 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:33.493 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:33.493 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:00:33.494 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:33.521 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:00:33.525 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:00:34.758 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:34.758 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/detail/36(String)
+2020-04-27 16:00:34.789 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:43.484 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:43.484 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:43.492 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:43.492 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:43.492 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 16:00:43.492 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:43.516 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:43.520 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:43.520 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:00:43.528 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:43.528 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:43.531 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:43.532 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:00:43.551 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:00:43.569 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:00:46.580 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:46.581 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:46.591 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:46.591 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryLogByOrderId(String)
+2020-04-27 16:00:46.603 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:46.603 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:46.603 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:46.603 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryGoodsByOrderId(String)
+2020-04-27 16:00:46.617 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:46.620 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:46.620 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:00:46.623 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:46.639 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:46.639 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:46.643 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:46.643 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:00:46.656 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:00:46.680 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:00:47.927 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:47.928 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/detail/33(String)
+2020-04-27 16:00:47.963 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:55.590 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:55.590 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 16:00:55.602 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:55.602 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:55.613 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:00:55.614 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:00:55.627 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:55.638 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:55.641 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:55.641 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:00:55.649 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:00:55.654 [http-nio-8184-exec-2] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:00:55.654 [http-nio-8184-exec-2] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:00:55.677 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:00:55.691 [http-nio-8184-exec-2] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:01:01.379 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:01.379 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:01.380 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:01.380 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryGoodsByOrderId(String)
+2020-04-27 16:01:01.388 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:01.389 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryLogByOrderId(String)
+2020-04-27 16:01:01.392 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:01.392 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:01.415 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:01.417 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:01.420 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:01.420 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:01:01.423 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:01.425 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:01.427 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:01.427 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:01:01.456 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:01:01.464 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:01:02.797 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:02.798 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/detail/37(String)
+2020-04-27 16:01:02.834 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:12.237 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:12.238 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:12.239 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:12.240 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 16:01:12.250 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:12.250 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:12.274 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:12.276 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:12.278 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:12.278 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:01:12.281 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:12.284 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:12.284 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:01:12.314 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:01:12.315 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:01:23.654 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:23.655 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryGoodsByOrderId(String)
+2020-04-27 16:01:23.665 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:23.665 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryLogByOrderId(String)
+2020-04-27 16:01:23.667 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:23.667 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:23.668 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:23.668 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:23.686 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:23.702 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:23.704 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:23.704 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:23.709 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:23.709 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:23.709 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:01:23.709 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:01:23.745 [http-nio-8184-exec-7] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:01:23.745 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:01:24.954 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:24.954 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/detail/36(String)
+2020-04-27 16:01:24.990 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:29.666 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:29.667 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:29.667 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:29.667 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:29.681 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:29.681 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 16:01:29.703 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:29.703 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:29.706 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:29.706 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:29.706 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:01:29.706 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:01:29.717 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:29.743 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:01:29.743 [http-nio-8184-exec-8] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:01:32.516 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:32.516 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryGoodsByOrderId(String)
+2020-04-27 16:01:32.519 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:32.519 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:32.521 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:32.521 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryLogByOrderId(String)
+2020-04-27 16:01:32.525 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:32.525 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:01:32.552 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:32.555 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:32.556 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:32.557 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:01:32.559 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:32.559 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:01:32.559 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:01:32.559 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:01:32.590 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:01:32.595 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:01:33.754 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:01:33.754 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/detail/28(String)
+2020-04-27 16:01:33.790 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:03:42.274 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:08:42.275 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:13:42.277 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:18:42.278 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:23:42.279 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:28:42.281 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:33:42.283 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:35:13.237 [http-nio-8184-exec-5] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where 1=1 and ( email =? or mobile =? or user_name =? ) and status=1 
+2020-04-27 16:35:13.238 [http-nio-8184-exec-5] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - ==> Parameters: admin(String), admin(String), admin(String)
+2020-04-27 16:35:13.275 [http-nio-8184-exec-5] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - <==      Total: 1
+2020-04-27 16:35:13.275 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==>  Preparing: select r.id, r.role_name, r.role_code, r.role_desc, r.sys_code, r.create_time, r.create_user, r.update_user, r.update_time, r.isDefault from sys_role r,sys_user_role ur where r.id=ur.role_id and ur.user_id = ? 
+2020-04-27 16:35:13.276 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:13.312 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - <==      Total: 1
+2020-04-27 16:35:13.312 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - ==>  Preparing: SELECT u.id, u.user_name, u.real_name, u.mobile, u.email, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.icon, u.qq, u.wx, u.position_level, (SELECT min(dd.cname) from sys_dict_data dd where dd.type='POSITION_LEVEL' and dd.code=u.position_level) AS position, GROUP_CONCAT(d.department_name) department_name FROM sys_user u LEFT JOIN user_department_info udi on u.id = udi.user_id LEFT JOIN department_info d on d.ID = udi.department_id WHERE 1 = 1 and ( u.email =? or u.mobile =? or u.user_name =? ) and u.status=1 group by u.id, u.user_name, u.real_name, u.mobile, u.email, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.qq, u.wx, u.position_level 
+2020-04-27 16:35:13.313 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - ==> Parameters: admin(String), admin(String), admin(String)
+2020-04-27 16:35:13.349 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - <==      Total: 1
+2020-04-27 16:35:13.785 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - ==>  Preparing: SELECT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r WHERE r. STATUS = 1 AND r.type = 0 AND (r.parent_id IS NULL OR r.parent_id = '') AND r.id IN ( SELECT rr.resource_id FROM sys_role_resource rr, sys_role sr, sys_user_role ur, sys_user u WHERE rr.role_id = sr.id AND sr.id = ur.role_id and ur.user_id = u.id AND ur.user_id = ? ) ORDER BY r.sort_no 
+2020-04-27 16:35:13.785 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:13.822 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - <==      Total: 0
+2020-04-27 16:35:13.826 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 16:35:13.826 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:13.865 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 16:35:13.866 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 16:35:13.867 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:13.904 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 16:35:15.251 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:15.252 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 16:35:15.288 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:35:15.288 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:15.289 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/personal/getPersonalInfo(String)
+2020-04-27 16:35:15.325 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:35:15.325 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:15.325 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:35:15.361 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:35:15.362 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:15.362 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:35:15.398 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:35:15.398 [http-nio-8184-exec-8] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where id = ? 
+2020-04-27 16:35:15.399 [http-nio-8184-exec-8] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:15.436 [http-nio-8184-exec-8] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - <==      Total: 1
+2020-04-27 16:35:15.436 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:35:15.436 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:35:15.472 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:35:15.473 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:35:15.473 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:35:15.509 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:35:15.510 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 16:35:15.510 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:15.546 [http-nio-8184-exec-7] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 16:35:15.550 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 16:35:15.550 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 16:35:15.587 [http-nio-8184-exec-6] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 16:35:21.709 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:21.710 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/user/queryUserPage(String)
+2020-04-27 16:35:21.742 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:35:21.756 [http-nio-8184-exec-1] DEBUG cn.enjoy.users.dao.SysUserMapper.queryByPage - ==>  Preparing: select u.id, u.user_name, u.real_name, u.mobile, u.email, u.status, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.icon, u.qq, u.wx, u.position_level, (SELECT min(dd.cname) from sys_dict_data dd where dd.type='POSITION_LEVEL' and dd.code=u.position_level) AS position from sys_user u where 1 = 1 and u.identity_code = ? and u.status in (1,2) AND left(u.user_name, 5) !='admin' limit ? 
+2020-04-27 16:35:21.758 [http-nio-8184-exec-1] DEBUG cn.enjoy.users.dao.SysUserMapper.queryByPage - ==> Parameters: 1(String), 10(Integer)
+2020-04-27 16:35:21.791 [http-nio-8184-exec-1] DEBUG cn.enjoy.users.dao.SysUserMapper.queryByPage - <==      Total: 3
+2020-04-27 16:35:26.974 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:26.974 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/user/detailUser(String)
+2020-04-27 16:35:27.007 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:35:27.010 [http-nio-8184-exec-9] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where id = ? 
+2020-04-27 16:35:27.011 [http-nio-8184-exec-9] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==> Parameters: 031c212dc50b4d95a80b9c58c2b78c83(String)
+2020-04-27 16:35:27.044 [http-nio-8184-exec-9] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - <==      Total: 1
+2020-04-27 16:35:27.047 [http-nio-8184-exec-10] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 16:35:27.048 [http-nio-8184-exec-10] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: 031c212dc50b4d95a80b9c58c2b78c83(String)
+2020-04-27 16:35:27.081 [http-nio-8184-exec-10] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 16:35:27.089 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==>  Preparing: select r.id, r.role_name, r.role_code, r.role_desc, r.sys_code, r.create_time, r.create_user, r.update_user, r.update_time, r.isDefault from sys_role r,sys_user_role ur where r.id=ur.role_id and ur.user_id = ? 
+2020-04-27 16:35:27.090 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==> Parameters: 031c212dc50b4d95a80b9c58c2b78c83(String)
+2020-04-27 16:35:27.122 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - <==      Total: 0
+2020-04-27 16:35:36.192 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:35:36.192 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/batchUpload(String)
+2020-04-27 16:35:36.225 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:37:03.383 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:03.383 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/user/queryUserPage(String)
+2020-04-27 16:37:03.416 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:03.422 [http-nio-8184-exec-2] DEBUG cn.enjoy.users.dao.SysUserMapper.queryByPage - ==>  Preparing: select u.id, u.user_name, u.real_name, u.mobile, u.email, u.status, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.icon, u.qq, u.wx, u.position_level, (SELECT min(dd.cname) from sys_dict_data dd where dd.type='POSITION_LEVEL' and dd.code=u.position_level) AS position from sys_user u where 1 = 1 and u.identity_code = ? and u.status in (1,2) AND left(u.user_name, 5) !='admin' limit ? 
+2020-04-27 16:37:03.422 [http-nio-8184-exec-2] DEBUG cn.enjoy.users.dao.SysUserMapper.queryByPage - ==> Parameters: 0(String), 10(Integer)
+2020-04-27 16:37:03.456 [http-nio-8184-exec-2] DEBUG cn.enjoy.users.dao.SysUserMapper.queryByPage - <==      Total: 0
+2020-04-27 16:37:10.583 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:10.584 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/role/queryRolePage(String)
+2020-04-27 16:37:10.620 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:10.625 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:10.625 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourceTree(String)
+2020-04-27 16:37:10.628 [http-nio-8184-exec-8] DEBUG cn.enjoy.users.dao.SysRoleMapper.selectByPage - ==>  Preparing: select * from (select id, role_name, role_code, role_desc, create_time, (select real_name from sys_user u where u.id = r.create_user) create_user, (select real_name from sys_user u where u.id = r.update_user) update_user, update_time, isDefault from sys_role r where 1=1) temp_order order by update_time DESC limit ? 
+2020-04-27 16:37:10.629 [http-nio-8184-exec-8] DEBUG cn.enjoy.users.dao.SysRoleMapper.selectByPage - ==> Parameters: 10(Integer)
+2020-04-27 16:37:10.661 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:37:10.662 [http-nio-8184-exec-8] DEBUG cn.enjoy.users.dao.SysRoleMapper.selectByPage - <==      Total: 2
+2020-04-27 16:37:10.696 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ==>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and (r.parent_id IS NULL OR r.parent_id = '') order by r.sort_no 
+2020-04-27 16:37:10.697 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ==> Parameters: 
+2020-04-27 16:37:10.736 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ====>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.737 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ====> Parameters: 0(String)
+2020-04-27 16:37:10.773 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.773 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 60d19fd25f634f569686099a9275a3bb(String)
+2020-04-27 16:37:10.809 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.810 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: db917963f3204a6aad8f345d11bfc097(String)
+2020-04-27 16:37:10.846 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:10.847 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.847 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 4f9abb661a9743f2a1daa40ea5c11cbc(String)
+2020-04-27 16:37:10.883 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:10.884 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.884 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: ddbbaa22ce59432980788623066d1ab8(String)
+2020-04-27 16:37:10.920 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:10.920 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.920 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 28c50ac53b6347d885d78a550a79fd50(String)
+2020-04-27 16:37:10.957 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:10.957 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.957 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 6840359f45804e6c9f34c2ad50bce9fd(String)
+2020-04-27 16:37:10.993 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:10.994 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:10.994 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 4f64dfb87e7542e0acc9c5c6e607acbd(String)
+2020-04-27 16:37:11.030 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.031 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.031 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 87a198f35fc949ba9e624212a7140a18(String)
+2020-04-27 16:37:11.068 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.068 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 7
+2020-04-27 16:37:11.069 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.069 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 4eef8b84d05e49c5ae1844528dc69883(String)
+2020-04-27 16:37:11.105 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.105 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: dc63b35ffe03471ca90f1b5d9e580063(String)
+2020-04-27 16:37:11.142 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.142 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 1
+2020-04-27 16:37:11.142 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.142 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 632b69b6c7e4444cb52e5a4bb74be3ac(String)
+2020-04-27 16:37:11.179 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.179 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 2dc06573d0f34d2cbdc56841a1e80219(String)
+2020-04-27 16:37:11.215 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.216 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.216 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: bacb6a3939774da38b2dbc2c01b2a47c(String)
+2020-04-27 16:37:11.251 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.252 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.252 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: deb66426336d49a0b4dcd702b4b689d0(String)
+2020-04-27 16:37:11.288 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.289 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.289 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 586406a821ab4030b22ad6c7b8b6a780(String)
+2020-04-27 16:37:11.326 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.326 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.327 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: e11df2403c7a4442a3ee22f5718c3f0b(String)
+2020-04-27 16:37:11.362 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.363 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 5
+2020-04-27 16:37:11.363 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.364 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: dbb32c6b3fc34b41814541a363272171(String)
+2020-04-27 16:37:11.400 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.400 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: f9f4f5b9099e4452aea2d79cde009aef(String)
+2020-04-27 16:37:11.437 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.437 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 1
+2020-04-27 16:37:11.438 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.438 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 7235a19c3ebf479c8b14812fbef79999(String)
+2020-04-27 16:37:11.474 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.474 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 2e4a8465f1c442b88c31207188ca675e(String)
+2020-04-27 16:37:11.511 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.511 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 1
+2020-04-27 16:37:11.511 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.511 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: e10771be27d44feba59592c4e2c585a4(String)
+2020-04-27 16:37:11.548 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.548 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 38e45dfbd81d4c82b4ae923345d55afc(String)
+2020-04-27 16:37:11.584 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.585 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:11.585 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 1dabe53159714aaf80bb92fefd0ccfd0(String)
+2020-04-27 16:37:11.621 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:11.621 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 2
+2020-04-27 16:37:11.621 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <====      Total: 6
+2020-04-27 16:37:11.621 [http-nio-8184-exec-3] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <==      Total: 1
+2020-04-27 16:37:23.360 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:23.360 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourcePage(String)
+2020-04-27 16:37:23.373 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:23.373 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourceTree(String)
+2020-04-27 16:37:23.397 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:23.405 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:37:23.409 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ==>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and (r.parent_id IS NULL OR r.parent_id = '') order by r.sort_no 
+2020-04-27 16:37:23.410 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ==> Parameters: 
+2020-04-27 16:37:23.442 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ====>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.443 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ====> Parameters: 0(String)
+2020-04-27 16:37:23.449 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==>  Preparing: select * from (SELECT sr.id, sr.name, sr.code, sr.status, ( SELECT name FROM sys_resource s WHERE s.id = sr.parent_id )parent_name, sr.parent_id, sr.identifying, sr.url, sr.type, sr.icon, sr.sort_no FROM sys_resource sr WHERE name like CONCAT('%',?,'%') AND parent_id = ? order by sr.sort_no) temp_order order by status DESC, sort_no ASC limit ? 
+2020-04-27 16:37:23.450 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==> Parameters: (String), 0(String), 10(Integer)
+2020-04-27 16:37:23.475 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.475 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 60d19fd25f634f569686099a9275a3bb(String)
+2020-04-27 16:37:23.487 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - <==      Total: 6
+2020-04-27 16:37:23.508 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.508 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: db917963f3204a6aad8f345d11bfc097(String)
+2020-04-27 16:37:23.542 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.542 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.542 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 4f9abb661a9743f2a1daa40ea5c11cbc(String)
+2020-04-27 16:37:23.575 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.576 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.576 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: ddbbaa22ce59432980788623066d1ab8(String)
+2020-04-27 16:37:23.608 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.609 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.609 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 28c50ac53b6347d885d78a550a79fd50(String)
+2020-04-27 16:37:23.642 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.642 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.642 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 6840359f45804e6c9f34c2ad50bce9fd(String)
+2020-04-27 16:37:23.676 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.677 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.677 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 4f64dfb87e7542e0acc9c5c6e607acbd(String)
+2020-04-27 16:37:23.709 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.710 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.710 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 87a198f35fc949ba9e624212a7140a18(String)
+2020-04-27 16:37:23.742 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.742 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 7
+2020-04-27 16:37:23.743 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.743 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 4eef8b84d05e49c5ae1844528dc69883(String)
+2020-04-27 16:37:23.776 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.776 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: dc63b35ffe03471ca90f1b5d9e580063(String)
+2020-04-27 16:37:23.808 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.808 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 1
+2020-04-27 16:37:23.809 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.809 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 632b69b6c7e4444cb52e5a4bb74be3ac(String)
+2020-04-27 16:37:23.842 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.843 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 2dc06573d0f34d2cbdc56841a1e80219(String)
+2020-04-27 16:37:23.876 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.876 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.876 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: bacb6a3939774da38b2dbc2c01b2a47c(String)
+2020-04-27 16:37:23.910 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.910 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.910 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: deb66426336d49a0b4dcd702b4b689d0(String)
+2020-04-27 16:37:23.943 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.944 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.944 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 586406a821ab4030b22ad6c7b8b6a780(String)
+2020-04-27 16:37:23.976 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:23.976 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:23.977 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: e11df2403c7a4442a3ee22f5718c3f0b(String)
+2020-04-27 16:37:24.009 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:24.009 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 5
+2020-04-27 16:37:24.009 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.009 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: dbb32c6b3fc34b41814541a363272171(String)
+2020-04-27 16:37:24.042 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.042 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: f9f4f5b9099e4452aea2d79cde009aef(String)
+2020-04-27 16:37:24.075 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:24.075 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 1
+2020-04-27 16:37:24.075 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.075 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: 7235a19c3ebf479c8b14812fbef79999(String)
+2020-04-27 16:37:24.108 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.108 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 2e4a8465f1c442b88c31207188ca675e(String)
+2020-04-27 16:37:24.141 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:24.141 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 1
+2020-04-27 16:37:24.141 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.141 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ======> Parameters: e10771be27d44feba59592c4e2c585a4(String)
+2020-04-27 16:37:24.174 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.174 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 38e45dfbd81d4c82b4ae923345d55afc(String)
+2020-04-27 16:37:24.207 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:24.207 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========>  Preparing: SELECT r.id, r.parent_id pid, r. NAME text FROM sys_resource r WHERE 1=1 and r.parent_id = ? order by r.sort_no 
+2020-04-27 16:37:24.207 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - ========> Parameters: 1dabe53159714aaf80bb92fefd0ccfd0(String)
+2020-04-27 16:37:24.240 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <========      Total: 0
+2020-04-27 16:37:24.240 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <======      Total: 2
+2020-04-27 16:37:24.240 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <====      Total: 6
+2020-04-27 16:37:24.240 [http-nio-8184-exec-4] DEBUG c.e.u.dao.SysResourceMapper.selectTreeViewResource - <==      Total: 1
+2020-04-27 16:37:37.425 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:37.425 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourcePage(String)
+2020-04-27 16:37:37.459 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:37.465 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==>  Preparing: select * from (SELECT sr.id, sr.name, sr.code, sr.status, ( SELECT name FROM sys_resource s WHERE s.id = sr.parent_id )parent_name, sr.parent_id, sr.identifying, sr.url, sr.type, sr.icon, sr.sort_no FROM sys_resource sr WHERE name like CONCAT('%',?,'%') AND parent_id = ? order by sr.sort_no) temp_order order by status DESC, sort_no ASC limit ? 
+2020-04-27 16:37:37.465 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==> Parameters: (String), db917963f3204a6aad8f345d11bfc097(String), 10(Integer)
+2020-04-27 16:37:37.502 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - <==      Total: 0
+2020-04-27 16:37:40.970 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:40.970 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourcePage(String)
+2020-04-27 16:37:41.004 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:41.009 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==>  Preparing: select * from (SELECT sr.id, sr.name, sr.code, sr.status, ( SELECT name FROM sys_resource s WHERE s.id = sr.parent_id )parent_name, sr.parent_id, sr.identifying, sr.url, sr.type, sr.icon, sr.sort_no FROM sys_resource sr WHERE name like CONCAT('%',?,'%') AND parent_id = ? order by sr.sort_no) temp_order order by status DESC, sort_no ASC limit ? 
+2020-04-27 16:37:41.010 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==> Parameters: (String), 4f9abb661a9743f2a1daa40ea5c11cbc(String), 10(Integer)
+2020-04-27 16:37:41.046 [http-nio-8184-exec-10] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - <==      Total: 0
+2020-04-27 16:37:46.311 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:46.311 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourcePage(String)
+2020-04-27 16:37:46.344 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:46.348 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==>  Preparing: select * from (SELECT sr.id, sr.name, sr.code, sr.status, ( SELECT name FROM sys_resource s WHERE s.id = sr.parent_id )parent_name, sr.parent_id, sr.identifying, sr.url, sr.type, sr.icon, sr.sort_no FROM sys_resource sr WHERE name like CONCAT('%',?,'%') AND parent_id = ? order by sr.sort_no) temp_order order by status DESC, sort_no ASC limit ? 
+2020-04-27 16:37:46.349 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==> Parameters: (String), ddbbaa22ce59432980788623066d1ab8(String), 10(Integer)
+2020-04-27 16:37:46.385 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - <==      Total: 0
+2020-04-27 16:37:55.286 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:37:55.287 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/resource/queryResourcePage(String)
+2020-04-27 16:37:55.320 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 1
+2020-04-27 16:37:55.324 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==>  Preparing: select * from (SELECT sr.id, sr.name, sr.code, sr.status, ( SELECT name FROM sys_resource s WHERE s.id = sr.parent_id )parent_name, sr.parent_id, sr.identifying, sr.url, sr.type, sr.icon, sr.sort_no FROM sys_resource sr WHERE name like CONCAT('%',?,'%') AND parent_id = ? order by sr.sort_no) temp_order order by status DESC, sort_no ASC limit ? 
+2020-04-27 16:37:55.324 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - ==> Parameters: (String), dc63b35ffe03471ca90f1b5d9e580063(String), 10(Integer)
+2020-04-27 16:37:55.360 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourcePage - <==      Total: 0
+2020-04-27 16:38:32.760 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:38:32.760 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/order/queryByPage(String)
+2020-04-27 16:38:32.793 [http-nio-8184-exec-4] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:38:32.794 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:38:32.794 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:38:32.798 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:38:32.799 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/dict/loadDictDataByType(String)
+2020-04-27 16:38:32.827 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:38:32.831 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:38:32.831 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: SHIPPING_STATUS(String)
+2020-04-27 16:38:32.835 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:38:32.838 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==>  Preparing: select code 'key',cname value from sys_dict_data where valid=1 and type=? order by sort_no 
+2020-04-27 16:38:32.838 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - ==> Parameters: ORDER_STATUS(String)
+2020-04-27 16:38:32.863 [http-nio-8184-exec-9] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 3
+2020-04-27 16:38:32.874 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysDictDataMapper.querySelectModelByType - <==      Total: 6
+2020-04-27 16:38:42.283 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:39:05.846 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:39:05.847 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodscategory/getCategoryTree3(String)
+2020-04-27 16:39:05.847 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:39:05.848 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goods/searchList(String)
+2020-04-27 16:39:05.850 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 16:39:05.850 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 16:39:05.883 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:39:05.884 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:39:05.884 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 16:39:46.710 [http-nio-8184-exec-6] INFO  org.mongodb.driver.connection - Opened connection [connectionId{localValue:2, serverValue:355}] to 94.191.83.120:27017
+2020-04-27 16:39:46.913 [boundedElastic-1] INFO  io.lettuce.core.EpollProvider - Starting without optional epoll library
+2020-04-27 16:39:46.914 [boundedElastic-1] INFO  io.lettuce.core.KqueueProvider - Starting without optional kqueue library
+2020-04-27 16:43:42.294 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:48:42.295 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:53:42.296 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 16:58:42.297 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:03:42.306 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:08:42.308 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:13:42.310 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:18:42.318 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:23:42.319 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:28:42.321 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:31:53.670 [http-nio-8184-exec-5] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where 1=1 and ( email =? or mobile =? or user_name =? ) and status=1 
+2020-04-27 17:31:53.671 [http-nio-8184-exec-5] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - ==> Parameters: admin(String), admin(String), admin(String)
+2020-04-27 17:31:53.706 [http-nio-8184-exec-5] DEBUG cn.enjoy.users.dao.SysUserMapper.getUserByAccount - <==      Total: 1
+2020-04-27 17:31:53.707 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==>  Preparing: select r.id, r.role_name, r.role_code, r.role_desc, r.sys_code, r.create_time, r.create_user, r.update_user, r.update_time, r.isDefault from sys_role r,sys_user_role ur where r.id=ur.role_id and ur.user_id = ? 
+2020-04-27 17:31:53.707 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:53.741 [http-nio-8184-exec-5] DEBUG c.e.users.dao.SysRoleMapper.queryUserRoleByUserId - <==      Total: 1
+2020-04-27 17:31:53.741 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - ==>  Preparing: SELECT u.id, u.user_name, u.real_name, u.mobile, u.email, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.icon, u.qq, u.wx, u.position_level, (SELECT min(dd.cname) from sys_dict_data dd where dd.type='POSITION_LEVEL' and dd.code=u.position_level) AS position, GROUP_CONCAT(d.department_name) department_name FROM sys_user u LEFT JOIN user_department_info udi on u.id = udi.user_id LEFT JOIN department_info d on d.ID = udi.department_id WHERE 1 = 1 and ( u.email =? or u.mobile =? or u.user_name =? ) and u.status=1 group by u.id, u.user_name, u.real_name, u.mobile, u.email, u.create_time, u.create_user, u.update_time, u.update_user, u.birthday, u.qq, u.wx, u.position_level 
+2020-04-27 17:31:53.742 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - ==> Parameters: admin(String), admin(String), admin(String)
+2020-04-27 17:31:53.775 [http-nio-8184-exec-5] DEBUG c.e.u.dao.SysUserMapper.getUserByAccountWithLogin - <==      Total: 1
+2020-04-27 17:31:54.191 [http-nio-8184-exec-9] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - ==>  Preparing: SELECT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r WHERE r. STATUS = 1 AND r.type = 0 AND (r.parent_id IS NULL OR r.parent_id = '') AND r.id IN ( SELECT rr.resource_id FROM sys_role_resource rr, sys_role sr, sys_user_role ur, sys_user u WHERE rr.role_id = sr.id AND sr.id = ur.role_id and ur.user_id = u.id AND ur.user_id = ? ) ORDER BY r.sort_no 
+2020-04-27 17:31:54.192 [http-nio-8184-exec-9] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:54.227 [http-nio-8184-exec-9] DEBUG cn.enjoy.users.dao.SysResourceMapper.queryMenus - <==      Total: 0
+2020-04-27 17:31:54.231 [http-nio-8184-exec-2] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 17:31:54.232 [http-nio-8184-exec-2] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:54.267 [http-nio-8184-exec-2] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 17:31:54.270 [http-nio-8184-exec-6] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 17:31:54.270 [http-nio-8184-exec-6] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:54.304 [http-nio-8184-exec-6] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 17:31:55.605 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:31:55.606 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/personal/getPersonalInfo(String)
+2020-04-27 17:31:55.641 [http-nio-8184-exec-7] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:31:55.642 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:31:55.642 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/killgoodsSpec/queryByPage(String)
+2020-04-27 17:31:55.677 [http-nio-8184-exec-8] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:31:55.677 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:31:55.677 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 17:31:55.712 [http-nio-8184-exec-1] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:31:55.712 [http-nio-8184-exec-3] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where id = ? 
+2020-04-27 17:31:55.712 [http-nio-8184-exec-3] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:55.747 [http-nio-8184-exec-3] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - <==      Total: 1
+2020-04-27 17:31:55.750 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 17:31:55.750 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:55.785 [http-nio-8184-exec-4] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 17:31:55.789 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 17:31:55.789 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:31:55.825 [http-nio-8184-exec-10] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 17:33:17.468 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:33:17.469 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/killgoodsSpec/save(String)
+2020-04-27 17:33:17.503 [http-nio-8184-exec-3] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:33:42.323 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:33:48.417 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:33:48.417 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/personal/getPersonalInfo(String)
+2020-04-27 17:33:48.451 [http-nio-8184-exec-9] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:33:48.452 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:33:48.452 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/killgoodsSpec/queryByPage(String)
+2020-04-27 17:33:48.461 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==>  Preparing: select id, name, code, parent_id, identifying, url, icon, type, sort_no, status, create_user, create_time, update_user, update_time from sys_resource where url like CONCAT('%',?,'%') and status = '1' 
+2020-04-27 17:33:48.461 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - ==> Parameters: /api/goodsType/getAll(String)
+2020-04-27 17:33:48.487 [http-nio-8184-exec-6] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:33:48.487 [http-nio-8184-exec-7] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==>  Preparing: select id, user_name, password, password_rand, real_name, mobile, email, org_code, identity_code, sys_code, status, validate_code, activated_time, create_time, create_user, update_time, update_user, birthday, captcha, captcha_time,qq,wx,icon,position_level,(select cname from sys_dict_data d where d.`code` =position_level and d.type='POSITION_LEVEL') position_level_str from sys_user where id = ? 
+2020-04-27 17:33:48.487 [http-nio-8184-exec-7] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:33:48.495 [http-nio-8184-exec-2] DEBUG c.e.users.dao.SysResourceMapper.queryResourceByUrl - <==      Total: 0
+2020-04-27 17:33:48.524 [http-nio-8184-exec-7] DEBUG c.enjoy.users.dao.SysUserMapper.selectByPrimaryKey - <==      Total: 1
+2020-04-27 17:33:48.530 [http-nio-8184-exec-8] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==>  Preparing: select i.id, i.department_name, i.department_code from department_info i,user_department_info di where i.ID = di.department_id and di.user_id=? 
+2020-04-27 17:33:48.530 [http-nio-8184-exec-8] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:33:48.564 [http-nio-8184-exec-8] DEBUG cn.enjoy.users.dao.DepartmentMapper.selectByUserId - <==      Total: 0
+2020-04-27 17:33:48.569 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==>  Preparing: SELECT DISTINCT r.id, r.name AS title, r.`code`, r.url, r.icon FROM sys_resource r JOIN sys_role_resource rr ON (r.parent_id = rr.resource_id AND r.type =2) or r.id = rr.resource_id JOIN sys_role sr ON sr.id = rr.role_id JOIN sys_user_role ur ON sr.id = ur.role_id JOIN sys_user u on ur.user_id = u.id WHERE 1=1 AND ur.user_id = ? 
+2020-04-27 17:33:48.569 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - ==> Parameters: b9eabb3b63a24e1faa1d4a75262c1e99(String)
+2020-04-27 17:33:48.604 [http-nio-8184-exec-1] DEBUG c.e.u.dao.SysResourceMapper.queryPermissionList - <==      Total: 21
+2020-04-27 17:38:42.324 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:43:42.324 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:48:42.325 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:53:42.326 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration
+2020-04-27 17:58:42.327 [AsyncResolver-bootstrap-executor-0] INFO  c.n.d.shared.resolver.aws.ConfigClusterResolver - Resolving eureka endpoints via configuration

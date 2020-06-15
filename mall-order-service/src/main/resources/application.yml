@@ -1,0 +1,9 @@
+
+server:
+  port: 8182
+spring:
+  profiles:
+    active: test
+goods:
+  pic:
+    domain: http://demo5.tp-shop.cn

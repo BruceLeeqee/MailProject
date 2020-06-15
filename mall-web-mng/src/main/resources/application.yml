@@ -1,0 +1,9 @@
+server:
+  port: 8185
+  servlet:
+    context-path: /mall-mng
+  tomcat:
+    uri-encoding: UTF-8
+spring:
+  profiles:
+    active: test

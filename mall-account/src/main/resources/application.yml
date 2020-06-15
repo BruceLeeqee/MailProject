@@ -1,0 +1,9 @@
+server:
+  port: 8180
+  servlet:
+    context-path: /mall-account
+
+
+spring:
+  profiles:
+    active: test
