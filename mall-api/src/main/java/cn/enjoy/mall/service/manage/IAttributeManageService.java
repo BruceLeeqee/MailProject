@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author Ray
  * @date 2018/3/7.
  */
-@RequestMapping("/mall/service/manage/IAttributeManageService")
+@RequestMapping("/product/mall/service/manage/IAttributeManageService")
 public interface IAttributeManageService {
 
     /**

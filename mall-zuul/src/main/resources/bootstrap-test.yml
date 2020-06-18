@@ -1,0 +1,111 @@
+spring:
+  application:
+    name: api-gateway
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      profile:
+      label: master
+      #连单机configserver
+      #uri: http://localhost:8085/
+      discovery:
+        enabled: true
+        service-id: mall-config
+      fail-fast: true
+      retry:
+        multiplier: 1.1
+        initial-interval: 1000
+        max-interval: 2000
+        max-attempts: 6
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://admin:admin@localhost:8763/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 40000
+
+ribbon:
+  ConnectTimeout: 1000
+  ReadTimeout: 20000
+  OkToRetryOnAllOperations: false
+  MaxAutoRetriesNextServer: 0
+  MaxAutoRetries: 0
+  #每个host的最大连接数
+  #MaxConnectionsPerHost: 3000
+  #ribbon的最大连接数
+  #MaxTotalConnections: 6000
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+zuul:
+  thread-pool:
+    #每个路由使用独立的线程池
+    use-separate-thread-pools: true
+    #zuul默认采用信号量隔离策略
+    #设置Hystrix隔离策略为线程池
+    thread-pool-key-prefix: enjoy-
+    default:
+      coreSize: 300
+      maximumSize: 400
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: -1
+  ribbon-isolation-strategy: thread
+  routes:
+    mall-web-order:
+      path: /mall/**
+      serviceId: mall-web-order
+      sensitive-headers:
+    mall-web-mng:
+      path: /mall-mng/**
+      serviceId: mall-mng
+      sensitive-headers:
+    mall-user-service:
+      path: /user/**
+      serviceId: mall-user-service
+      sensitive-headers:
+    mall-product-service:
+      path: /product/**
+      serviceId: mall-product-service
+      sensitive-headers:
+    mall-order-service:
+      path: /order/**
+      serviceId: mall-order-service
+      sensitive-headers:
+      retryable: false
+    mall-account:
+      path: /account/**
+      serviceId: mall-account
+      sensitive-headers:
+    mall-pay:
+      path: /pay/**
+      serviceId: mall-pay-service
+      sensitive-headers:
+  add-host-header: true
+  add-proxy-headers: true
+  retryable: false
+  host:
+    #每个route可用的最大连接数
+    max-per-route-connections: 300
+    #每个服务的http客户端连接池最大连接
+    max-total-connections: 1000
+#  semaphore:
+#    max-semaphores: 100
+

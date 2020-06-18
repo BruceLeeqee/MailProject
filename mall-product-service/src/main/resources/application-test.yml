@@ -84,6 +84,7 @@ management:
       show-details: always
     shutdown:
       enabled: true
+  endpoints:
     web:
       exposure:
         include: "*"

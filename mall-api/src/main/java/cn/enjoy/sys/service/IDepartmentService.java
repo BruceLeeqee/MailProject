@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RequestMapping("/sys/service/IDepartmentService")
+@RequestMapping("/user/sys/service/IDepartmentService")
 public interface IDepartmentService {
 
     @RequestMapping(value = "/saveDepartment", method = RequestMethod.POST)

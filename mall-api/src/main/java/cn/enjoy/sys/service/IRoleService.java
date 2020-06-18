@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RequestMapping("/sys/service/IRoleService")
+@RequestMapping("/user/sys/service/IRoleService")
 public interface IRoleService {
 
     /***

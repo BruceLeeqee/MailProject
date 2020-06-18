@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
-@RequestMapping("/mall/service/manage/IBrandService")
+@RequestMapping("/product/mall/service/manage/IBrandService")
 public interface IBrandService {
     @RequestMapping(value = "/getAll")
     List<Brand> getAll();

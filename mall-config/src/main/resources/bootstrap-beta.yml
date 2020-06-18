@@ -5,17 +5,22 @@ spring:
     config:
       server:
         git:
-          uri: http://ce56aac05471/xiangxue-jack/enjoy-config.git
-          search-paths: config-repo
-          username: xiangxue-jack
-          password: xiangxue-jack
+          uri: https://e.coding.net/xiangxueman/enjoy-mi.git
+          search-paths: mall-config-repo
+          username: 2181935941@qq.com
+          password: XKcs_0731@123)$3
           #强制从GitHub配置中心中拉取配置信息，不走缓存
           force-pull: true
+  rabbitmq:
+    host: 94.191.83.120
+    port: 5672
+    username: admin
+    password: admin
 
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8763/eureka/
+      defaultZone: http://admin:admin@94.191.83.120:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
 
@@ -25,6 +30,7 @@ management:
       show-details: always
     shutdown:
       enabled: true
+  endpoints:
     web:
       exposure:
         include: "*"

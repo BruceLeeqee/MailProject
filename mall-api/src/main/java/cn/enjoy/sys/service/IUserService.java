@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/sys/service/IUserService")
+@RequestMapping("/user/sys/service/IUserService")
 public interface IUserService {
 
     /**

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/sys/service/IDictTypeService")
+@RequestMapping("/user/sys/service/IDictTypeService")
 public interface IDictTypeService {
 
 	/**

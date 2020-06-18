@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RequestMapping("/mall/service/IShoppingCartService")
+@RequestMapping("/order/mall/service/IShoppingCartService")
 public interface IShoppingCartService {
     static final Integer SAVE_MODE_APPEND = 0;
     static final Integer SAVE_MODE_UPDATE = 1;

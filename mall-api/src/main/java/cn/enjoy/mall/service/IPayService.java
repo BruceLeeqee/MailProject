@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
 import java.util.Map;
 
-@RequestMapping("/mall/service/IPayService")
+@RequestMapping("/order/mall/service/IPayService")
 public interface IPayService {
 
     @RequestMapping(value = "/doPrePay", method = RequestMethod.POST)

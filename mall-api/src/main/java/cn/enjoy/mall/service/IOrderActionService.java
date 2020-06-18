@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/mall/service/IOrderActionService")
+@RequestMapping("/order/mall/service/IOrderActionService")
 public interface IOrderActionService {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     void save(@RequestBody Order order, @RequestParam("actinNote") String actinNote, @RequestParam("userId") String userId);

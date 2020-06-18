@@ -11,7 +11,7 @@ import java.util.Map;
  * @author Ray
  * @date 2018/3/23.
  */
-@RequestMapping("/sys/service/IAuthorizeService")
+@RequestMapping("/user/sys/service/IAuthorizeService")
 public interface IAuthorizeService {
 
      @RequestMapping(value = "/checkClientId", method = RequestMethod.POST)

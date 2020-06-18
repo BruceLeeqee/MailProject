@@ -9,7 +9,7 @@ import java.util.List;
  * @author Ray
  * @date 2018/3/21.
  */
-@RequestMapping("/mall/service/manage/IShippingService")
+@RequestMapping("/order/mall/service/manage/IShippingService")
 public interface IShippingService {
 
     /**

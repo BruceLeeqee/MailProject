@@ -15,7 +15,7 @@ import java.util.List;
  * @author Ray
  * @date 2018/3/7.
  */
-@RequestMapping("/mall/service/manage/IOrderManageService")
+@RequestMapping("/order/mall/service/manage/IOrderManageService")
 public interface IOrderManageService {
 
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)

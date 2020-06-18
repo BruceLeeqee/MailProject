@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/sys/service/ILoginService")
+@RequestMapping("/user/sys/service/ILoginService")
 public interface ILoginService {
     @RequestMapping(value = "/loginByToken", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     Map<String, Object> login(@RequestBody AuthenticationToken token);

@@ -1,5 +1,10 @@
 server:
   port: 8186
+  tomcat:
+    max-threads: 1000
+    accept-count: 1000
+    max-connections: 2000
+    uri-encoding: UTF-8
   servlet:
     context-path: /mall
 

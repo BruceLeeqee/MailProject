@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/mall/service/manage/IKillSpecManageService")
+@RequestMapping("/product/mall/service/manage/IKillSpecManageService")
 public interface IKillSpecManageService {
 
     @RequestMapping(value = "/delete", method = RequestMethod.POST)

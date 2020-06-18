@@ -1,5 +1,6 @@
 package cn.enjoy.sys.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
@@ -53,6 +54,7 @@ public class SysParam implements Serializable {
      *
      * @mbggenerated Tue Oct 31 09:13:55 CST 2017
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     /**

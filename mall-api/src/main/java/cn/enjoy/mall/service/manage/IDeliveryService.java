@@ -12,7 +12,7 @@ import java.util.List;
  * @author Ray
  * @date 2018/3/22.
  */
-@RequestMapping("/mall/service/manage/IDeliveryService")
+@RequestMapping("/order/mall/service/manage/IDeliveryService")
 public interface IDeliveryService {
 
     @RequestMapping(value = "/queryDeliveryDocByOrderId", method = RequestMethod.POST)

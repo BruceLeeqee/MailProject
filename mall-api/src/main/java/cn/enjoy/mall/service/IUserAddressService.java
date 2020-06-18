@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@RequestMapping("/mall/service/IUserAddressService")
+@RequestMapping("/order/mall/service/IUserAddressService")
 public interface IUserAddressService {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     void save(@RequestBody UserAddress userAddress);

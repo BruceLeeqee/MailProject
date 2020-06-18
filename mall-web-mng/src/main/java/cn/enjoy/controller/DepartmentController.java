@@ -59,7 +59,7 @@ public class DepartmentController extends BaseController {
 
     @GetMapping("queryDepartmentTree")
     public HttpResponseBody<List<DepartmentTree>> queryToTree(@RequestParam(required = false, defaultValue = "") String deptName) {
-        List<DepartmentTree> departments = iDepartmentService.selectByToTree(deptName, null);
+        List<DepartmentTree> departments = iDepartmentService.selectByToTree(deptName, "");
         return HttpResponseBody.successResponse("查询成功", departments);
     }
 

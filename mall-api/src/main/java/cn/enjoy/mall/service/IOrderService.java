@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@RequestMapping("/mall/service/IOrderService")
+@RequestMapping("/order/mall/service/IOrderService")
 public interface IOrderService {
     @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
     Integer createOrder(@RequestBody OrderCreateVo crderCreateVo, @RequestParam("userId") String userId);

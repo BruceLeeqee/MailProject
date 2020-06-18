@@ -13,7 +13,7 @@ import java.util.List;
  * @author Ray
  * @date 2018/3/7.
  */
-@RequestMapping("/mall/service/manage/IGoodsTypeManageService")
+@RequestMapping("/product/mall/service/manage/IGoodsTypeManageService")
 public interface IGoodsTypeManageService {
 
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)

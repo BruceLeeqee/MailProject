@@ -26,7 +26,7 @@ import java.util.Map;
  * 修改记录：
  * 修改序号，修改日期，修改人，修改内容
  */
-@RequestMapping("/sys/dictData")
+@RequestMapping("/user/sys/dictData")
 public interface IDictDataService {
 
 	/**

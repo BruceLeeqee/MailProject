@@ -15,7 +15,7 @@ import java.util.List;
  * @author Ray
  * @date 2018/2/5.
  */
-@RequestMapping("/mall/service/IGoodsCategoryService")
+@RequestMapping("/product/mall/service/IGoodsCategoryService")
 public interface IGoodsCategoryService {
     @RequestMapping(value = "/selectCategoryTree", method = RequestMethod.POST)
     List<CategoryTree> selectCategoryTree(@RequestParam("parentId") String parentId, @RequestParam("keywords") String keywords);

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/sys/service/IResourceService")
+@RequestMapping("/user/sys/service/IResourceService")
 public interface IResourceService {
 
     @RequestMapping(value = "/getMenuIdByUrl", method = RequestMethod.POST)
