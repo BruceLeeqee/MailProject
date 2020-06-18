@@ -1,0 +1,37 @@
+zuul:
+  thread-pool:
+    #每个路由使用独立的线程池
+    use-separate-thread-pools: true
+    #zuul默认采用信号量隔离策略
+    #设置Hystrix隔离策略为线程池
+    thread-pool-key-prefix: enjoy
+  ribbon-isolation-strategy: thread
+  routes:
+    mall-web-order:
+      path: /mall/**
+      serviceId: mall-web-order
+      sensitive-headers:
+    mall-web-mng:
+      path: /mall-mng/**
+      serviceId: mall-mng
+      sensitive-headers:
+    mall-user-service:
+      path: /user/**
+      serviceId: mall-user-service
+      sensitive-headers:
+    mall-product-service:
+      path: /product/**
+      serviceId: mall-product-service
+      sensitive-headers:
+    mall-order-service:
+      path: /order/**
+      serviceId: mall-order-service
+      sensitive-headers:
+    mall-account:
+      path: /account/**
+      serviceId: mall-account
+      sensitive-headers:
+    mall-pay:
+      path: /pay/**
+      serviceId: mall-pay-service
+      sensitive-headers:
