@@ -5,6 +5,7 @@ import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
 import cn.enjoy.mall.vo.OrderCreateVo;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 @RequestMapping("/order/mall/service/IOrderService")
 public interface IOrderService {
-    @RequestMapping(value = "/createOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/createOrder", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     Integer createOrder(@RequestBody OrderCreateVo crderCreateVo, @RequestParam("userId") String userId);
 
     @RequestMapping(value = "/killOrder", method = RequestMethod.POST)

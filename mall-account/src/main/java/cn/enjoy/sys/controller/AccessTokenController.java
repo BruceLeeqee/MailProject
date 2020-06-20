@@ -18,6 +18,7 @@ import org.apache.oltu.oauth2.common.exception.OAuthSystemException;
 import org.apache.oltu.oauth2.common.message.OAuthResponse;
 import org.apache.oltu.oauth2.common.message.types.GrantType;
 import org.apache.oltu.oauth2.common.message.types.ParameterStyle;
+import org.apache.oltu.oauth2.common.utils.JSONUtils;
 import org.apache.oltu.oauth2.common.utils.OAuthUtils;
 import org.apache.oltu.oauth2.rs.request.OAuthAccessResourceRequest;
 import org.apache.oltu.oauth2.rs.response.OAuthRSResponse;
@@ -108,7 +109,7 @@ public class AccessTokenController extends BaseController {
                     .setAccessToken(accessToken).setExpiresIn(String.valueOf(authorizeService.getExpireIn()))
                     .buildJSONMessage();
 
-            return new ResponseEntity<>(response.getBody(), HttpStatus.valueOf(response.getResponseStatus()));
+            return new ResponseEntity<>(JSONUtils.parseJSON(response.getBody()), HttpStatus.valueOf(response.getResponseStatus()));
         } catch (OAuthProblemException e) {
             e.printStackTrace();
             OAuthResponse res = OAuthASResponse.errorResponse(HttpServletResponse.SC_BAD_REQUEST).error(e).buildBodyMessage();

@@ -43,8 +43,8 @@ ribbon:
   ConnectTimeout: 1000
   ReadTimeout: 20000
   OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 0
-  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
   #每个host的最大连接数
   #MaxConnectionsPerHost: 3000
   #ribbon的最大连接数

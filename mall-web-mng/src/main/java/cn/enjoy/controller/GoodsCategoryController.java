@@ -4,15 +4,12 @@ import cn.enjoy.core.utils.response.HttpResponseBody;
 import cn.enjoy.mall.model.GoodsCategory;
 import cn.enjoy.mall.service.IGoodsCategoryService;
 import cn.enjoy.mall.service.manage.ICategoryManageService;
-import cn.enjoy.mall.vo.CategoryTree;
 import cn.enjoy.sys.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.List;
 
 /**
  * @author Ray
@@ -39,7 +36,7 @@ public class GoodsCategoryController extends BaseController {
 
     @GetMapping("/getCategoryTree3")
     public HttpResponseBody getCategoryTree3(String parentId, String keywords){
-        List<CategoryTree> categoryTrees = goodsCategoryService.selectCategoryTree3(parentId, keywords);
+//        List<CategoryTree> categoryTrees = goodsCategoryService.selectCategoryTree3(parentId, keywords);
         return HttpResponseBody.successResponse("ok", goodsCategoryService.selectCategoryTree3(parentId, keywords));
     }
 

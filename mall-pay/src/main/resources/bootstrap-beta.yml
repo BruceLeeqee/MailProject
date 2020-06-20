@@ -1,51 +1,46 @@
 dfs:
   url: 94.191.83.120:8181
-fdfs:
-    connectTimeout: 600
-    soTimeout: 1500
-    thumbImage:
-        height: 150
-        width: 150
-    trackerList:
-    - 94.191.83.120:12050
+
+
+#wx:
+#  appId: wx59a7e2633f445ef7
+#  mchId: 1534472621
+#  key: f4b7a6885e121bd8cbc1664ceabf5cce
+#  certPath:
+#  notify_url: http://thesunbig.imwork.net/wx/notify
+#  wap_url: https://pay.qq.com
+#  spbill_create_ip: 127.0.0.1
 
 zookeeper:
   url: zookeeper://94.191.83.120:2181
 spring:
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-  redis:
-    host: 94.191.83.120
-    port: 6379
-    password: 123456
-  jmx:
-    enabled: false
   application:
-    name: mall-mng
-  main:
-    allow-bean-definition-overriding: true
-shiro:
-  maxAge:
-    day: 10
-company:
-  images:
-    login-logo:
-    logo:
-    login-bg:
-wx:
-    appid: wxc5eae5bf209e986f
-    appsecret:
-    redirect_uri:
-
-goods:
-  pic:
-    domain: http://demo5.tp-shop.cn
+    name: mall-pay-service
+  cloud:
+    config:
+      profile:
+      label: master
+      #连单机configserver
+      #uri: http://localhost:8085/
+      discovery:
+        enabled: true
+        service-id: mall-config
+      fail-fast: true
+      retry:
+        multiplier: 1.1
+        initial-interval: 1000
+        max-interval: 2000
+        max-attempts: 6
+  rabbitmq:
+    host: 94.191.83.120
+    port: 5672
+    username: admin
+    password: admin
 
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@94.191.83.120:8763/eureka/
+      defaultZone: http://admin:admin@localhost:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
   instance:

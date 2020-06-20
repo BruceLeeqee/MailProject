@@ -31,7 +31,7 @@ public abstract class BaseMgDao {
         int count = (int) mongoTemplate.count(query, entityClass, getCollectionName());
         GridModel<T> gridModel = new GridModel<T>();
         gridModel.setPage(page);
-        gridModel.setRecords(count);
+        gridModel.setRecords(Long.valueOf(count));
         if(count > 0) {
             gridModel.setTotal(count / size + 1);
         }

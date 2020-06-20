@@ -17,13 +17,16 @@ import cn.enjoy.sys.model.SysParam;
 import cn.enjoy.sys.service.ISysParamService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,6 +60,21 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
     @Value("${goods.pic.domain}")
     private String goodsPicDomain;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private static String topCategoryTree = "topCategoryTree";
+
+    @PostConstruct
+    public void cacheCategoryTree() {
+        if(!redisTemplate.hasKey(topCategoryTree)) {
+            new Thread(() -> {
+                List<CategoryTree> categoryTrees = goodsCategoryMapper.selectCategoryTree3("0", "");
+                redisTemplate.opsForValue().set(topCategoryTree,categoryTrees);
+            }).start();
+        }
+    }
+
     @Override
     public List<CategoryTree> selectCategoryTree(String parentId, String keywords) {
         return goodsCategoryMapper.selectCategoryTree(parentId, keywords);
@@ -64,7 +82,16 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
 
     @Override
     public List<CategoryTree> selectCategoryTree3(String parentId, String keywords) {
-        return goodsCategoryMapper.selectCategoryTree3(parentId, keywords);
+        if(redisTemplate.hasKey(topCategoryTree)) {
+            log.info("----------从缓存获取商品分类数据---------");
+            List<CategoryTree> categoryTrees = (List<CategoryTree>)redisTemplate.opsForValue().get(topCategoryTree);
+            return categoryTrees;
+        } else {
+            log.info("----------从数据库获取商品分类数据---------");
+            List<CategoryTree> categoryTrees = goodsCategoryMapper.selectCategoryTree3(parentId, keywords);
+            redisTemplate.opsForValue().set(topCategoryTree,categoryTrees);
+            return categoryTrees;
+        }
     }
 
     @Override

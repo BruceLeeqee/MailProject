@@ -34,9 +34,9 @@ sso:
   loginUrl: /api/system/unLogin
   client-id: c1ebe466-1cdc-4bd3-ab69-77c3561b9dee
   client-secret: d8346ea2-6017-43ed-ad68-19c0f971738b
-  access-token-url: http://self.sso.com/mall-account/api/accessToken
-  user-info-url: http://self.sso.com/mall-account/api/userInfo
-  redirect-url: http://self.sso.com/mall-account/
+  access-token-url: http://localhost:8180/mall-account/api/accessToken
+  user-info-url: http://localhost:8180/mall-account/api/userInfo
+  redirect-url: http://localhost:8180/mall-account/
 
 company:
   images:
@@ -65,14 +65,14 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 40000
 
 ribbon:
   ConnectTimeout: 1000
-  ReadTimeout: 5000
+  ReadTimeout: 20000
   OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 0
-  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
 
 management:
   endpoint:

@@ -13,10 +13,7 @@ import cn.enjoy.mall.vo.GoodsDetailVo;
 import cn.enjoy.mall.vo.GoodsPageVo;
 import cn.enjoy.mall.vo.GoodsSpecPriceAttrVo;
 import cn.enjoy.mall.vo.GoodsVo;
-import com.alibaba.fastjson.JSONObject;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
-import com.github.miemiedev.mybatis.paginator.domain.PageList;
-import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -73,6 +70,9 @@ public class GoodsServiceImpl implements IGoodsService {
     @Resource
     private RedisTemplate redisTemplate;
 
+    @Value("${dfs.url}")
+    private String dfsurl;
+
     @Override
     public GoodsVo findOneById(Integer goodsId) {
         return goodsDao.findOneById(goodsId);
@@ -96,6 +96,7 @@ public class GoodsServiceImpl implements IGoodsService {
     @Override
     public int save(Goods goods){
         Integer goodsId = goods.getGoodsId();
+//        goods.setOriginalImg("http://" + dfsurl + goods.getOriginalImg());
         if(goodsId != null && goodsId > 0 && goodsMapper.selectByPrimaryKey(goodsId)!=null){
              goodsMapper.updateByPrimaryKeySelective(goods);
              return goodsId;
@@ -121,22 +122,22 @@ public class GoodsServiceImpl implements IGoodsService {
         if(StringUtil.isNotEmpty(sidx)  && StringUtil.isNotEmpty(sord)){
             orderString = sidx + "." + sord;
         }
-        PageBounds pageBounds = new PageBounds(page, pageSize, com.github.miemiedev.mybatis.paginator.domain.Order.formString(orderString));
+//        PageBounds pageBounds = new PageBounds(page, pageSize, com.github.miemiedev.mybatis.paginator.domain.Order.formString(orderString));
         List<Integer> subCatList = null;
         if(catId!=null && catId.intValue()>0){
             subCatList = goodsCategoryService.getSubCats(catId);
         }
-        PageList<Goods> pageList =(PageList<Goods>)goodsMapper.queryListPageFromDB(subCatList, keywords,pageBounds);
-        if(pageList.getPaginator() == null) {
-            Integer totalCount = goodsMapper.queryListPageFromDBTotalCount(subCatList, keywords);
-            Paginator paginator = new Paginator(page,pageSize,totalCount);
-            PageList<Goods> goods = new PageList<>(pageList, paginator);
-            GridModel<Goods> goodsGridModel = new GridModel<>(goods);
-            String goodsGridModelStr = JSONObject.toJSONString(goodsGridModel);
-            return goodsGridModel;
-        }
-        GridModel<Goods> goodsGridModel = new GridModel<>(pageList);
-        String goodsGridModelStr = JSONObject.toJSONString(goodsGridModel);
+        PageHelper.startPage(page,pageSize);
+        List<Goods> list = goodsMapper.queryListPageFromDB(subCatList, keywords);
+//        if(pageList.getPaginator() == null) {
+//            Integer totalCount = goodsMapper.queryListPageFromDBTotalCount(subCatList, keywords);
+//            Paginator paginator = new Paginator(page,pageSize,totalCount);
+//            PageList<Goods> goods = new PageList<>(pageList, paginator);
+//            GridModel<Goods> goodsGridModel = new GridModel<>(goods);
+//            String goodsGridModelStr = JSONObject.toJSONString(goodsGridModel);
+//            return goodsGridModel;
+//        }
+        GridModel<Goods> goodsGridModel = new GridModel<>(list);
         return goodsGridModel;
     }
 
@@ -274,7 +275,7 @@ public class GoodsServiceImpl implements IGoodsService {
             for(String url : imageUrls){
                 GoodsImages image = new GoodsImages();
                 image.setGoodsId(goodsId);
-                image.setImageUrl(url);
+                image.setImageUrl("http://" + dfsurl + url);
                 goodsImagesList.add(image);
             }
             return goodsImagesMapper.insertBatch(goodsImagesList);

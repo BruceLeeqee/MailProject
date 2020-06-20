@@ -70,14 +70,14 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 10000
+            timeoutInMilliseconds: 40000
 
 ribbon:
   ConnectTimeout: 1000
-  ReadTimeout: 5000
+  ReadTimeout: 20000
   OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 0
-  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 1
+  MaxAutoRetries: 1
 
 management:
   endpoint:

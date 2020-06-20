@@ -70,6 +70,8 @@ public interface GoodsMapper {
 
     PageList<Goods> queryListPageFromDB(@Param("subCatList") List<Integer> subCatList, @Param("keywords") String keyword, PageBounds pageBounds);
 
+    List<Goods> queryListPageFromDB(@Param("subCatList") List<Integer> subCatList, @Param("keywords") String keyword);
+
     Integer queryListPageFromDBTotalCount(@Param("subCatList") List<Integer> subCatList, @Param("keywords") String keyword);
 
     Goods selectDetailByGoodsId(Integer goodsId);

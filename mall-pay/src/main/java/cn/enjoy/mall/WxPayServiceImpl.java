@@ -6,8 +6,10 @@ import cn.enjoy.mall.wxsdk.WXPay;
 import cn.enjoy.mall.wxsdk.WxPayConfigImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,6 +17,7 @@ import java.util.Map;
 
 /**
  */
+@RefreshScope
 @RestController
 public class WxPayServiceImpl implements IWxPayService {
     @Autowired
@@ -37,6 +40,10 @@ public class WxPayServiceImpl implements IWxPayService {
     @Value("${wx.spbill_create_ip}")
     private String spbill_create_ip="";
 
+    @PostConstruct
+    public void tet() {
+        String appId = this.appId;
+    }
     /**
      * 微信H5 支付
      * 注意：必须再web页面中发起支付且域名已添加到开发配置中

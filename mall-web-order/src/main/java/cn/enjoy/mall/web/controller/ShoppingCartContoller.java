@@ -23,7 +23,7 @@ public class ShoppingCartContoller  extends BaseController {
      */
     @PostMapping("add")
     public HttpResponseBody add(ShopppingGoodsAddVo shopppingGoodsAddVo){
-        shoppingCartService.save(shopppingGoodsAddVo.getSpecGoodsId(),shopppingGoodsAddVo.getNum(),getSessionUserId(),IShoppingCartService.SAVE_MODE_APPEND);
+        shoppingCartService.save(shopppingGoodsAddVo.getSpecGoodsId(),shopppingGoodsAddVo.getNum() == null ? 1 : shopppingGoodsAddVo.getNum(),getSessionUserId(),IShoppingCartService.SAVE_MODE_APPEND);
         return HttpResponseBody.successResponse("ok");
     }
 
