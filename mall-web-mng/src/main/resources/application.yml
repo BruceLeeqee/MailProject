@@ -9,4 +9,4 @@ server:
     uri-encoding: UTF-8
 spring:
   profiles:
-    active: test
+    active: beta

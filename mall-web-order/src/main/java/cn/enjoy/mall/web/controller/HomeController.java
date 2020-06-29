@@ -3,12 +3,14 @@ package cn.enjoy.mall.web.controller;
 import cn.enjoy.core.utils.JsonUtils;
 import cn.enjoy.core.utils.response.HttpResponseBody;
 import cn.enjoy.mall.service.IGoodsCategoryService;
+import cn.enjoy.mall.vo.HotGoodsVo;
 import cn.enjoy.sys.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -79,7 +81,8 @@ public class HomeController extends BaseController {
      */
     @GetMapping("getHotGoods")
     public HttpResponseBody getHotGoods(){
-        return HttpResponseBody.successResponse("ok", goodsCategoryService.getHotGoods());
+        List<HotGoodsVo> hotGoods = goodsCategoryService.getHotGoods();
+        return HttpResponseBody.successResponse("ok", hotGoods);
     }
 
 }

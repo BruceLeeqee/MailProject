@@ -20,12 +20,12 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8763/eureka/
+      defaultZone: http://admin:admin@eureka.h:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
   instance:
     #hostname:
-    ip-address: 94.191.83.120
+    #ip-address: 94.191.83.120
     prefer-ip-address: true
     instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 

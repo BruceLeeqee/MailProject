@@ -11,4 +11,4 @@ server:
 
 spring:
   profiles:
-    active: test
+    active: beta

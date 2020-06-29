@@ -7,7 +7,7 @@ server:
     uri-encoding: UTF-8
 spring:
   profiles:
-    active: test
+    active: beta
 goods:
       pic:
         domain: http://demo5.tp-shop.cn
