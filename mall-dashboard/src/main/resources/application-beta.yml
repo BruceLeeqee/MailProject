@@ -5,9 +5,9 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    #hostname:
+    hostname: dashboard.h
     #ip-address: 94.191.83.120
-    prefer-ip-address: true
+    prefer-ip-address: false
     instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 
 management:
