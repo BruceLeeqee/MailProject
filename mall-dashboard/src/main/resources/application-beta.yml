@@ -8,7 +8,7 @@ eureka:
     hostname: dashboard.h
     #ip-address: 94.191.83.120
     prefer-ip-address: false
-    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+    instance-id: dashboard.h:${spring.application.name}:${server.port}
 
 management:
   endpoint:
