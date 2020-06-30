@@ -16,32 +16,38 @@ zookeeper:
 spring:
   application:
     name: mall-pay-service
-  rabbitmq:
-    host: 94.191.83.120
-    port: 5672
-    username: admin
-    password: admin
-  main:
-    allow-bean-definition-overriding: true
   cloud:
     config:
       profile:
       label: master
+      #连单机configserver
+      #uri: http://localhost:8085/
       discovery:
         enabled: true
         service-id: mall-config
       fail-fast: true
       retry:
         multiplier: 1.1
+        initial-interval: 1000
         max-interval: 2000
         max-attempts: 6
-        initial-interval: 1000
+  rabbitmq:
+    host: 94.191.83.120
+    port: 5672
+    username: admin
+    password: admin
+
 eureka:
   client:
     service-url:
-      defaultZone: http://admin:admin@localhost:8763/eureka/
+      defaultZone: http://admin:admin@eureka.h:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
+  instance:
+    #hostname:
+    #ip-address: 94.191.83.120
+    prefer-ip-address: true
+    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 
 hystrix:
   command:

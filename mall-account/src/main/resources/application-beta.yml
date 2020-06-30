@@ -51,9 +51,9 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
   instance:
-    hostname: account.h
+    #hostname: account.h
     #ip-address: 94.191.83.120
-    prefer-ip-address: false
+    prefer-ip-address: true
     instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 
 hystrix:

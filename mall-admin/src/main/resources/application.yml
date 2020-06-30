@@ -9,4 +9,4 @@ server:
 
 spring:
   profiles:
-    active: beta
+    active: ${spring.profiles.active:test}
