@@ -16,6 +16,8 @@ import org.apache.oltu.oauth2.common.message.types.ResponseType;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -35,6 +37,8 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api")
 public class AuthorizeController extends BaseController {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IAuthorizeService authorizeService;
@@ -69,10 +73,13 @@ public class AuthorizeController extends BaseController {
             String authorizationCode = null;
 
             String responseType = oAuthAuthzRequest.getParam(OAuth.OAUTH_RESPONSE_TYPE);
+            logger.info("------------------responseType:" + responseType);
             if (responseType.equals(ResponseType.CODE.toString())) {
                 OAuthIssuerImpl oAuthIssuer = new OAuthIssuerImpl(new MD5Generator());
                 authorizationCode = oAuthIssuer.authorizationCode();
+                logger.info("------------------authorizationCode:--------------" + authorizationCode);
                 shiroCacheUtil.addAuthCode(authorizationCode, username);
+                logger.info("------------------put cache ok--------------");
             }
 
             Map<String, Object> data = new HashMap<>();
