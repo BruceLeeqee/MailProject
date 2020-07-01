@@ -1,13 +1,15 @@
 package cn.enjoy.mall.wxsdk;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.EnvironmentAware;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
 @Service
-public class WxPayConfigImpl extends WXPayConfig {
+public class WxPayConfigImpl extends WXPayConfig implements EnvironmentAware {
 
     private byte[] certData;
     private static WxPayConfigImpl INSTANCE;
@@ -91,4 +93,8 @@ public class WxPayConfigImpl extends WXPayConfig {
         return 2;
     }
 
+    @Override
+    public void setEnvironment(Environment environment) {
+        Environment environment1 = environment;
+    }
 }
