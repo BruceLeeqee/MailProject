@@ -120,6 +120,7 @@ public class LoginController extends BaseController {
             Subject subject = SecurityUtils.getSubject();
             logger.info("------------------subject.hashCode():--------------" + subject.hashCode());
             subject.login(token);
+            logger.info("------------------subject.isAuthenticated():--------------" + subject.isAuthenticated());
             user = (SysUser) subject.getSession().getAttribute(CommonConstant.SESSION_USER_KEY);
             if (user != null) {
                 user.setPasswordRand(null);
@@ -132,7 +133,7 @@ public class LoginController extends BaseController {
             data.put("userInfo", user);
             data.put("departments", departments);
             data.put("authorityInfo", menuModels);
-            logger.info("------------------用户" + loginName + "登录成功-------------------");
+            logger.info("------------------user" + loginName + "login SUCCESS-------------------");
         } catch (AuthenticationException e) {
             token.clear();
             throw new BusinessException(ResponseCodeConstant.USER_LOGIN_FAIL_PASSWORD_FAIL, "用户名或密码错误！");
