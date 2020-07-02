@@ -37,8 +37,8 @@ public class CorsFilter implements Filter {
             logger.info("-----------Origin:" + request.getHeader("Origin"));
             response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
         } else {
-            logger.info("-----------Origin-else:http://106.55.152.41:8186");
-            response.setHeader("Access-Control-Allow-Origin", "http://106.55.152.41:8186");
+            logger.info("-----------Origin-else:http://106.55.250.100:8180");
+            response.setHeader("Access-Control-Allow-Origin", "http://106.55.250.100:8180");
         }
 
 //        response.setHeader("Access-Control-Allow-Origin", "*");
