@@ -118,6 +118,7 @@ public class LoginController extends BaseController {
         }
         try {
             Subject subject = SecurityUtils.getSubject();
+            logger.info("------------------subject.hashCode():--------------" + subject.hashCode());
             subject.login(token);
             user = (SysUser) subject.getSession().getAttribute(CommonConstant.SESSION_USER_KEY);
             if (user != null) {

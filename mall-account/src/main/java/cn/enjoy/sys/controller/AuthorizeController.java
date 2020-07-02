@@ -61,6 +61,7 @@ public class AuthorizeController extends BaseController {
 
             // 判断用户是否登录
             Subject subject = SecurityUtils.getSubject();
+            logger.info("------------------subject.hashCode():--------------" + subject.hashCode());
             logger.info("------------------subject.isAuthenticated():--------------" + subject.isAuthenticated());
             if (!subject.isAuthenticated()) {
                 if (!login(subject, request)) {
@@ -94,9 +95,9 @@ public class AuthorizeController extends BaseController {
 
     private boolean login(Subject subject, HttpServletRequest request) {
         logger.info("-----------------request.getMethod():" + request.getMethod());
-//        if ("get".equalsIgnoreCase(request.getMethod())) {
-//            return false;
-//        }
+        if ("get".equalsIgnoreCase(request.getMethod())) {
+            return false;
+        }
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
