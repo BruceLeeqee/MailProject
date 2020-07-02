@@ -1,13 +1,18 @@
 package cn.enjoy.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Component
 public class CorsFilter implements Filter {
+
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,12 +29,23 @@ public class CorsFilter implements Filter {
     * */
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
-        System.out.println("=========跨域过滤器=========");
+        logger.info("=========cors filter=========");
         HttpServletResponse response = (HttpServletResponse) res;
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        HttpServletRequest request = (HttpServletRequest) req;
+
+        if (request.getHeader("Origin") != null) {
+            logger.info("-----------Origin:" + request.getHeader("Origin"));
+            response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
+        } else {
+            logger.info("-----------Origin-else:http://106.55.152.41:8186");
+            response.setHeader("Access-Control-Allow-Origin", "http://106.55.152.41:8186");
+        }
+
+//        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Credentials","true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
-        response.setHeader("Access-Control-Allow-Headers", "*");
+        response.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept, X-Requested-With, remember-me");
         chain.doFilter(req, res);
     }
 
