@@ -62,7 +62,6 @@ public class AuthorizeController extends BaseController {
 
             // 判断用户是否登录
             Subject subject = SecurityUtils.getSubject();
-            logger.info("------------------subject:--------------" + JSONObject.toJSONString(subject));
             logger.info("------------------subject.isAuthenticated():--------------" + subject.isAuthenticated());
             if (!subject.isAuthenticated()) {
                 if (!login(subject, request)) {
