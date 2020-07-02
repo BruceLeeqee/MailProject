@@ -93,9 +93,10 @@ public class AuthorizeController extends BaseController {
     }
 
     private boolean login(Subject subject, HttpServletRequest request) {
-        if ("get".equalsIgnoreCase(request.getMethod())) {
-            return false;
-        }
+        logger.info("-----------------request.getMethod():" + request.getMethod());
+//        if ("get".equalsIgnoreCase(request.getMethod())) {
+//            return false;
+//        }
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
