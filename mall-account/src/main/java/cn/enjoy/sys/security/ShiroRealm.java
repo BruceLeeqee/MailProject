@@ -76,6 +76,7 @@ public class ShiroRealm extends AuthorizingRealm {
         String userName = token.getUsername();
         String password = new String(token.getPassword());
 
+        logger.info("userName-password" + userName + "-" + password);
         if (StringUtils.isEmpty(userName)){
             throw new BusinessException(ResponseCodeConstant.USER_LOGIN_FAIL, "用户名不能为空");
         }
@@ -88,6 +89,7 @@ public class ShiroRealm extends AuthorizingRealm {
         try{
             Map<String, Object> user = iLoginService.loginByStrToken(JSONObject.toJSONString(authcToken));
             JSONObject userJo = (JSONObject)user.get("user");
+            logger.info("userJo" + userJo.toJSONString());
             SysUser sysUser = JSONObject.parseObject(userJo.toJSONString(), SysUser.class);
             user.remove("user");
 

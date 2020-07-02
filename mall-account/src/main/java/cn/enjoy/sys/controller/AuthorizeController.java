@@ -6,7 +6,6 @@ import cn.enjoy.core.utils.response.ResponseCodeConstant;
 import cn.enjoy.mall.constant.SsoConstants;
 import cn.enjoy.sys.service.IAuthorizeService;
 import cn.enjoy.util.ShiroCacheUtil;
-import com.alibaba.fastjson.JSONObject;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
 import org.apache.oltu.oauth2.as.issuer.OAuthIssuerImpl;
 import org.apache.oltu.oauth2.as.request.OAuthAuthzRequest;
@@ -100,7 +99,7 @@ public class AuthorizeController extends BaseController {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-
+        logger.info("------------------username:password--------------" + username + ":" + password);
         if (StringUtils.isEmpty(username) || StringUtils.isEmpty(password)) {
             return false;
         }
