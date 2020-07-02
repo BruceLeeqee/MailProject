@@ -233,6 +233,7 @@ public class ShiroConfiguration {
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionIdCookie(simpleCookie());
         sessionManager.setSessionDAO(sessionDAO());
+        sessionManager.setSessionIdCookieEnabled(true);
         List<SessionListener> sessionListeners = new ArrayList<>();
         sessionListeners.add(sessionListener());
         sessionManager.setSessionListeners(sessionListeners);
