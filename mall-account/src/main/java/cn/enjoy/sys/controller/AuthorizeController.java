@@ -1,9 +1,11 @@
 package cn.enjoy.sys.controller;
 
 import cn.enjoy.core.exception.BusinessException;
+import cn.enjoy.core.utils.CommonConstant;
 import cn.enjoy.core.utils.response.HttpResponseBody;
 import cn.enjoy.core.utils.response.ResponseCodeConstant;
 import cn.enjoy.mall.constant.SsoConstants;
+import cn.enjoy.sys.model.SysUser;
 import cn.enjoy.sys.service.IAuthorizeService;
 import cn.enjoy.util.ShiroCacheUtil;
 import org.apache.oltu.oauth2.as.issuer.MD5Generator;
@@ -64,13 +66,23 @@ public class AuthorizeController extends BaseController {
             logger.info("------------------subject.hashCode():--------------" + subject.hashCode());
             logger.info("------------------subject.isAuthenticated():--------------" + subject.isAuthenticated());
             logger.info("------------------subject.getPrincipal():--------------" + subject.getPrincipal());
-            if (!subject.isAuthenticated()) {
+
+            SysUser user = (SysUser) subject.getSession().getAttribute(CommonConstant.SESSION_USER_KEY);
+            logger.info("------------------user:--------------" + user);
+//            if (!subject.isAuthenticated() || (user == null)) {
+//                if (!login(subject, request)) {
+//                    logger.info("------------------not login:--------------");
+//                    return new HttpResponseBody(ResponseCodeConstant.UN_LOGIN_ERROR, "没有登陆");
+//                }
+//            }
+            if (user == null) {
                 if (!login(subject, request)) {
                     logger.info("------------------not login:--------------");
                     return new HttpResponseBody(ResponseCodeConstant.UN_LOGIN_ERROR, "没有登陆");
                 }
             }
-            String username = (String) subject.getPrincipal();
+            logger.info("------------------user:--------------" + user.getUserName());
+            String username = subject.getPrincipal() != null ? (String) subject.getPrincipal() : user.getUserName();
 
             //生成授权码
             String authorizationCode = null;
