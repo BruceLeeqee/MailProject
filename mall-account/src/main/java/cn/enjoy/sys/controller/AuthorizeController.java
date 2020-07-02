@@ -63,6 +63,7 @@ public class AuthorizeController extends BaseController {
             Subject subject = SecurityUtils.getSubject();
             logger.info("------------------subject.hashCode():--------------" + subject.hashCode());
             logger.info("------------------subject.isAuthenticated():--------------" + subject.isAuthenticated());
+            logger.info("------------------subject.getPrincipal():--------------" + subject.getPrincipal());
             if (!subject.isAuthenticated()) {
                 if (!login(subject, request)) {
                     logger.info("------------------not login:--------------");
