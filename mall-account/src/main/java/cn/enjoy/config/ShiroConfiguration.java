@@ -1,5 +1,6 @@
 package cn.enjoy.config;
 
+import cn.enjoy.mall.constant.SsoConstants;
 import cn.enjoy.sys.security.MySessionListener;
 import cn.enjoy.sys.security.ShiroAuthFilter;
 import cn.enjoy.sys.security.ShiroRealm;
@@ -199,8 +200,8 @@ public class ShiroConfiguration {
 
     @Bean
     public SimpleCookie simpleCookie(){
-//        SimpleCookie simpleCookie = new SimpleCookie(SsoConstants.SSO_SESSION_ID);
-        SimpleCookie simpleCookie = new SimpleCookie();
+        SimpleCookie simpleCookie = new SimpleCookie(SsoConstants.SSO_SESSION_ID);
+//        SimpleCookie simpleCookie = new SimpleCookie();
         simpleCookie.setHttpOnly(false);
         return simpleCookie;
     }
