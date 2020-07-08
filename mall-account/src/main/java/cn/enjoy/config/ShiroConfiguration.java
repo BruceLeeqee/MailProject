@@ -1,6 +1,5 @@
 package cn.enjoy.config;
 
-import cn.enjoy.mall.constant.SsoConstants;
 import cn.enjoy.sys.security.MySessionListener;
 import cn.enjoy.sys.security.ShiroAuthFilter;
 import cn.enjoy.sys.security.ShiroRealm;
@@ -181,7 +180,8 @@ public class ShiroConfiguration {
         //这个参数是cookie的名称，对应前端的checkbox的name = rememberMe
         SimpleCookie simpleCookie = new SimpleCookie("rememberMe");
         //如果httyOnly设置为true，则客户端不会暴露给客户端脚本代码，使用HttpOnly cookie有助于减少某些类型的跨站点脚本攻击；
-        simpleCookie.setHttpOnly(true);
+//        simpleCookie.setHttpOnly(true);
+        simpleCookie.setHttpOnly(false);
         //记住我cookie生效时间,默认30天 ,单位秒：60 * 60 * 24 * 30
         simpleCookie.setMaxAge(60 * 60 * 24 * maxAgeDay);
         //simpleCookie.setMaxAge(60*1);
@@ -199,7 +199,10 @@ public class ShiroConfiguration {
 
     @Bean
     public SimpleCookie simpleCookie(){
-        return new SimpleCookie(SsoConstants.SSO_SESSION_ID);
+//        SimpleCookie simpleCookie = new SimpleCookie(SsoConstants.SSO_SESSION_ID);
+        SimpleCookie simpleCookie = new SimpleCookie();
+        simpleCookie.setHttpOnly(false);
+        return simpleCookie;
     }
 
     @Bean
@@ -228,7 +231,7 @@ public class ShiroConfiguration {
     }
 
     @Bean
-    public DefaultWebSessionManager sessionManager(){
+    public DefaultWebSessionManager sessionManager() {
         DefaultWebSessionManager sessionManager = new DefaultWebSessionManager();
         sessionManager.setDeleteInvalidSessions(true);
         sessionManager.setSessionIdCookie(simpleCookie());
