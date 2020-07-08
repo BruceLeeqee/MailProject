@@ -9,6 +9,8 @@ import cn.enjoy.sys.service.IDepartmentService;
 import cn.enjoy.sys.service.IRoleService;
 import cn.enjoy.sys.service.IUserService;
 import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,7 @@ import java.util.Map;
 @RequestMapping("/api/user/")
 public class UserController  extends BaseController {
 
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private IRoleService iRoleService;
@@ -168,6 +171,7 @@ public class UserController  extends BaseController {
 
     @GetMapping("getUserInfo")
     public HttpResponseBody getUserInfo(){
+        logger.info("----------getUserInfo-----------");
         SysUser sysUser = this.getSessionUser();
         Map<String, Object> result = new HashMap<>();
         result.put("userInfo", sysUser);

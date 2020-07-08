@@ -26,6 +26,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author Ray
@@ -33,6 +35,7 @@ import org.apache.shiro.subject.PrincipalCollection;
  */
 public class OAuth2Realm extends AuthorizingRealm {
 
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private String clientId;
     private String clientSecret;
@@ -80,6 +83,7 @@ public class OAuth2Realm extends AuthorizingRealm {
             OAuthAccessTokenResponse oAuthResponse = oAuthClient.accessToken(accessTokenRequest, OAuth.HttpMethod.POST);
             String accessToken = oAuthResponse.getAccessToken();
 
+            logger.info("--------accessToken:" + accessToken);
             //拿用户信息  获得用户的信息
             OAuthClientRequest userInfoRequest = new OAuthBearerClientRequest(userInfoUrl)
                     .setAccessToken(accessToken).buildQueryMessage();

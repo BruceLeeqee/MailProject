@@ -49,7 +49,8 @@ public class BaseController {
     }
 
     public SysUser getSessionUser() {
-        return this.getSessionUser(this.getRequest());
+        HttpServletRequest request = this.getRequest();
+        return this.getSessionUser(request);
     }
 
     public HttpSession getSession(HttpServletRequest request) {
