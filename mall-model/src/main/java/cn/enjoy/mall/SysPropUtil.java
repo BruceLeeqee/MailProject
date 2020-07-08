@@ -23,7 +23,7 @@ public class SysPropUtil {
                 return "http://" + fdfsDomain + originalImg;
             }
         }*/
-
+        System.out.println(originalImg);
         if(originalImg.startsWith("http")) {
             return originalImg;
         } else {
