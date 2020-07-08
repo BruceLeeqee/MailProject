@@ -36,12 +36,12 @@ public class CorsFilter implements Filter {
         if (request.getHeader("Origin") != null) {
             logger.info("-----------Origin:" + request.getHeader("Origin"));
             response.setHeader("Access-Control-Allow-Origin", request.getHeader("Origin"));
-        } else {
+        } /*else {
             logger.info("-----------Origin-else:http://106.55.250.100:8180");
             response.setHeader("Access-Control-Allow-Origin", "http://106.55.250.100:8180");
-        }
+        }*/
 
-//        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials","true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
