@@ -40,8 +40,9 @@ public class CorsFilter implements Filter {
             logger.info("-----------Origin-else:http://106.55.250.100:8180");
             response.setHeader("Access-Control-Allow-Origin", "http://106.55.250.100:8180");
         }*/
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
+        //      *不允许携带认证头和cookies
+        // 如果不是80端口,需要将端口加上,如果是集群,则用Nginx的地址,同理不是80端口要加上端口
+        response.setHeader("Access-Control-Allow-Origin", "http://106.52.62.38:8186");
         response.setHeader("Access-Control-Allow-Credentials","true");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE");
         response.setHeader("Access-Control-Max-Age", "3600");
