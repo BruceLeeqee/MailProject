@@ -14,7 +14,6 @@ public class SysPropUtil {
     private static String fdfsDomain;
 
     public static String getPicDomain(String originalImg) {
-        return originalImg;
         /*if(originalImg == null || originalImg.startsWith("http")){
             return null;
         } else {
@@ -24,6 +23,12 @@ public class SysPropUtil {
                 return "http://" + fdfsDomain + originalImg;
             }
         }*/
+
+        if(originalImg.startsWith("http")) {
+            return originalImg;
+        } else {
+            return "http://" + fdfsDomain + originalImg;
+        }
     }
 
     @Value("${goods.pic.domain}")
