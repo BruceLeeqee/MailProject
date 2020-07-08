@@ -164,6 +164,7 @@ public class UserController  extends BaseController {
 
     @GetMapping("getUserInfo")
     public HttpResponseBody getUserInfo(){
+        logger.info("----------getUserInfo:----------");
         SysUser sysUser = iUserService.selectByPrimaryKey(getSessionUserId());
         logger.info("----------sysUser:" + JSONObject.toJSONString(sysUser));
         if(sysUser == null){
