@@ -61,7 +61,7 @@ public class WxPayServiceImpl implements IWxPayService {
         try {
             WXPay wxPay = new WXPay(wxPayConfig);
 
-            reqData.put("body","订单号:"+actionId);
+            reqData.put("body","orderno:"+actionId);
             reqData.put("out_trade_no",actionId);
 
             reqData.put("total_fee",String.valueOf(payAmount.multiply(BigDecimal.valueOf(100)).intValue()));
