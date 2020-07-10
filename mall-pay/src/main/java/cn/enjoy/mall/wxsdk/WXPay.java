@@ -2,6 +2,8 @@ package cn.enjoy.mall.wxsdk;
 
 
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -11,6 +13,8 @@ import static cn.enjoy.mall.wxsdk.WXPayConstants.SignType.MD5;
 
 @Service
 public class WXPay {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     private WXPayConfig config;
     private WXPayConstants.SignType signType=MD5;
@@ -157,6 +161,7 @@ public class WXPay {
                                      int connectTimeoutMs, int readTimeoutMs) throws Exception {
         String msgUUID = reqData.get("nonce_str");
         String reqBody = WXPayUtil.mapToXml(reqData);
+        logger.info("-----------reqBody----" + reqBody);
         String resp = this.wxPayRequest.requestWithoutCert(urlSuffix, msgUUID, reqBody, connectTimeoutMs, readTimeoutMs, autoReport);
         return resp;
     }
