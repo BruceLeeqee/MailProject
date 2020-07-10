@@ -4,6 +4,9 @@ package cn.enjoy.mall;
 import cn.enjoy.mall.service.IWxPayService;
 import cn.enjoy.mall.wxsdk.WXPay;
 import cn.enjoy.mall.wxsdk.WxPayConfigImpl;
+import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -20,6 +23,9 @@ import java.util.Map;
 @RefreshScope
 @RestController
 public class WxPayServiceImpl implements IWxPayService {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     WxPayConfigImpl wxPayConfig;
     @Autowired
@@ -62,8 +68,11 @@ public class WxPayServiceImpl implements IWxPayService {
             reqData.put("spbill_create_ip","127.0.0.1");
             reqData.put("notify_url",notify_url);
             reqData.put("trade_type","NATIVE");
+
+            logger.info("--------unifiedorder:" + JSONObject.toJSONString(reqData));
             //调官方sdk统一下单方法
             Map<String, String> result = wxPay.unifiedOrder(reqData);
+            logger.info("--------result:" + result);
             return result;
         } catch (Exception e) {
             e.printStackTrace();
