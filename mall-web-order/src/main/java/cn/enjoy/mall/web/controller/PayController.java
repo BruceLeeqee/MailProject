@@ -3,6 +3,8 @@ package cn.enjoy.mall.web.controller;
 import cn.enjoy.core.utils.response.HttpResponseBody;
 import cn.enjoy.mall.service.IPayService;
 import cn.enjoy.sys.controller.BaseController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/pay")
 public class PayController extends BaseController {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private IPayService payService;
 
@@ -37,6 +42,7 @@ public class PayController extends BaseController {
     @PostMapping("orderPay")
     public HttpResponseBody orderPay(Integer orderId, String payCode, BigDecimal payAmount){
         String payResult = payService.doPay(orderId,payCode,payAmount,getSessionUserId());
+        logger.info("----------payResult-------" + payResult);
         if("success".equals(payResult)){
             return HttpResponseBody.successResponse("支付成功");
         }else{
