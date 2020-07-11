@@ -370,6 +370,7 @@ public class WXPay {
         }
 
         String respXml = this.requestWithoutCert(url, this.fillRequestData(reqData), connectTimeoutMs, readTimeoutMs);
+        logger.info("--------respXml:------" + respXml);
         return this.processResponseXml(respXml);
     }
 
