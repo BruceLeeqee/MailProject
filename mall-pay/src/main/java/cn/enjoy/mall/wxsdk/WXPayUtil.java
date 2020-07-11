@@ -1,5 +1,6 @@
 package cn.enjoy.mall.wxsdk;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
@@ -26,6 +27,8 @@ public class WXPayUtil {
     private static final String SYMBOLS = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     private static final Random RANDOM = new SecureRandom();
+
+    private static Logger logger = LoggerFactory.getLogger(WXPayUtil.class);
 
     /**
      * XML格式字符串转换为Map
@@ -193,18 +196,37 @@ public class WXPayUtil {
      * @return 签名
      */
     public static String generateSignature(final Map<String, String> data, String key, WXPayConstants.SignType signType) throws Exception {
-        Set<String> keySet = data.keySet();
-        String[] keyArray = keySet.toArray(new String[keySet.size()]);
-        Arrays.sort(keyArray);
+//        Set<String> keySet = data.keySet();
+//        String[] keyArray = keySet.toArray(new String[keySet.size()]);
+//        Arrays.sort(keyArray);
+        List<Map.Entry<String, String>> infoIds = new ArrayList<Map.Entry<String, String>>(data.entrySet());
+        //对所有传入参数按照字段名的ASCII码从小到大排序（字典序）
+        Collections.sort(infoIds, new Comparator<Map.Entry<String, String>>() {
+            public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
+                return (o1.getKey()).toString().compareTo(o2.getKey());
+            }
+        });
+
         StringBuilder sb = new StringBuilder();
-        for (String k : keyArray) {
+        /*for (String k : keyArray) {
             if (k.equals(WXPayConstants.FIELD_SIGN)) {
                 continue;
             }
             if (data.get(k).trim().length() > 0) // 参数值为空，则不参与签名
                 sb.append(k).append("=").append(data.get(k).trim()).append("&");
+        }*/
+
+        for (Map.Entry<String, String> infoId : infoIds) {
+            if(StringUtils.isNotBlank(infoId.getKey())) {
+                String nkey = infoId.getKey();
+                String value = infoId.getValue();
+                sb.append(nkey.toLowerCase()).append("=").append(value.trim()).append("&");
+            }
         }
+        
         sb.append("key=").append(key);
+
+        logger.info("-------------param:---" + sb.toString());
         if (WXPayConstants.SignType.MD5.equals(signType)) {
             return MD5(sb.toString()).toUpperCase();
         }
@@ -245,6 +267,14 @@ public class WXPayUtil {
             sb.append(Integer.toHexString((item & 0xFF) | 0x100).substring(1, 3));
         }
         return sb.toString().toUpperCase();
+    }
+
+    public static void main(String[] args) {
+        try {
+            System.out.println(MD5("body=orderno:151&appid=wx59a7e2633f445ef7&mch_id=1534472621&nonce_str=YhGy19N21957TR7iZGerjppjFX5tiqgz&notify_url=http://mi.xiangxueketang.cn/wx/notify&out_trade_no=151&sign_type=MD5&spbill_create_ip=127.0.0.1&total_fee=20000&key=f4b7a6885e121bd8cbc1664ceabf5cce").toUpperCase());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
