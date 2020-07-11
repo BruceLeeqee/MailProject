@@ -76,8 +76,22 @@ public class WXPayUtil {
         org.w3c.dom.Document document = WXPayXmlUtil.newDocument();
         org.w3c.dom.Element root = document.createElement("xml");
         document.appendChild(root);
-        for (String key: data.keySet()) {
-            String value = data.get(key);
+
+        Map<String,String> xmlmap = data;
+
+        String sign = xmlmap.get("sign");
+        xmlmap.remove("sign");
+        List<Map.Entry<String, String>> infoIds = new ArrayList<Map.Entry<String, String>>(xmlmap.entrySet());
+        //对所有传入参数按照字段名的ASCII码从小到大排序（字典序）
+        Collections.sort(infoIds, new Comparator<Map.Entry<String, String>>() {
+            public int compare(Map.Entry<String, String> o1, Map.Entry<String, String> o2) {
+                return (o1.getKey()).toString().compareTo(o2.getKey());
+            }
+        });
+
+        for (Map.Entry<String, String> infoId : infoIds) {
+            String key = infoId.getKey();
+            String value = infoId.getValue();
             if (value == null) {
                 value = "";
             }
@@ -86,6 +100,19 @@ public class WXPayUtil {
             filed.appendChild(document.createTextNode(value));
             root.appendChild(filed);
         }
+        org.w3c.dom.Element filed = document.createElement("sign");
+        filed.appendChild(document.createTextNode(sign));
+        root.appendChild(filed);
+/*        for (String key: data.keySet()) {
+            String value = data.get(key);
+            if (value == null) {
+                value = "";
+            }
+            value = value.trim();
+            org.w3c.dom.Element filed = document.createElement(key);
+            filed.appendChild(document.createTextNode(value));
+            root.appendChild(filed);
+        }*/
         TransformerFactory tf = TransformerFactory.newInstance();
         Transformer transformer = tf.newTransformer();
         DOMSource source = new DOMSource(document);
