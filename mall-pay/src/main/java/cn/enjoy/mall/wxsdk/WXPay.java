@@ -2,6 +2,7 @@ package cn.enjoy.mall.wxsdk;
 
 
 
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -195,6 +196,8 @@ public class WXPay {
         String RETURN_CODE = "return_code";
         String return_code;
         Map<String, String> respData = WXPayUtil.xmlToMap(xmlStr);
+
+        logger.info("-----------respData:-----" + JSONObject.toJSONString(respData));
         if (respData.containsKey(RETURN_CODE)) {
             return_code = respData.get(RETURN_CODE);
         }

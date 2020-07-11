@@ -200,6 +200,7 @@ public class WXPayUtil {
             return false;
         }
         String sign = data.get(WXPayConstants.FIELD_SIGN);
+        data.remove(WXPayConstants.FIELD_SIGN);
         return generateSignature(data, key, signType).equals(sign);
     }
 
