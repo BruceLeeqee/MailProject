@@ -97,7 +97,10 @@ public class PayServiceImpl implements IPayService {
         order.setPayTime(System.currentTimeMillis());
         orderMapper.updateByPrimaryKeySelective(order);
         orderActionService.save(order,"支付成功",userId);
-        return "success";
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("respCode","0");
+        jsonObject.put("respMsg","成功");
+        return jsonObject.toJSONString();
     }
 
     @Override
