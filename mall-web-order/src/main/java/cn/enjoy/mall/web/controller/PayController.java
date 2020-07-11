@@ -3,6 +3,7 @@ package cn.enjoy.mall.web.controller;
 import cn.enjoy.core.utils.response.HttpResponseBody;
 import cn.enjoy.mall.service.IPayService;
 import cn.enjoy.sys.controller.BaseController;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,10 @@ public class PayController extends BaseController {
     public HttpResponseBody orderPay(Integer orderId, String payCode, BigDecimal payAmount){
         String payResult = payService.doPay(orderId,payCode,payAmount,getSessionUserId());
         logger.info("----------payResult-------" + payResult);
-        if("success".equals(payResult)){
+
+        JSONObject jsonObject = JSONObject.parseObject(payResult);
+        String respCode = jsonObject.getString("respCode");
+        if("0".equals(respCode)){
             return HttpResponseBody.successResponse("支付成功");
         }else{
             return HttpResponseBody.failResponse(payResult);
