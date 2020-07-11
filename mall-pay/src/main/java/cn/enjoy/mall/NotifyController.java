@@ -5,6 +5,9 @@ import cn.enjoy.mall.service.IPayService;
 import cn.enjoy.mall.wxsdk.WXPay;
 import cn.enjoy.mall.wxsdk.WXPayUtil;
 import cn.enjoy.mall.wxsdk.WxPayConfigImpl;
+import com.alibaba.fastjson.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -19,10 +22,14 @@ import java.util.Map;
 
 
 /**
+ *
  */
 @Controller
 //http请求控制类  Contoller
 public class NotifyController {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private IPayService payService;
     @Autowired
@@ -55,17 +62,19 @@ public class NotifyController {
         }
         xmlString = inputString.toString();
         request.getReader().close();
-        System.out.println("----接收到的数据如下：---" + xmlString);
+        logger.info("----pay callback data：---" + xmlString);
         Map<String, String> map = new HashMap<String, String>();
         String result_code = "";
         String return_code = "";
         String out_trade_no = "";
-        map =    WXPayUtil.xmlToMap(xmlString);
+        map = WXPayUtil.xmlToMap(xmlString);
         result_code = map.get("result_code");
         return_code = map.get("return_code");
-        if(return_code.equals("SUCCESS")){
-            if(result_code.equals("SUCCESS")){
+        logger.info("--------map ------" + JSONObject.toJSONString(map));
+        if (return_code.equals("SUCCESS")) {
+            if (result_code.equals("SUCCESS")) {
                 String payResult = payService.updateByActionId(map.get("out_trade_no"));
+                logger.info("----------payResult:-----" + payResult);
                 return payResult;
             }
         }
