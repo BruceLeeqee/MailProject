@@ -5,6 +5,8 @@ import cn.enjoy.mall.constant.KillConstants;
 import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.*;
@@ -18,6 +20,8 @@ import java.util.concurrent.TimeUnit;
  */
 @Service
 public class KillGoodsService  {
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private IKillSpecManageService iKillSpecManageService;
@@ -93,13 +97,19 @@ public class KillGoodsService  {
     }
 
     public boolean secKill(int killId,String userId) {
-        long is = redisTemplate.opsForSet().add(KillConstants.KILLED_GOOD_USER+killId,userId);
-        if (is == 0){//判断用户已经秒杀过，直接返回当次秒杀失败
-//            return false;
+//        long is = redisTemplate.opsForSet().add(KillConstants.KILLED_GOOD_USER+killId,userId);
+//        if (is == 0){//判断用户已经秒杀过，直接返回当次秒杀失败
+////            return false;
+//        }
+        Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
+        if(member) {
+            logger.info("--------userId:" + userId + "--has secKilled");
+            return false;
         }
 
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT+killId;
         if(redisTemplate.opsForValue().increment(killGoodCount,-1) < 0){
+            logger.info("--------Insufficient stock:" + redisTemplate.opsForValue().get(killGoodCount));
             return false;
         }
 
