@@ -62,7 +62,7 @@ public class NotifyController {
         }
         xmlString = inputString.toString();
         request.getReader().close();
-        logger.info("----pay callback data：---" + xmlString);
+        logger.info("----pay callback data---" + xmlString);
         Map<String, String> map = new HashMap<String, String>();
         String result_code = "";
         String return_code = "";

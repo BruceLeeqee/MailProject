@@ -19,6 +19,7 @@ import cn.enjoy.users.dao.UserDepartmentInfoMapper;
 import com.github.miemiedev.mybatis.paginator.domain.Order;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import com.github.pagehelper.PageHelper;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -386,8 +387,9 @@ public class UserServiceImpl implements IUserService {
         if (!StringUtils.isEmpty(sidx)) {
             orderString = sidx + "." + sord;
         }
-        PageBounds pageBounds = new PageBounds(pageNo, pageSize, Order.formString(orderString));
-        PageList<SysUser> pageList =(PageList<SysUser>)sysUserMapper.queryByPage(account, identityCode, pageBounds);
+        PageHelper.startPage(pageNo,pageSize);
+//        PageBounds pageBounds = new PageBounds(pageNo, pageSize, Order.formString(orderString));
+        List<SysUser> pageList = sysUserMapper.queryByPage(account, Integer.valueOf(identityCode));
         return new GridModel<SysUser>(pageList);
     }
 

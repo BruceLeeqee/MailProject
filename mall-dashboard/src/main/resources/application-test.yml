@@ -4,11 +4,11 @@ eureka:
       defaultZone: http://admin:admin@eureka.h:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
-  instance:
+  #instance:
     #hostname:
     #ip-address: 94.191.83.120
-    prefer-ip-address: true
-    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+    #prefer-ip-address: true
+    #instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 
 management:
   endpoint:

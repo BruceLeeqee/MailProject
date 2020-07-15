@@ -4,6 +4,7 @@ package cn.enjoy.sys.service;
 import cn.enjoy.core.exception.BusinessException;
 import cn.enjoy.core.utils.GridModel;
 import cn.enjoy.sys.model.SysUser;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -155,7 +156,7 @@ public interface IUserService {
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
     void updateUserInfo(@RequestBody SysUser sysUser);
 
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    @RequestMapping(value = "/register", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     void register(@RequestBody SysUser user);
 
     @RequestMapping(value = "/selectByAccount", method = RequestMethod.POST)

@@ -65,7 +65,7 @@ public class DepartmentController extends BaseController {
 
     @GetMapping("getDepartmentOptions")
     public HttpResponseBody<List<SelectModel>> queryDepartment() {
-        List<Department> departments = iDepartmentService.loadDepartment(null);
+        List<Department> departments = iDepartmentService.loadDepartment(new Department());
         List<SelectModel> result = new ArrayList<>();
         for (Department depart : departments) {
             SelectModel sm = new SelectModel();

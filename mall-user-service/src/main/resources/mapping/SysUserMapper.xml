@@ -508,7 +508,7 @@
 		</foreach>
 	</delete>
 
-	<select id="queryByPage" resultMap="BaseResultMap" parameterType="java.lang.String" >
+	<select id="queryByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
 		select
 			u.id,
 			u.user_name,
