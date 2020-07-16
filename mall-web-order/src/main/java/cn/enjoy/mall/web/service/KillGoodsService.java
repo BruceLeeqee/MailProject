@@ -109,7 +109,7 @@ public class KillGoodsService  {
 
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT+killId;
         if(redisTemplate.opsForValue().increment(killGoodCount,-1) < 0){
-            logger.info("--------Insufficient stock:" + redisTemplate.opsForValue().get(killGoodCount));
+            logger.info("--------Insufficient stock:------------");
             return false;
         }
 
