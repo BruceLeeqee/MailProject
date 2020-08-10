@@ -21,7 +21,7 @@ public class DeliveryDoc implements Serializable{
      *
      * @mbg.generated Thu Mar 22 10:05:15 CST 2018
      */
-    private Integer orderId;
+    private Long orderId;
 
     /**
      *
@@ -235,7 +235,7 @@ public class DeliveryDoc implements Serializable{
      *
      * @mbg.generated Thu Mar 22 10:05:15 CST 2018
      */
-    public Integer getOrderId() {
+    public Long getOrderId() {
         return orderId;
     }
 
@@ -247,7 +247,7 @@ public class DeliveryDoc implements Serializable{
      *
      * @mbg.generated Thu Mar 22 10:05:15 CST 2018
      */
-    public void setOrderId(Integer orderId) {
+    public void setOrderId(Long orderId) {
         this.orderId = orderId;
     }
 

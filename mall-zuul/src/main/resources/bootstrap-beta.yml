@@ -42,14 +42,23 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 40000
+            timeoutInMilliseconds: 50000
 
+feign:
+  compression:
+    request:
+      enabled: true  #开启请求压缩功能
+      mime-types: text/xml;application/xml;application/json #指定压缩请求数据类型
+      min-request-size: 2048  #如果传输超过该字节，就对其进行压缩
+    response:
+      #开启响应压缩功能
+      enabled: true
 ribbon:
   ConnectTimeout: 1000
-  ReadTimeout: 20000
-  OkToRetryOnAllOperations: false
-  MaxAutoRetriesNextServer: 1
-  MaxAutoRetries: 1
+  ReadTimeout: 40000
+  #OkToRetryOnAllOperations: false
+  #MaxAutoRetriesNextServer: 1
+  #MaxAutoRetries: 1
   #每个host的最大连接数
   #MaxConnectionsPerHost: 3000
   #ribbon的最大连接数
@@ -118,4 +127,3 @@ management:
 #    max-total-connections: 1000
 #  semaphore:
 #    max-semaphores: 100
-

@@ -20,7 +20,12 @@ public class GoodsContoller extends BaseController {
 
     /**
      * 根据关键字搜索商品
+     * @param type
+     * @param brand
+     * @param order
      * @param param
+     * @param page
+     * @param pageSize
      * @return
      */
     @GetMapping("searchList")
@@ -48,6 +53,11 @@ public class GoodsContoller extends BaseController {
         return HttpResponseBody.successResponse("ok",  goodsService.findOneBySpecGoodsId(specGoodsId));
     }
 
+    /**
+     * 查询热门商品
+     * @param showNum
+     * @return
+     */
     @GetMapping("/hotSelling")
     public HttpResponseBody queryHotSelling(Integer showNum){
         return HttpResponseBody.successResponse("ok",  goodsService.queryHotSellingGoods(showNum));

@@ -45,7 +45,7 @@ mybatis:
   config-location: classpath:SqlMapConfig.xml
 spring:
   redis:
-    host: 94.191.83.120
+    host: 106.52.62.38
     port: 6379
     password: 123456
   application:

@@ -77,11 +77,19 @@ public class ShoppingCartContoller  extends BaseController {
         return HttpResponseBody.successResponse("ok",  shoppingCartService.findCheckedGoodsList(getSessionUserId()));
     }
 
+    /**
+     * 查询购物车
+     * @return
+     */
     @GetMapping("findBySpecGoodsId")
     public HttpResponseBody findBySpecGoodsId(@RequestParam Integer specGoodsId){
         return HttpResponseBody.successResponse("ok",  shoppingCartService.findBySpecGoodsId (specGoodsId , getSessionUserId()));
     }
 
+    /**
+     * 修改购物车状态
+     * @return
+     */
     @PostMapping("updateStatus")
     public HttpResponseBody updateStatus(@RequestParam String specGoodsIds, @RequestParam Integer status){
         shoppingCartService.updateStatus(specGoodsIds , status, getSessionUserId());

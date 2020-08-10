@@ -23,7 +23,7 @@ public interface IOrderManageService {
                                    @RequestParam("pageSize") int pageSize, @RequestBody OrderVo params);
 
     @RequestMapping(value = "/queryOrderDetail", method = RequestMethod.POST)
-    OrderVo queryOrderDetail(@RequestParam("orderId") int orderId);
+    OrderVo queryOrderDetail(@RequestParam("orderId") Long orderId);
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     void save(@RequestBody OrderVo orderVo);
@@ -35,7 +35,7 @@ public interface IOrderManageService {
     void deleteByIds(@RequestBody String[] ids);
 
     @RequestMapping(value = "/selectGoodsByOrderId", method = RequestMethod.POST)
-    List<OrderGoods> selectGoodsByOrderId(@RequestParam("orderId") Integer orderId);
+    List<OrderGoods> selectGoodsByOrderId(@RequestParam("orderId") Long orderId);
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     int update(@RequestBody Order order);

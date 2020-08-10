@@ -11,9 +11,15 @@ fdfs:
 
 spring:
   redis:
-    host: 94.191.83.120
+    host: 106.52.62.38
     port: 6379
     password: 123456
+    jedis:
+      pool:
+        max-active: 1000
+        min-idle: 10
+        max-idle: 1000
+        max-wait: -1
   jmx:
     enabled: false
   rabbitmq:
@@ -78,6 +84,16 @@ ribbon:
   OkToRetryOnAllOperations: false
   MaxAutoRetriesNextServer: 1
   MaxAutoRetries: 1
+
+feign:
+  compression:
+    request:
+      enabled: true  #开启请求压缩功能
+      mime-types: text/xml;application/xml;application/json #指定压缩请求数据类型
+      min-request-size: 2048  #如果传输超过该字节，就对其进行压缩
+    response:
+      #开启响应压缩功能
+      enabled:  true
 
 management:
   endpoint:

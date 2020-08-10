@@ -78,6 +78,12 @@ public class KillGoodsManageServiceImpl implements IKillSpecManageService {
         return ret;
     }
 
+    @Override
+    public int updateSecKill(KillGoodsPrice record) {
+        int i = killGoodsPriceMapper.updateSecKill(record);
+        return i;
+    }
+
     public void flushCache(KillGoodsPrice record) {
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT + record.getId();
 

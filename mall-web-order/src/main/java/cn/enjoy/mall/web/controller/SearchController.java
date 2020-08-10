@@ -21,6 +21,13 @@ public class SearchController {
     @Autowired
     private IGoodsCategoryService goodsCategoryService;
 
+    /**
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return 
+    * @version
+    */ 
     @GetMapping("getClassification")
     public HttpResponseBody getClafication(){
         Map<String, Object> data = new HashMap<>();

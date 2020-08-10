@@ -61,5 +61,5 @@ public interface DeliveryDocMapper {
      */
     int updateByPrimaryKey(DeliveryDoc record);
 
-    List<DeliveryDoc> selectByOrderId(int orderId);
+    List<DeliveryDoc> selectByOrderId(Long orderId);
 }

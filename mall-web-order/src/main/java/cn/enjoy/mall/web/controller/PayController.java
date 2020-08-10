@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
-
+/*
+* 支付服务
+* */
 @RestController
 @RequestMapping("/api/pay")
 public class PayController extends BaseController {
@@ -24,8 +26,19 @@ public class PayController extends BaseController {
     @Autowired
     private IPayService payService;
 
+    /**
+     * 微信支付
+    * @param orderId
+     * @param payCode
+     * @param payAmount
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("wxPrePay")
-    public HttpResponseBody wxPrePay(Integer orderId, String payCode, BigDecimal payAmount){
+    public HttpResponseBody wxPrePay(Long orderId, String payCode, BigDecimal payAmount){
         Map<String, String> preMap = payService.doPrePay(orderId,payCode,payAmount,getSessionUserId());
         if("success".equalsIgnoreCase(preMap.get("result_code"))){
             return HttpResponseBody.successResponse("生成预支付单成功",preMap);
@@ -33,6 +46,16 @@ public class PayController extends BaseController {
             return HttpResponseBody.failResponse(preMap.get("return_msg"));
         }
     }
+
+    /**
+     * 校验是否支付成功
+    * @param prepayId
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("checkPay")
     public HttpResponseBody checkPay(String prepayId){
         String payStatus = payService.queryByPrepayId(prepayId);
@@ -40,8 +63,20 @@ public class PayController extends BaseController {
         preMap.put("payStatus",payStatus);
         return HttpResponseBody.successResponse("支付成功",preMap);
     }
+
+    /**
+     * 插入支付订单数据
+    * @param orderId
+     @param payCode
+     @param payAmount
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("orderPay")
-    public HttpResponseBody orderPay(Integer orderId, String payCode, BigDecimal payAmount){
+    public HttpResponseBody orderPay(Long orderId, String payCode, BigDecimal payAmount){
         String payResult = payService.doPay(orderId,payCode,payAmount,getSessionUserId());
         logger.info("----------payResult-------" + payResult);
 

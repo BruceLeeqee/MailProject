@@ -32,7 +32,7 @@ public class PayServiceImpl implements IPayService {
     private IWxPayService iWxPayService;
     @Transactional
     @Override
-    public Map<String, String> doPrePay(Integer orderId, String payCode, BigDecimal payAmount, String userId){
+    public Map<String, String> doPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId){
 
         Order order = orderMapper.selectByPrimaryKey(orderId);
         Map<String, String> return_map = new HashMap<>();
@@ -58,7 +58,7 @@ public class PayServiceImpl implements IPayService {
         order.setPayTime(System.currentTimeMillis());
         orderMapper.updateByPrimaryKeySelective(order);
         String orderStr = JSONObject.toJSONString(order);
-        int action_id = orderActionService.savePre(orderStr,null,"微信-预支付订单",userId,"微信-预支付订单");
+        Long action_id = orderActionService.savePre(orderStr,null,"微信-预支付订单",userId,"微信-预支付订单");
 
         Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(action_id),payAmount,userId);
         orderActionService.updatePre(action_id,map);
@@ -67,7 +67,7 @@ public class PayServiceImpl implements IPayService {
     @Transactional
     @Override
     public String updateByActionId(String actionId) {
-        OrderAction orderAction = orderActionMapper.selectByPrimaryKey(Integer.parseInt(actionId));
+        OrderAction orderAction = orderActionMapper.selectByPrimaryKey(Long.parseLong(actionId));
         Order order = orderMapper.selectByPrimaryKey(orderAction.getOrderId());
         order.setOrderId(order.getOrderId());
         order.setPayStatus(PayStatus.PAID.getCode());
@@ -82,7 +82,7 @@ public class PayServiceImpl implements IPayService {
 
     @Transactional
     @Override
-    public String doPay(Integer orderId, String payCode, BigDecimal payAmount,String userId) {
+    public String doPay(Long orderId, String payCode, BigDecimal payAmount,String userId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if(payAmount.compareTo(order.getOrderAmount())!=0){
             return "支付金额不正确";

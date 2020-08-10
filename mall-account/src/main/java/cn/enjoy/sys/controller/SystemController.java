@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  *
@@ -32,11 +35,14 @@ public class SystemController extends BaseController {
 
 
     @RequestMapping(value = "logout", method = {RequestMethod.POST, RequestMethod.GET})
-    public HttpResponseBody logout(){
+    public HttpResponseBody logout(HttpServletRequest request, HttpServletResponse response){
         if(this.getSessionUser() != null) {
             shiroCacheUtil.removeUser(this.getSessionUser().getUserName());
         }
         SecurityUtils.getSubject().logout();
+
+        Cookie cookie = new Cookie("JSESSIONID","");
+        response.addCookie(cookie);
         return HttpResponseBody.successResponse("登出成功");
     }
 

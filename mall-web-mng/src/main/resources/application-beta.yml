@@ -16,7 +16,7 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
   redis:
-    host: 94.191.83.120
+    host: 106.52.62.38
     port: 6379
     password: 123456
   jmx:

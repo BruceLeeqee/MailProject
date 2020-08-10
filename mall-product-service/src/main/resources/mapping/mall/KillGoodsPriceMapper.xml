@@ -63,6 +63,31 @@
     where id = #{id,jdbcType=INTEGER}
   </update>
 
+  <update id="updateSecKill" parameterType="cn.enjoy.mall.model.SpecGoodsPrice">
+    update tp_kill_goods_price
+    <set>
+      <if test="specGoodsId != null">
+        spec_goods_id = #{specGoodsId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="killCount != null">
+        kill_count = kill_count-#{killCount,jdbcType=INTEGER},
+      </if>
+      <if test="begainTime != null">
+        begain_time = #{begainTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER} and kill_count > 0
+  </update>
+
   <resultMap id="DetailBaseResultMap" type="cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo">
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="spec_goods_id" jdbcType="INTEGER" property="specGoodsId" />
@@ -135,5 +160,7 @@
     LEFT JOIN tp_goods g ON sgp.goods_id = g.goods_id
     where kgp.spec_goods_id = #{specGoodsId,jdbcType=INTEGER}
   </select>
+
+
 
 </mapper>

@@ -11,9 +11,15 @@ fdfs:
 
 spring:
   redis:
-    host: 94.191.83.120
+    host: 106.52.62.38
     port: 6379
     password: 123456
+    jedis:
+      pool:
+        max-active: 1000
+        min-idle: 10
+        max-idle: 1000
+        max-wait: -1
   jmx:
     enabled: false
   rabbitmq:
@@ -64,6 +70,7 @@ eureka:
   #prefer-ip-address: true
   #instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 
+
 hystrix:
   command:
     default:
@@ -71,6 +78,23 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 40000
+          #信号量
+          strategy: SEMAPHORE
+          semaphore:
+            # semaphore应该占整个容器（tomcat）的线程池的一小部分。
+            maxConcurrentRequests: 800
+      fallback:
+        isolation:
+          semaphore:
+            # 只在信号量隔离策略中有效，建议设置大一些，这样并发数达到execution最大请求数时，会直接调用fallback，而并发数达到fallback最大请求数时会被拒绝和抛出异常。
+            maxConcurrentRequests: 1000
+
+#  threadpool:
+#    default:
+#      coreSize: 200 #并发执行的最大线程数，默认10
+#      maxQueueSize: 1000 #BlockingQueue的最大队列数，默认值-1
+#      queueSizeRejectionThreshold: 800 #即使maxQueueSize没有达到，达到queueSizeRejectionThreshold该值后，请求也会被拒绝，默认值5
+
 
 ribbon:
   ConnectTimeout: 1000
@@ -89,3 +113,12 @@ management:
     web:
       exposure:
         include: "*"
+feign:
+  compression:
+    request:
+      enabled: true  #开启请求压缩功能
+      mime-types: text/xml;application/xml;application/json #指定压缩请求数据类型
+      min-request-size: 2048  #如果传输超过该字节，就对其进行压缩
+    response:
+      #开启响应压缩功能
+      enabled:  true

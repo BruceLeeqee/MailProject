@@ -14,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -92,7 +89,21 @@ public class UserController  extends BaseController {
     public HttpResponseBody update(SysUser user, @RequestParam(name="departIds",required = false,defaultValue = "") String[] departIds,
                                    @RequestParam(name="roleIds",required = false,defaultValue = "") String[] roleIds) {
         user.setUpdateUser(this.getSessionUserId());
-        boolean result = iUserService.update(user,JSONObject.toJSONString(departIds),JSONObject.toJSONString(roleIds));
+        StringBuffer deString = new StringBuffer();
+        StringBuffer roString = new StringBuffer();
+        if(departIds != null) {
+            for (String departId : departIds) {
+                deString.append(departId).append(",");
+            }
+        }
+        deString.deleteCharAt(deString.lastIndexOf(","));
+        if(roleIds != null) {
+            for (String roleId : roleIds) {
+                roString.append(roleId).append(",");
+            }
+        }
+        roString.deleteCharAt(roString.lastIndexOf(","));
+        boolean result = iUserService.update(user, deString.toString(),roString.toString());
         if(result){
             return HttpResponseBody.successResponse("修改成功");
         }else {
@@ -100,6 +111,13 @@ public class UserController  extends BaseController {
         }
     }
 
+    public static void main(String[] args) {
+        StringBuffer deString = new StringBuffer();
+        deString.append("1").append(",");
+        deString.append("2").append(",");
+        deString.deleteCharAt(deString.lastIndexOf(","));
+        System.out.println(deString);
+    }
 
 
     @PostMapping("batchDeleteUser")

@@ -7,12 +7,24 @@ import cn.enjoy.sys.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/*
+* 用户地址服务
+* */
 @RestController
 @RequestMapping("/api/userAddress")
 public class UserAddressController extends BaseController {
     @Autowired
     private IUserAddressService userAddressService;
 
+    /**
+     * 保存用户地址
+    * @param userAddress
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("save")
     public HttpResponseBody save(UserAddress userAddress){
         userAddress.setUserId(getSessionUserId());
@@ -20,12 +32,29 @@ public class UserAddressController extends BaseController {
         return HttpResponseBody.successResponse("ok");
     }
 
+    /**
+     * 删除用户地址
+    * @param addressId
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("remove")
     public HttpResponseBody remove(@RequestParam(name = "addressId", required = false) Integer addressId){
         userAddressService.remove(addressId);
         return HttpResponseBody.successResponse("ok");
     }
 
+    /**
+     * 查询用的地址列表
+    * @author Jack
+    * @date 2020/8/4
+    * @throws Exception
+    * @return
+    * @version
+    */
     @GetMapping("list")
     public HttpResponseBody list(){
         return HttpResponseBody.successResponse("ok",userAddressService.selectByUserId(getSessionUserId()));

@@ -33,7 +33,7 @@ public class SecKillReceiver implements ChannelAwareMessageListener {
 
                 String kill_order_user = KillConstants.KILL_ORDER_USER+vo.getKillGoodsSpecPriceDetailVo().getId()+vo.getUserId();
                 if (null != stringRedisTemplate.opsForValue().get(kill_order_user)){//未超时，则业务处理
-                    int orderId = orderService.killOrder(vo);
+                    Long orderId = orderService.killOrder(vo);
                     String oldstr = stringRedisTemplate.opsForValue().getAndSet(kill_order_user,String.valueOf(orderId));
                     if (null == oldstr){//已超时，生产端已拒绝
                         orderService.cancel(orderId);

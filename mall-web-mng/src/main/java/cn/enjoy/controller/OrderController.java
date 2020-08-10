@@ -37,7 +37,7 @@ public class OrderController  extends BaseController {
      */
     @PostMapping("save")
     public HttpResponseBody save(@RequestBody OrderCreateVo crderCreateVo){
-        Integer orderId = orderService.createOrder(crderCreateVo,getSessionUserId());
+        Long orderId = orderService.createOrder(crderCreateVo,getSessionUserId());
         return HttpResponseBody.successResponse("ok",orderId);
     }
 
@@ -58,7 +58,7 @@ public class OrderController  extends BaseController {
 
 
     @GetMapping("detail/{orderId}")
-    public HttpResponseBody detail(@PathVariable("orderId") Integer orderId) {
+    public HttpResponseBody detail(@PathVariable("orderId") Long orderId) {
         return HttpResponseBody.successResponse("ok",
                 orderManageService.queryOrderDetail(orderId));
     }
@@ -87,12 +87,12 @@ public class OrderController  extends BaseController {
      * @return
      */
     @GetMapping("queryDeliveryDocByOrderId")
-    public HttpResponseBody queryDeliveryDocByOrderId(Integer orderId) {
+    public HttpResponseBody queryDeliveryDocByOrderId(Long orderId) {
         return HttpResponseBody.successResponse("ok", deliveryService.queryDeliveryDocByOrderId(orderId));
     }
 
     @PostMapping("shipping")
-    public HttpResponseBody shipping(DeliveryDoc deliveryDoc, Integer[] selectedIds) {
+    public HttpResponseBody shipping(DeliveryDoc deliveryDoc, Long[] selectedIds) {
         deliveryDoc.setAdminId(this.getSessionUserId());
         deliveryService.shipping(JSONObject.toJSONString(deliveryDoc), Arrays.asList(selectedIds));
 
@@ -101,12 +101,12 @@ public class OrderController  extends BaseController {
 
 
     @GetMapping("queryGoodsByOrderId")
-    public HttpResponseBody queryGoodsByOrderId(Integer orderId) {
+    public HttpResponseBody queryGoodsByOrderId(Long orderId) {
         return HttpResponseBody.successResponse("ok", orderManageService.selectGoodsByOrderId(orderId));
     }
 
     @GetMapping("queryLogByOrderId")
-    public HttpResponseBody queryLogByOrderId(Integer orderId) {
+    public HttpResponseBody queryLogByOrderId(Long orderId) {
         return HttpResponseBody.successResponse("ok", orderActionService.queryByOrderId(orderId));
     }
 
@@ -117,7 +117,7 @@ public class OrderController  extends BaseController {
      * @return
      */
     @PostMapping("cancel")
-    public HttpResponseBody cancel(@RequestParam Integer orderId){
+    public HttpResponseBody cancel(@RequestParam Long orderId){
         orderService.selfCancel(orderId,getSessionUserId());
         return HttpResponseBody.successResponse("ok");
     }
@@ -128,7 +128,7 @@ public class OrderController  extends BaseController {
      * @return
      */
     @PostMapping("confirmReceiveGoods")
-    public HttpResponseBody confirmReceiveGoods(@RequestParam Integer orderId){
+    public HttpResponseBody confirmReceiveGoods(@RequestParam Long orderId){
         orderService.confirmReceiveGoods(orderId,getSessionUserId());
         return HttpResponseBody.successResponse("ok");
     }

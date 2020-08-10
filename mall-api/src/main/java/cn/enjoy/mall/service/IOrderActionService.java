@@ -13,7 +13,7 @@ public interface IOrderActionService {
     void save(@RequestBody Order order, @RequestParam("actinNote") String actinNote, @RequestParam("userId") String userId);
 
     @RequestMapping(value = "/savePre", method = RequestMethod.POST)
-    int savePre(@RequestParam("orderStr") String orderStr, @RequestBody Map map,
+    Long savePre(@RequestParam("orderStr") String orderStr, @RequestBody Map map,
                 @RequestParam("action") String action, @RequestParam("userId") String userId,
                 @RequestParam("remark") String remark);
 
@@ -31,8 +31,8 @@ public interface IOrderActionService {
     OrderAction queryByPrepayId(@RequestParam("prepayId") String prepayId);
 
     @RequestMapping(value = "/updatePre", method = RequestMethod.POST)
-    int updatePre(@RequestParam("actionId") int actionId, @RequestBody Map map) ;
+    Long updatePre(@RequestParam("actionId") Long actionId, @RequestBody Map map) ;
 
     @RequestMapping(value = "/queryByOrderId", method = RequestMethod.POST)
-    List<OrderAction> queryByOrderId(@RequestParam("orderId") Integer orderId);
+    List<OrderAction> queryByOrderId(@RequestParam("orderId") Long orderId);
 }

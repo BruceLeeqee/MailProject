@@ -428,8 +428,9 @@ public class UserServiceImpl implements IUserService {
             int i = sysUserMapper.updateByPrimaryKeySelective(user);
             userDepartmentInfoMapper.deleteByUserId(user.getId());
             sysUserRoleMapper.deleteUserRoleByUserId(user.getId());
-            saveUserDeparts(user.getId(), user.getUpdateUser(), Arrays.asList(departIds));
-            saveUserRole(user, user.getUpdateUser(), Arrays.asList(roleIds));
+            String[] split = departIds.split(",");
+            saveUserDeparts(user.getId(), user.getUpdateUser(), Arrays.asList(split));
+            saveUserRole(user, user.getUpdateUser(), Arrays.asList(roleIds.split(",")));
             return i > 0;
         }else{
             return a;

@@ -40,7 +40,7 @@ public class OrderManageServiceImpl implements IOrderManageService {
     }
 
     @Override
-    public OrderVo queryOrderDetail(int orderId) {
+    public OrderVo queryOrderDetail(Long orderId) {
         return orderMapper.selectOrderById(orderId);
     }
 
@@ -60,7 +60,7 @@ public class OrderManageServiceImpl implements IOrderManageService {
     }
 
     @Override
-    public List<OrderGoods> selectGoodsByOrderId(Integer orderId) {
+    public List<OrderGoods> selectGoodsByOrderId(Long orderId) {
         return  orderGoodsMapper.selectByOrderId(orderId);
     }
 

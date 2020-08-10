@@ -3,6 +3,7 @@ package cn.enjoy.mall.service.manage;
 import cn.enjoy.core.utils.GridModel;
 import cn.enjoy.mall.model.KillGoodsPrice;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +32,9 @@ public interface IKillSpecManageService {
 
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     int update(@RequestBody KillGoodsPrice record);
+
+    @RequestMapping(value = "/updateSecKill", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    int updateSecKill(@RequestBody KillGoodsPrice record);
 
     @RequestMapping(value = "/flushCache", method = RequestMethod.POST)
     void flushCache(@RequestBody KillGoodsPrice record);

@@ -19,9 +19,12 @@ import cn.enjoy.mall.service.IOrderService;
 import cn.enjoy.mall.service.IShoppingCartService;
 import cn.enjoy.mall.vo.*;
 import cn.enjoy.users.annotation.Master;
+import com.baidu.fsg.uid.impl.CachedUidGenerator;
+import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -30,7 +33,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -58,11 +63,28 @@ public class OrderServiceImpl implements IOrderService {
     @Resource
     private SequenceGenerator sequenceGenerator;
 
+    @Autowired
+    private DefaultUidGenerator defaultUidGenerator;
+
+    @Autowired
+    private CachedUidGenerator cachedUidGenerator;
+
+    @Override
+    public List<Order> queryOrderByUserId(String userId) {
+        Map map = new HashMap();
+        //做路由转换
+        map.put("orderType","K");
+        map.put("userId",userId);
+        return orderMapper.queryByPage(map);
+    }
+
     @Transactional
     @Override
-    public Integer createOrder(OrderCreateVo orderCreateVo, String userId) {
+    public Long createOrder(OrderCreateVo orderCreateVo, String userId) {
         //创建一个订单
         Order order = new Order();
+        order.setOrderId(defaultUidGenerator.getUID());
+        order.setOrderType("P");
         //从SequenceGenerator中获取订单的变化
         order.setOrderSn(sequenceGenerator.getOrderNo());
         order.setAddTime(System.currentTimeMillis());
@@ -79,7 +101,7 @@ public class OrderServiceImpl implements IOrderService {
 
         //新增订单
         orderMapper.insert(order);
-        int orderId = order.getOrderId();
+        Long orderId = order.getOrderId();
         BigDecimal totalAmount = new BigDecimal(0);
         //从mongodb的购物车中获取所购物品
         List<ShoppingGoodsVo> checkedGoodsList = shoppingCartService.findCheckedGoodsList(userId);
@@ -107,6 +129,8 @@ public class OrderServiceImpl implements IOrderService {
 
             //创建的订单商品
             OrderGoods orderGoods = new OrderGoods();
+            orderGoods.setRecId(defaultUidGenerator.getUID());
+            orderGoods.setOrderType("P");
             orderGoods.setOrderId(orderId);
             BeanUtils.copyProperties(goodsVo.getBase(),orderGoods);
             orderGoods.setGoodsNum(goodsAddVo.getNum().shortValue());
@@ -143,10 +167,12 @@ public class OrderServiceImpl implements IOrderService {
 
     @Transactional
     @Master
-    public Integer killOrder(int addressId, KillGoodsSpecPriceDetailVo killGoods, String userId) {
+    public Long killOrder(int addressId, KillGoodsSpecPriceDetailVo killGoods, String userId) {
         //创建一个订单
         Order order = new Order();
+        order.setOrderType("K");
         //从SequenceGenerator中获取订单的变化
+        order.setOrderId(defaultUidGenerator.getUID());
         order.setOrderSn(sequenceGenerator.getOrderNo());
         order.setAddTime(System.currentTimeMillis());
         //设置订单的状态为未确定订单
@@ -162,7 +188,7 @@ public class OrderServiceImpl implements IOrderService {
 
         //新增订单
         orderMapper.insert(order);
-        int orderId = order.getOrderId();
+        Long orderId = order.getOrderId();
         BigDecimal totalAmount = new BigDecimal(0);
         //从mongodb的购物车中获取所购物品
         List<OrderGoods> orderGoodsList = new ArrayList<>();
@@ -170,6 +196,8 @@ public class OrderServiceImpl implements IOrderService {
 
         //创建的订单商品
         OrderGoods orderGoods = new OrderGoods();
+        orderGoods.setRecId(defaultUidGenerator.getUID());
+        orderGoods.setOrderType("K");
         orderGoods.setOrderId(orderId);
         BeanUtils.copyProperties(goodsVo.getBase(),orderGoods);
         orderGoods.setPromType(true);
@@ -201,7 +229,7 @@ public class OrderServiceImpl implements IOrderService {
     @Transactional
     @Master
     @Override
-    public Integer killOrder(KillOrderVo killOrderVo) {
+    public Long killOrder(KillOrderVo killOrderVo) {
         return this.killOrder(killOrderVo.getAddressId(),
                 killOrderVo.getKillGoodsSpecPriceDetailVo(),killOrderVo.getUserId());
     }
@@ -232,7 +260,7 @@ public class OrderServiceImpl implements IOrderService {
      * @return
      */
     @Override
-    public Order selectOrderDetail(Integer orderId) {
+    public Order selectOrderDetail(Long orderId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if(order!=null){
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
@@ -242,7 +270,7 @@ public class OrderServiceImpl implements IOrderService {
     }
 
     @Override
-    public Order selectMyOrderDetail(Integer orderId, String userId) {
+    public Order selectMyOrderDetail(Long orderId, String userId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if(order!=null){
             if(StringUtils.isEmpty(userId) || !userId.equals(order.getUserId())){
@@ -256,11 +284,11 @@ public class OrderServiceImpl implements IOrderService {
 
     @Transactional
     @Override
-    public void cancel(Integer orderId ) {
+    public void cancel(Long orderId ) {
         cancel(orderId,null,false);
     }
 
-    private void cancel(Integer orderId ,String userId,boolean checkUser) {
+    private void cancel(Long orderId ,String userId,boolean checkUser) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if(order!=null) {
             if(checkUser){
@@ -288,7 +316,7 @@ public class OrderServiceImpl implements IOrderService {
     }
     @Transactional
     @Override
-    public void selfCancel(Integer orderId, String userId) {
+    public void selfCancel(Long orderId, String userId) {
         cancel(orderId,userId,true);
     }
 
@@ -314,7 +342,7 @@ public class OrderServiceImpl implements IOrderService {
 
     @Transactional
     @Override
-    public void confirmReceiveGoods(Integer orderId ,String userId) {
+    public void confirmReceiveGoods(Long orderId ,String userId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if(order == null) {
             throw new BusinessException("订单不存在");

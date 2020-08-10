@@ -5,10 +5,12 @@ import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Aspect
 @Component
+@Order(-1)
 public class DataSourceAop {
     /*从库的切点,没有标注Master注解，并且方法名为select和get开头的方法，走从库*/
     @Pointcut("!@annotation(cn.enjoy.users.annotation.Master) " +

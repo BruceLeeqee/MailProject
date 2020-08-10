@@ -34,13 +34,13 @@ public class DeleveryServiceImpl implements IDeliveryService {
     private OrderActionMapper orderActionMapper;
 
     @Override
-    public List<DeliveryDoc> queryDeliveryDocByOrderId(int orderId) {
+    public List<DeliveryDoc> queryDeliveryDocByOrderId(Long orderId) {
         return deliveryDocMapper.selectByOrderId(orderId);
     }
 
     @Override
     @Transactional
-    public void shipping(String deliveryDocStr, List<Integer> orderGoodsIds) {
+    public void shipping(String deliveryDocStr, List<Long> orderGoodsIds) {
         DeliveryDoc deliveryDoc = JSONObject.parseObject(deliveryDocStr,DeliveryDoc.class);
         Order order = orderMapper.selectByPrimaryKey(deliveryDoc.getOrderId());
         // 1.写tp_delivery_doc
@@ -48,7 +48,7 @@ public class DeleveryServiceImpl implements IDeliveryService {
         deliveryDoc.setCreateTime((int) (System.currentTimeMillis()/1000));
         deliveryDocMapper.insertSelective(deliveryDoc);
         // 2.修改tp_order_goods.delivery_id, is_send=1
-        for(Integer orderGoodsId:orderGoodsIds){
+        for(Long orderGoodsId:orderGoodsIds){
             OrderGoods orderGoods = new OrderGoods();
             orderGoods.setRecId(orderGoodsId);
             orderGoods.setIsSend(true);

@@ -45,7 +45,7 @@ mybatis:
   config-location: classpath:SqlMapConfig.xml
 spring:
   redis:
-    host: 94.191.83.120
+    host: 106.52.62.38
     port: 6379
     password: 123456
   application:
@@ -69,7 +69,7 @@ eureka:
       defaultZone: http://admin:admin@eureka.h:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
-  #instance:
+    #instance:
     #hostname:
     #ip-address: 119.45.45.184
     #prefer-ip-address: true
@@ -100,3 +100,10 @@ management:
     web:
       exposure:
         include: "*"
+
+logging:
+  level:
+    cn:
+      enjoy:
+        mall:
+          dao: debug

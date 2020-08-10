@@ -5,6 +5,9 @@ import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.model.OrderAction;
 import cn.enjoy.mall.service.IOrderActionService;
 import com.alibaba.fastjson.JSONObject;
+import com.baidu.fsg.uid.impl.CachedUidGenerator;
+import com.baidu.fsg.uid.impl.DefaultUidGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -19,14 +22,21 @@ public class OrderActionServiceImpl implements IOrderActionService {
     @Resource
     private OrderActionMapper orderActionMapper;
 
+    @Autowired
+    private DefaultUidGenerator defaultUidGenerator;
+
+    @Autowired
+    private CachedUidGenerator cachedUidGenerator;
+
     @Override
     public void save(Order order, String action, String userId) {
         this.save(order, action, userId, null);
     }
     @Override
-    public int savePre(String orderStr, Map map , String action, String userId, String remark) {
+    public Long savePre(String orderStr, Map map , String action, String userId, String remark) {
         Order order = JSONObject.parseObject(orderStr,Order.class);
         OrderAction orderAction = new OrderAction();
+        orderAction.setActionId(defaultUidGenerator.getUID());
         orderAction.setActionUser(userId);
         orderAction.setLogTime(System.currentTimeMillis());
         orderAction.setOrderId(order.getOrderId());
@@ -49,7 +59,7 @@ public class OrderActionServiceImpl implements IOrderActionService {
     }
 
     @Override
-    public int updatePre(int actionId,Map map ) {
+    public Long updatePre(Long actionId,Map map ) {
         OrderAction orderAction = orderActionMapper.selectByPrimaryKey(actionId);
         if(map.get("trade_type")!=null){
             orderAction.setTradeType(map.get("trade_type").toString());
@@ -68,6 +78,8 @@ public class OrderActionServiceImpl implements IOrderActionService {
     @Override
     public void save(Order order, String action, String userId, String remark) {
         OrderAction orderAction = new OrderAction();
+        orderAction.setActionId(defaultUidGenerator.getUID());
+        orderAction.setOrderType(order.getOrderType());
         orderAction.setActionUser(userId);
         orderAction.setLogTime(System.currentTimeMillis());
         orderAction.setOrderId(order.getOrderId());
@@ -87,7 +99,7 @@ public class OrderActionServiceImpl implements IOrderActionService {
     }
 
     @Override
-    public List<OrderAction> queryByOrderId(Integer orderId) {
+    public List<OrderAction> queryByOrderId(Long orderId) {
         return orderActionMapper.queryByOrderId(orderId);
     }
 }

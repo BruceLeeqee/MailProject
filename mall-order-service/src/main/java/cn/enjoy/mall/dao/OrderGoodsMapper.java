@@ -56,9 +56,9 @@ public interface OrderGoodsMapper {
 
     int insertBatch(List<OrderGoods> list);
 
-    List<OrderGoods> selectByOrderId(Integer orderId);
+    List<OrderGoods> selectByOrderId(Long orderId);
 
-    int countNotSendGoodsByOrderId(int orderId);
+    int countNotSendGoodsByOrderId(Long orderId);
 
     List<HotSellingGoods> selectTopNSoldGoods(int n);
 }

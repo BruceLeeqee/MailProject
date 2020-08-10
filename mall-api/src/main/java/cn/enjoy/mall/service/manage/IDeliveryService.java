@@ -16,8 +16,8 @@ import java.util.List;
 public interface IDeliveryService {
 
     @RequestMapping(value = "/queryDeliveryDocByOrderId", method = RequestMethod.POST)
-    List<DeliveryDoc> queryDeliveryDocByOrderId(@RequestParam("orderId") int orderId);
+    List<DeliveryDoc> queryDeliveryDocByOrderId(@RequestParam("orderId") Long orderId);
 
     @RequestMapping(value = "/shipping", method = RequestMethod.POST)
-    void shipping(@RequestParam("deliveryDocStr") String deliveryDocStr, @RequestBody List<Integer> orderGoodsIds);
+    void shipping(@RequestParam("deliveryDocStr") String deliveryDocStr, @RequestBody List<Long> orderGoodsIds);
 }

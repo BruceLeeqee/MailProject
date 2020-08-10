@@ -12,7 +12,7 @@ import java.util.Map;
 public interface IPayService {
 
     @RequestMapping(value = "/doPrePay", method = RequestMethod.POST)
-    Map<String, String> doPrePay(@RequestParam("orderId") Integer orderId, @RequestParam("payCode") String payCode,
+    Map<String, String> doPrePay(@RequestParam("orderId") Long orderId, @RequestParam("payCode") String payCode,
                                  @RequestParam("payAmount") BigDecimal payAmount, @RequestParam("userId") String userId) ;
 
     @RequestMapping(value = "/updateByActionId", method = RequestMethod.POST)
@@ -22,6 +22,6 @@ public interface IPayService {
     String queryByPrepayId(@RequestParam("prepayId") String prepayId) ;
 
     @RequestMapping(value = "/doPay", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
-    String doPay(@RequestParam("orderId") Integer orderId, @RequestParam("payCode") String payCode,
+    String doPay(@RequestParam("orderId") Long orderId, @RequestParam("payCode") String payCode,
                  @RequestParam("payAmount") BigDecimal payAmount, @RequestParam("userId") String userId) ;
 }

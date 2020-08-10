@@ -7,6 +7,9 @@ import cn.enjoy.sys.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/*
+* 订单服务
+* */
 @RestController
 @RequestMapping("/api/order")
 public class OrderController  extends BaseController {
@@ -14,18 +17,18 @@ public class OrderController  extends BaseController {
     private IOrderService orderService;
     /**
      * 创建订单
-     * @param crderCreateVo
+     * @param orderCreateVo
      * @return
      */
     @PostMapping("save")
-    public HttpResponseBody save(@RequestBody OrderCreateVo crderCreateVo){
-        Integer orderId = orderService.createOrder(crderCreateVo,getSessionUserId());
+    public HttpResponseBody save(@RequestBody OrderCreateVo orderCreateVo){
+        Long orderId = orderService.createOrder(orderCreateVo,getSessionUserId());
         return HttpResponseBody.successResponse("ok",orderId);
     }
 
     /**
      * 分页查询订单
-     * @param type： 0-全部订单，1-全部有效订单，2-待支付，3-待收货，4-已关闭
+     * @param type 0-全部订单，1-全部有效订单，2-待支付，3-待收货，4-已关闭
      * @param keywords 订单号
      * @param page
      * @param pageSize
@@ -46,7 +49,7 @@ public class OrderController  extends BaseController {
      * @return
      */
     @GetMapping("detail/{orderId}")
-    public HttpResponseBody search(@PathVariable("orderId") Integer orderId){
+    public HttpResponseBody search(@PathVariable("orderId") Long orderId){
         return HttpResponseBody.successResponse("ok",orderService.selectMyOrderDetail(orderId,getSessionUserId()));
     }
 
@@ -56,7 +59,7 @@ public class OrderController  extends BaseController {
      * @return
      */
     @PostMapping("cancel")
-    public HttpResponseBody cancel(@RequestParam Integer orderId){
+    public HttpResponseBody cancel(@RequestParam Long orderId){
         orderService.selfCancel(orderId,getSessionUserId());
         return HttpResponseBody.successResponse("ok");
     }
@@ -67,7 +70,7 @@ public class OrderController  extends BaseController {
      * @return
      */
     @PostMapping("confirmReceiveGoods")
-    public HttpResponseBody confirmReceiveGoods(@RequestParam Integer orderId){
+    public HttpResponseBody confirmReceiveGoods(@RequestParam Long orderId){
         orderService.confirmReceiveGoods(orderId,getSessionUserId());
         return HttpResponseBody.successResponse("ok");
     }

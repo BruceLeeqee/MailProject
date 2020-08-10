@@ -27,7 +27,7 @@ public class HomeController extends BaseController {
 
     /**
      * 首页获取分类
-     * @return HttpResponseBody
+     * @return
      */
     @GetMapping("getAllGroupItems")
     public HttpResponseBody getAllGroupItems(){
@@ -36,7 +36,7 @@ public class HomeController extends BaseController {
 
     /**
      * 首页轮播图
-     * @return HttpResponseBody
+     * @return
      */
     @GetMapping("getSliderList")
     public HttpResponseBody getSliderList(){
@@ -68,7 +68,8 @@ public class HomeController extends BaseController {
 
     /**
      * 首页查询框下拉提示
-     * @return HttpResponseBody
+     * @param param
+     * @return
      */
     @GetMapping("getSearchList")
     public HttpResponseBody getSearchList(String param){
@@ -77,7 +78,7 @@ public class HomeController extends BaseController {
 
     /**
      * 首页大分类商品
-     * @return HttpResponseBody
+     * @return
      */
     @GetMapping("getHotGoods")
     public HttpResponseBody getHotGoods(){
