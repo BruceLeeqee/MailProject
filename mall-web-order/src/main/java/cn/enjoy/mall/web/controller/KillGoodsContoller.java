@@ -58,7 +58,7 @@ public class KillGoodsContoller extends BaseController {
     * @return
     * @version
     */
-/*    @PostMapping("kill")
+    @PostMapping("kill")
     public HttpResponseBody kill(int killId){
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
         if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
@@ -72,7 +72,7 @@ public class KillGoodsContoller extends BaseController {
         }
 
         return HttpResponseBody.successResponse("ok",  killGoods);
-    }*/
+    }
 
     /**
      * 秒杀接口，直接从数据库减库存
@@ -83,7 +83,7 @@ public class KillGoodsContoller extends BaseController {
      * @return
      * @version
      */
-    @PostMapping("kill")
+/*    @PostMapping("kill")
     public HttpResponseBody killByDb(int killId) {
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
         if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
@@ -97,7 +97,7 @@ public class KillGoodsContoller extends BaseController {
         }
 
         return HttpResponseBody.successResponse("ok",  killGoods);
-    }
+    }*/
 
     /**
      * 秒杀订单提交，不直接修改数据库，而是把订单消息存mq，做异步处理
@@ -109,7 +109,7 @@ public class KillGoodsContoller extends BaseController {
     * @return
     * @version
     */
-/*    @PostMapping("submit")
+    @PostMapping("submit")
     public HttpResponseBody submit(int addressId, int killId){
         if (!killGoodsService.chkKillOrder(String.valueOf(killId),getSessionUserId())){
             return HttpResponseBody.failResponse("请先抢购");
@@ -118,7 +118,7 @@ public class KillGoodsContoller extends BaseController {
 
         //创建秒杀订单
 //        Integer orderId = orderService.killOrder(addressId,killGoods,getSessionUserId());
-        *//*发送到消息队列*//*
+        //发送到消息队列
 //        secKillSender.send(addressId,killGoods,getSessionUserId());
 
         String orderId = killGoodsService.submitOrder(addressId,killId,getSessionUserId());
@@ -126,7 +126,7 @@ public class KillGoodsContoller extends BaseController {
             return HttpResponseBody.failResponse("抢购失败");
         }
         return HttpResponseBody.successResponse("ok",orderId);
-    }*/
+    }
 
     /**
      * 基于数据库的秒杀订单提交
@@ -138,7 +138,7 @@ public class KillGoodsContoller extends BaseController {
     * @return
     * @version
     */
-    @PostMapping("submit")
+/*    @PostMapping("submit")
     public HttpResponseBody submitByDb(int addressId, int killId){
 //        if (!killGoodsService.chkKillOrder(String.valueOf(killId),getSessionUserId())){
 //            return HttpResponseBody.failResponse("请先抢购");
@@ -147,7 +147,7 @@ public class KillGoodsContoller extends BaseController {
 
         //创建秒杀订单
 //        Integer orderId = orderService.killOrder(addressId,killGoods,getSessionUserId());
-        /*发送到消息队列*/
+        *//*发送到消息队列*//*
 //        secKillSender.send(addressId,killGoods,getSessionUserId());
 
         String orderId = killGoodsService.submitOrderByDb(addressId,killId,getSessionUserId());
@@ -155,6 +155,6 @@ public class KillGoodsContoller extends BaseController {
             return HttpResponseBody.failResponse("抢购失败");
         }
         return HttpResponseBody.successResponse("ok",orderId);
-    }
+    }*/
 
 }
