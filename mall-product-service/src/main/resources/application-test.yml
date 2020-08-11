@@ -38,6 +38,25 @@ druid-slave:
   maxPoolPreparedStatementPerConnectionSize: 20
   filters: stat,wall
   connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+druid-mycat:
+  jdbcUrl: jdbc:mysql://94.191.83.120:8066/enjoydb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  #jdbcUrl1: jdbc:mysql://94.191.83.120:3308/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  username: enjoy
+  password: 123456
+  driver-class-name: com.mysql.jdbc.Driver
+  minIdle: 2
+  maxActive: 10
+  maxWait: 60000
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 1 FROM DUAL
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  filters: stat,wall
+  connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
 mybatis:
   mapper-locations: classpath*:mapping/**/*.xml

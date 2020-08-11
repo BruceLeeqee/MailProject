@@ -5,6 +5,7 @@ import cn.enjoy.mall.service.IOrderService;
 import cn.enjoy.mall.vo.KillOrderVo;
 import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.listener.api.ChannelAwareMessageListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -15,6 +16,7 @@ import javax.annotation.Resource;
 /**
  * 类说明：
  */
+@Slf4j
 @Component
 public class SecKillReceiver implements ChannelAwareMessageListener {
 
@@ -27,7 +29,7 @@ public class SecKillReceiver implements ChannelAwareMessageListener {
     public void onMessage(Message message, Channel channel) throws Exception {
         try {
             String msg = new String(message.getBody());
-            System.out.println("UserReceiver>>>>>>>接收到消息:"+msg);
+            log.info("UserReceiver>>>>>>>接收到消息:"+msg);
             try {
                 KillOrderVo vo = JSON.parseObject(msg, KillOrderVo.class);
 
@@ -41,18 +43,18 @@ public class SecKillReceiver implements ChannelAwareMessageListener {
                     }
                 }
 
-                System.out.println("UserReceiver>>>>>>消息已消费");
+                log.info("UserReceiver>>>>>>消息已消费");
                 channel.basicAck(message.getMessageProperties().getDeliveryTag(),false);//手工确认，可接下一条
             } catch (Exception e) {
                 System.out.println(e.getMessage());
                 channel.basicNack(message.getMessageProperties().getDeliveryTag(), false,false);//失败，则直接忽略此订单
 
-                System.out.println("UserReceiver>>>>>>拒绝消息，直接忽略");
+                log.info("UserReceiver>>>>>>拒绝消息，直接忽略");
                 throw e;
             }
 
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            log.info(e.getMessage());
         }
 
     }

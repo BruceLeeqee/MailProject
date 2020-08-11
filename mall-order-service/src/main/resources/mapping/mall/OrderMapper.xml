@@ -67,6 +67,11 @@
     <include refid="Base_Column_List" />
     from tp_order
     where order_id = #{orderId,jdbcType=INTEGER}
+    union
+    select
+    <include refid="Base_Column_List" />
+    from tp_order_kill
+    where order_id = #{orderId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     <!--

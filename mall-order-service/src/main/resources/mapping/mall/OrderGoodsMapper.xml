@@ -357,6 +357,11 @@
     <include refid="Base_Column_List" />
     from tp_order_goods
     where order_id = #{orderId}
+    union
+    select
+    <include refid="Base_Column_List" />
+    from tp_order_goods_kill
+    where order_id = #{orderId}
   </select>
 
   <select id="countNotSendGoodsByOrderId" resultType="int">

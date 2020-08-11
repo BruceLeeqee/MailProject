@@ -54,7 +54,7 @@ public class RouteTablePlugin implements Interceptor {
             if (isKillOrder(object)) {
                 sqlStr = routeSql(sqlStr, object);
             }
-            log.info("----------RouteTablePlugin--sql-->" + sqlStr);
+//            log.info("----------RouteTablePlugin--sql-->" + sqlStr);
             sql.set(bsinstance, sqlStr);
         }
         return invocation.proceed();
