@@ -4,7 +4,7 @@ import cn.enjoy.core.utils.GridModel;
 import cn.enjoy.mall.constant.KillConstants;
 import cn.enjoy.mall.model.KillGoodsPrice;
 import cn.enjoy.mall.model.Order;
-import cn.enjoy.mall.service.IOrderService;
+import cn.enjoy.mall.service.IKillOrderService;
 import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
@@ -39,7 +39,7 @@ public class KillGoodsService {
     private SecKillSender secKillSender;
 
     @Autowired
-    private IOrderService orderService;
+    private IKillOrderService orderService;
 
     @Autowired
     private IKillSpecManageService killSpecManageService;

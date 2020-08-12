@@ -1,7 +1,7 @@
 package cn.enjoy.mall.web.controller;
 
 import cn.enjoy.core.utils.response.HttpResponseBody;
-import cn.enjoy.mall.service.IOrderService;
+import cn.enjoy.mall.service.IKillOrderService;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.web.service.KillGoodsService;
 import cn.enjoy.sys.controller.BaseController;
@@ -20,7 +20,7 @@ public class KillGoodsContoller extends BaseController {
     @Autowired
     private KillGoodsService killGoodsService;
     @Autowired
-    private IOrderService orderService;
+    private IKillOrderService iKillOrderService;
 
     /**
      * 查询秒杀商品

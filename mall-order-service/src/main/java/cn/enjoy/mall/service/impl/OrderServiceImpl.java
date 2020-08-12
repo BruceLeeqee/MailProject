@@ -17,8 +17,9 @@ import cn.enjoy.mall.mongo.GoodsDao;
 import cn.enjoy.mall.service.IOrderActionService;
 import cn.enjoy.mall.service.IOrderService;
 import cn.enjoy.mall.service.IShoppingCartService;
-import cn.enjoy.mall.vo.*;
-import cn.enjoy.users.annotation.Master;
+import cn.enjoy.mall.vo.GoodsVo;
+import cn.enjoy.mall.vo.OrderCreateVo;
+import cn.enjoy.mall.vo.ShoppingGoodsVo;
 import com.baidu.fsg.uid.impl.CachedUidGenerator;
 import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
@@ -73,7 +74,7 @@ public class OrderServiceImpl implements IOrderService {
     public List<Order> queryOrderByUserId(String userId) {
         Map map = new HashMap();
         //做路由转换
-        map.put("orderType","K");
+//        map.put("orderType","K");
         map.put("userId",userId);
         return orderMapper.queryByPage(map);
     }
@@ -165,7 +166,7 @@ public class OrderServiceImpl implements IOrderService {
         return orderId;
     }
 
-    @Transactional
+/*    @Transactional
     @Master
     public Long killOrder(int addressId, KillGoodsSpecPriceDetailVo killGoods, String userId) {
         //创建一个订单
@@ -224,15 +225,15 @@ public class OrderServiceImpl implements IOrderService {
         orderActionService.save(order,"创建秒杀订单",userId);
 
         return orderId;
-    }
+    }*/
 
-    @Transactional
+/*    @Transactional
     @Master
     @Override
     public Long killOrder(KillOrderVo killOrderVo) {
         return this.killOrder(killOrderVo.getAddressId(),
                 killOrderVo.getKillGoodsSpecPriceDetailVo(),killOrderVo.getUserId());
-    }
+    }*/
 
 
     /**

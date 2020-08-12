@@ -9,7 +9,6 @@ import org.apache.ibatis.executor.statement.RoutingStatementHandler;
 import org.apache.ibatis.executor.statement.StatementHandler;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.plugin.*;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -24,7 +23,7 @@ import java.util.Map;
  * Date 2020/8/5 15:57
  * Version 1.0
  */
-@Component
+//@Component
 @Slf4j
 @Intercepts({@Signature(type = StatementHandler.class, method = "prepare",
         args = {Connection.class, Integer.class})})

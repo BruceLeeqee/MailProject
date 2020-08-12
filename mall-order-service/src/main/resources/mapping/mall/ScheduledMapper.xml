@@ -8,7 +8,7 @@
     <delete id="deleteByAll" >
         delete from tp_goods_hotsell
     </delete>
-    <insert id="insert" parameterType="cn.enjoy.mall.model.HotSellingGoods"  keyProperty="goods_id">
+    <insert id="insert" parameterType="cn.enjoy.mall.model.HotSellingGoods" keyProperty="goods_id">
         insert into tp_goods_hotsell (goods_id, sales_sum)
         values (#{goodsId,jdbcType=INTEGER}, #{salesSum,jdbcType=INTEGER})
     </insert>
