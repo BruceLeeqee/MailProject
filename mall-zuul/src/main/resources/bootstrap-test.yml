@@ -56,7 +56,13 @@ eureka:
 #          semaphore:
 #            # 只在信号量隔离策略中有效，建议设置大一些，这样并发数达到execution最大请求数时，会直接调用fallback，而并发数达到fallback最大请求数时会被拒绝和抛出异常。
 #            maxConcurrentRequests: 1000
-
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 100000
 
 feign:
   compression:
