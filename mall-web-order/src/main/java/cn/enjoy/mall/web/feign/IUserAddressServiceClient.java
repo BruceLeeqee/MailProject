@@ -6,6 +6,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 /*
 * API-GATEWAY
 * */
-@FeignClient(name = /*"MALL-ORDER-SERVICE"*/"API-GATEWAY",path = "/order")
+@FeignClient(name = /*"MALL-ORDER-SERVICE"*/"API-GATEWAY"/*,path = "/order"*/)
 public interface IUserAddressServiceClient extends IUserAddressService {
 }

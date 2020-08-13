@@ -84,6 +84,8 @@ spring:
     password: admin
     publisher-confirms: true
     virtual-host: /
+  main:
+    allow-bean-definition-overriding: true
 
 eureka:
   client:
