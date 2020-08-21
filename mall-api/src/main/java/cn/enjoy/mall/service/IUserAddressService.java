@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
+import java.util.Map;
 
-@RequestMapping("/order/mall/service/IUserAddressService")
+@RequestMapping("/user/sys/service/IUserAddressService")
 public interface IUserAddressService {
     @RequestMapping(value = "/save", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     void save(@RequestBody UserAddress userAddress);
@@ -17,6 +18,6 @@ public interface IUserAddressService {
     @RequestMapping(value = "/remove", method = RequestMethod.POST)
     void remove(@RequestParam("addressId") Integer addressId);
 
-    @RequestMapping(value = "/selectByUserId", method = RequestMethod.POST)
-    List<UserAddress> selectByUserId(@RequestParam("userId") String userId);
+    @RequestMapping(value = "/selectById", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    List<UserAddress> selectById(@RequestBody Map map);
 }

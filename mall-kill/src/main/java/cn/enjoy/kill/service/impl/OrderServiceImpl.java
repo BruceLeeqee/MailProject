@@ -22,9 +22,11 @@ import com.baidu.fsg.uid.impl.CachedUidGenerator;
 import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -35,12 +37,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- *  0|0|0 待支付
-    0|0|1 已付款待配货
-    1|0|1 已配货待出库
-    1|1|1 待收货
-    2|1|1 已完成
-    4|1|1 已完成
+ * 0|0|0 待支付
+ * 0|0|1 已付款待配货
+ * 1|0|1 已配货待出库
+ * 1|1|1 待收货
+ * 2|1|1 已完成
+ * 4|1|1 已完成
  */
 @RestController
 public class OrderServiceImpl implements IKillOrderService {
@@ -63,15 +65,33 @@ public class OrderServiceImpl implements IKillOrderService {
     @Autowired
     private CachedUidGenerator cachedUidGenerator;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    /**
+     * 订单详情
+     *
+     * @param orderId
+     * @return
+     */
+    public Order search(@PathVariable("orderId") Long orderId) {
+        Order order = orderMapper.selectByPrimaryKey(orderId);
+        if (order != null) {
+            List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
+            order.setOrderGoodsList(goodsList);
+        }
+        return order;
+    }
+
     @Override
     public List<Order> queryOrderByUserId(String userId) {
         Map map = new HashMap();
-        map.put("userId",userId);
+        map.put("userId", userId);
         return orderMapper.queryByPage(map);
     }
 
     @Transactional
-    public Long killOrder(int addressId, KillGoodsSpecPriceDetailVo killGoods, String userId) {
+    public Long killOrder(Long addressId, KillGoodsSpecPriceDetailVo killGoods, String userId) {
         //创建一个订单
         Order order = new Order();
 //        order.setOrderType("K");
@@ -87,7 +107,7 @@ public class OrderServiceImpl implements IKillOrderService {
         order.setShippingStatus(ShippingStatus.UNSHIPPED.getCode());
         //获取发货地址
         UserAddress userAddress = userAddressMapper.selectByPrimaryKey(addressId);
-        BeanUtils.copyProperties(userAddress,order);
+        BeanUtils.copyProperties(userAddress, order);
         order.setUserId(userId);
 
         //新增订单
@@ -103,10 +123,10 @@ public class OrderServiceImpl implements IKillOrderService {
         orderGoods.setRecId(defaultUidGenerator.getUID());
         orderGoods.setOrderType("K");
         orderGoods.setOrderId(orderId);
-        BeanUtils.copyProperties(goodsVo.getBase(),orderGoods);
+        BeanUtils.copyProperties(goodsVo.getBase(), orderGoods);
         orderGoods.setPromType(true);
         orderGoods.setPromId(killGoods.getId());
-        orderGoods.setGoodsNum((short)1);
+        orderGoods.setGoodsNum((short) 1);
         orderGoods.setGoodsPrice(killGoods.getPrice());
         orderGoods.setSpecKey(killGoods.getKey());
         orderGoods.setSpecKeyName(killGoods.getKeyName());
@@ -125,8 +145,10 @@ public class OrderServiceImpl implements IKillOrderService {
         //保存订单产品信息
         orderGoodsMapper.insertBatch(orderGoodsList);
         //订单日志
-        orderActionService.save(order,"创建秒杀订单",userId);
+        orderActionService.save(order, "创建秒杀订单", userId);
 
+        //清空用于分页的缓存
+        redisTemplate.opsForHash().delete(userId);
         return orderId;
     }
 
@@ -134,15 +156,15 @@ public class OrderServiceImpl implements IKillOrderService {
     @Override
     public Long killOrder(KillOrderVo killOrderVo) {
         return this.killOrder(killOrderVo.getAddressId(),
-                killOrderVo.getKillGoodsSpecPriceDetailVo(),killOrderVo.getUserId());
+                killOrderVo.getKillGoodsSpecPriceDetailVo(), killOrderVo.getUserId());
     }
 
     @Override
     public Order selectMyOrderDetail(Long orderId, String userId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
-        if(order!=null){
-            if(StringUtils.isEmpty(userId) || !userId.equals(order.getUserId())){
-                  return null;
+        if (order != null) {
+            if (StringUtils.isEmpty(userId) || !userId.equals(order.getUserId())) {
+                return null;
             }
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
             order.setOrderGoodsList(goodsList);
@@ -152,69 +174,72 @@ public class OrderServiceImpl implements IKillOrderService {
 
     @Transactional
     @Override
-    public void cancel(Long orderId ) {
-        cancel(orderId,null,false);
+    public void cancel(Long orderId) {
+        cancel(orderId, null, false);
     }
 
-    private void cancel(Long orderId ,String userId,boolean checkUser) {
+    private void cancel(Long orderId, String userId, boolean checkUser) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
-        if(order!=null) {
-            if(checkUser){
+        if (order != null) {
+            if (checkUser) {
                 if (StringUtils.isEmpty(userId) || !userId.equals(order.getUserId())) {
                     throw new BusinessException("订单不存在");
                 }
             }
-        }else{
+        } else {
             throw new BusinessException("订单不存在");
         }
         order.setOrderStatus(OrderStatus.CANCELED.getCode());
         List<OrderGoods> orderGoodsList = orderGoodsMapper.selectByOrderId(orderId);
-        for(OrderGoods orderGoods : orderGoodsList ){
+        for (OrderGoods orderGoods : orderGoodsList) {
             GoodsVo goodsVo = goodsDao.findOneById(orderGoods.getGoodsId());
-            if(goodsVo!=null){
+            if (goodsVo != null) {
                 List<SpecGoodsPrice> specGoodsPriceList = goodsVo.getSpecGoodsPriceList();
-                specGoodsPriceList.forEach(x -> x.setStoreCount(x.getStoreCount()+orderGoods.getGoodsNum()));
+                specGoodsPriceList.forEach(x -> x.setStoreCount(x.getStoreCount() + orderGoods.getGoodsNum()));
                 goodsVo.setSpecGoodsPriceList(specGoodsPriceList);
                 goodsDao.save(goodsVo);
             }
         }
         orderMapper.updateByPrimaryKeySelective(order);
         //订单日志
-        orderActionService.save(order,checkUser==true?"取消订单":"自动取消订单",userId);
+        orderActionService.save(order, checkUser == true ? "取消订单" : "自动取消订单", userId);
     }
+
     @Transactional
     @Override
     public void selfCancel(Long orderId, String userId) {
-        cancel(orderId,userId,true);
+        cancel(orderId, userId, true);
     }
 
     @Transactional
     @Override
     public void autoCancelExpiredOrder() {
         List<Order> expiredOrderList = orderMapper.selectExpiredOrder(MallConstant.EXPIRED_TIME_INTERVAL);
-        if(!CollectionUtils.isEmpty(expiredOrderList)) {
+        if (!CollectionUtils.isEmpty(expiredOrderList)) {
             for (Order order : expiredOrderList) {
                 cancel(order.getOrderId());
             }
         }
     }
+
     /**
      * 查询各类型的订单
+     *
      * @param type 0-全部订单，1-全部有效订单，2-待支付，3-待收货，4-已关闭
      * @return
      */
     @Override
-    public Integer queryOrderNum(Integer type,String userId) {
-        return orderMapper.selectOrderNum(type,userId);
+    public Integer queryOrderNum(Integer type, String userId) {
+        return orderMapper.selectOrderNum(type, userId);
     }
 
     @Transactional
     @Override
-    public void confirmReceiveGoods(Long orderId ,String userId) {
+    public void confirmReceiveGoods(Long orderId, String userId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
-        if(order == null) {
+        if (order == null) {
             throw new BusinessException("订单不存在");
-        }else{
+        } else {
             if (StringUtils.isEmpty(userId) || !userId.equals(order.getUserId())) {
                 throw new BusinessException("订单不存在");
             }
@@ -222,58 +247,67 @@ public class OrderServiceImpl implements IKillOrderService {
         order.setOrderStatus(OrderStatus.RECEIVED.getCode());
         order.setReceiveTime(System.currentTimeMillis());
         List<OrderGoods> orderGoodsList = orderGoodsMapper.selectByOrderId(orderId);
-        for(OrderGoods orderGoods : orderGoodsList ){
+        for (OrderGoods orderGoods : orderGoodsList) {
             GoodsVo goodsVo = goodsDao.findOneById(orderGoods.getGoodsId());
-            if(goodsVo!=null){
+            if (goodsVo != null) {
                 List<SpecGoodsPrice> specGoodsPriceList = goodsVo.getSpecGoodsPriceList();
-                specGoodsPriceList.forEach(x -> x.setStoreCount(x.getStoreCount()+orderGoods.getGoodsNum()));
+                specGoodsPriceList.forEach(x -> x.setStoreCount(x.getStoreCount() + orderGoods.getGoodsNum()));
                 goodsVo.setSpecGoodsPriceList(specGoodsPriceList);
                 goodsDao.save(goodsVo);
             }
         }
         orderMapper.updateByPrimaryKeySelective(order);
         //订单日志
-        orderActionService.save(order,"确认收货",userId);
+        orderActionService.save(order, "确认收货", userId);
     }
 
     /**
      * 根据类型获取订单状态
+     *
      * @param type
      * @return
      */
-    private Integer getOrderStatusByType(Integer type){
+    private Integer getOrderStatusByType(Integer type) {
         Integer orderStatus = null;
-        if(type == 0){
+        if (type == 0) {
             orderStatus = null;
-        }else if(type == 1){
-             orderStatus = 99;
-        }else if(type == 2){
+        } else if (type == 1) {
+            orderStatus = 99;
+        } else if (type == 2) {
             orderStatus = OrderStatus.CONFIRMED.getCode();
-        }else if(type == 3) {
-            orderStatus =  OrderStatus.CONFIRMED.getCode();
-        }else if(type == 4){
-            orderStatus =  OrderStatus.CANCELED.getCode();
+        } else if (type == 3) {
+            orderStatus = OrderStatus.CONFIRMED.getCode();
+        } else if (type == 4) {
+            orderStatus = OrderStatus.CANCELED.getCode();
         }
         return orderStatus;
     }
-     /**
+
+    /**
      * 根据类型获取支付状态
+     *
      * @param type
      * @return
      */
-    private Integer getPayStatusByType(Integer type){
+    private Integer getPayStatusByType(Integer type) {
         Integer payStatus = null;
-        if(type == 0){
+        if (type == 0) {
             payStatus = null;
-        }else if(type == 1){
+        } else if (type == 1) {
             payStatus = null;
-        }else if(type == 2){
+        } else if (type == 2) {
             payStatus = PayStatus.UNPAID.getCode();
-        }else if(type == 3) {
-            payStatus =  PayStatus.PAID.getCode();
-        }else if(type == 4){
+        } else if (type == 3) {
+            payStatus = PayStatus.PAID.getCode();
+        } else if (type == 4) {
             payStatus = null;
         }
         return payStatus;
+    }
+
+    @Override
+    public List<Order> queryByPage(Integer type, String keywords, String userId, Long addTime,int pageSize) {
+        List<Order> pageList = orderMapper.queryByPage(type, keywords,userId, addTime == 0 ? "" : addTime,pageSize);
+        return pageList;
     }
 }

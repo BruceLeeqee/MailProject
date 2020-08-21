@@ -2,7 +2,6 @@ package cn.enjoy.mall.dao;
 
 import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.vo.OrderVo;
-import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -58,8 +57,10 @@ public interface OrderMapper {
     int updateByPrimaryKey(Order record);
 
     List<Order> queryByPage(@Param("type") Integer type,
-                            @Param("keywords") String keywords, PageBounds pageBounds,
-                            @Param("userId") String userId);
+                            @Param("keywords") String keywords,
+                            @Param("userId") String userId,
+                            @Param("addTime") Object addTime,
+                            @Param("pageSize") int pageSize);
 
     List<Order> queryByPage(Map map);
 

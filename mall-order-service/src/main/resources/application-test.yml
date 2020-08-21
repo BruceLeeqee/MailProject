@@ -1,7 +1,7 @@
 dfs:
   url: 94.191.83.120:8181
 druid-master:
-  jdbcUrl: jdbc:mysql://94.191.83.120:3307/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl: jdbc:mysql://localhost:3307/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   jdbcUrl1: jdbc:mysql://94.191.83.120:3308/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   username: root
   password: root
@@ -39,7 +39,7 @@ druid-slave:
   connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
 
 druid-mycat:
-  jdbcUrl: jdbc:mysql://94.191.83.120:8066/enjoydb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl: jdbc:mysql://localhost:8066/orderdb?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   #jdbcUrl1: jdbc:mysql://94.191.83.120:3308/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   username: enjoy
   password: 123456
@@ -84,6 +84,8 @@ spring:
     password: admin
     publisher-confirms: true
     virtual-host: /
+  main:
+    allow-bean-definition-overriding: true
 
 eureka:
   client:

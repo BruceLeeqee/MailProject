@@ -110,7 +110,7 @@ public class KillGoodsContoller extends BaseController {
     * @version
     */
     @PostMapping("submit")
-    public HttpResponseBody submit(int addressId, int killId){
+    public HttpResponseBody submit(Long addressId, int killId){
         if (!killGoodsService.chkKillOrder(String.valueOf(killId),getSessionUserId())){
             return HttpResponseBody.failResponse("请先抢购");
         }

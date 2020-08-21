@@ -198,7 +198,7 @@ public class KillGoodsService {
         return isKilld;
     }
 
-    public String submitOrder(int addressId, int killId, String userId) {
+    public String submitOrder(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();
@@ -234,7 +234,7 @@ public class KillGoodsService {
         return null;
     }
 
-    public String submitOrderByDb(int addressId, int killId, String userId) {
+    public String submitOrderByDb(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();

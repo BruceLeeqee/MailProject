@@ -4,21 +4,25 @@ import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/order/mall/service/IKillOrderService")
+@RequestMapping("/kill/order/service/IKillOrderService")
 public interface IKillOrderService {
 
     @RequestMapping(value = "/queryOrderByUserId", method = RequestMethod.POST)
     List<Order> queryOrderByUserId(@RequestParam("userId") String userId);
 
+    @RequestMapping(value = "/queryByPage", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    List<Order> queryByPage(@RequestParam("type") Integer type,
+                            @RequestParam("keywords") String keywords,
+                            @RequestParam("userId") String userId,
+                            @RequestParam("addTime") Long addTime,
+                            @RequestParam("pageSize") int pageSize);
+
     @RequestMapping(value = "/killOrder", method = RequestMethod.POST)
-    Long killOrder(@RequestParam("addressId") int addressId, @RequestBody KillGoodsSpecPriceDetailVo killGoods, @RequestParam("userId") String userId);
+    Long killOrder(@RequestParam("addressId") Long addressId, @RequestBody KillGoodsSpecPriceDetailVo killGoods, @RequestParam("userId") String userId);
 
     @RequestMapping(value = "/killOrder2", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     Long killOrder(@RequestBody KillOrderVo killOrderVo);
@@ -40,4 +44,7 @@ public interface IKillOrderService {
 
     @RequestMapping(value = "/confirmReceiveGoods", method = RequestMethod.POST)
     void confirmReceiveGoods(@RequestParam("orderId") Long orderId, @RequestParam("userId") String userId);
+
+    @GetMapping("detail/{orderId}")
+    public Order search(@RequestParam("orderId")@PathVariable("orderId") Long orderId);
 }

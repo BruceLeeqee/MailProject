@@ -3,13 +3,13 @@ package cn.enjoy.mall.vo;
 import java.io.Serializable;
 
 public class OrderCreateVo implements Serializable{
-    private Integer addressId;
+    private Long addressId;
 
-    public Integer getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(Integer addressId) {
+    public void setAddressId(Long addressId) {
         this.addressId = addressId;
     }
 }

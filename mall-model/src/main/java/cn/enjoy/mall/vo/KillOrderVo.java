@@ -6,7 +6,7 @@ public class KillOrderVo implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private KillGoodsSpecPriceDetailVo killGoodsSpecPriceDetailVo;
-    private int addressId;
+    private Long addressId;
     private String userId;
 
     public KillGoodsSpecPriceDetailVo getKillGoodsSpecPriceDetailVo() {
@@ -17,11 +17,11 @@ public class KillOrderVo implements Serializable{
         this.killGoodsSpecPriceDetailVo = killGoodsSpecPriceDetailVo;
     }
 
-    public int getAddressId() {
+    public Long getAddressId() {
         return addressId;
     }
 
-    public void setAddressId(int addressId) {
+    public void setAddressId(Long addressId) {
         this.addressId = addressId;
     }
 

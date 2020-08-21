@@ -7,6 +7,9 @@ import cn.enjoy.sys.controller.BaseController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /*
 * 用户地址服务
 * */
@@ -57,7 +60,9 @@ public class UserAddressController extends BaseController {
     */
     @GetMapping("list")
     public HttpResponseBody list(){
-        return HttpResponseBody.successResponse("ok",userAddressService.selectByUserId(getSessionUserId()));
+        Map map = new HashMap();
+        map.put("userId",getSessionUserId());
+        return HttpResponseBody.successResponse("ok",userAddressService.selectById(map));
     }
 
 }

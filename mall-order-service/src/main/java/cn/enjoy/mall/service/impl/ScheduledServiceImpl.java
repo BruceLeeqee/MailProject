@@ -8,7 +8,6 @@ import cn.enjoy.mall.model.HotSellingGoods;
 import cn.enjoy.mall.service.IScheduledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -34,7 +33,7 @@ public class ScheduledServiceImpl implements IScheduledService {
     private final String HOT_LOCK_PATH = "/hotLock";
     private final String KILL_LOCK_PATH = "/killLock";
 
-    @Scheduled(cron = "0/5 * * * * ?")
+//    @Scheduled(cron = "0/5 * * * * ?")
     public void scheduledHotProduct() {
             if(zkLock.tryLock(HOT_LOCK_PATH)){//获取分布式锁
                try {
@@ -56,7 +55,7 @@ public class ScheduledServiceImpl implements IScheduledService {
             }
     }
 
-    @Scheduled(cron = "0 0/2 * * * ?")
+//    @Scheduled(cron = "0 0/2 * * * ?")
     public void scheduledKill() {
 
         if(zkLock.tryLock(KILL_LOCK_PATH)){//获取分布式锁

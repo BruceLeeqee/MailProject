@@ -44,6 +44,7 @@
     <result column="parent_sn" jdbcType="VARCHAR" property="parentSn" />
     <result column="is_distribut" jdbcType="BIT" property="isDistribut" />
     <result column="receive_time" jdbcType="BIGINT" property="receiveTime" />
+    <collection property="orderGoodsList" column="order_id" select="cn.enjoy.kill.dao.OrderGoodsMapper.selectByOrderId"/>
   </resultMap>
   <sql id="Base_Column_List">
     <!--
@@ -517,6 +518,9 @@
     <if test="userId != null and userId != ''">
        and o.user_id = #{userId,jdbcType=VARCHAR}
     </if>
+    <if test="addTime != null and addTime != ''">
+      <![CDATA[and o.add_time < #{addTime,jdbcType=BIGINT}]]>
+    </if>
     <if test="type != null and type == 1">
        and o.order_status in (0,1,2,4)
     </if>
@@ -542,6 +546,7 @@
                  )
       )
     </if>
+    order by o.add_time desc limit #{pageSize}
   </select>
 
   <select id="selectOrderNum" parameterType="java.util.Map" resultType="Integer">
