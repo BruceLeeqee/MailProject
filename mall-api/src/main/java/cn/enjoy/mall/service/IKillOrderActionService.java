@@ -2,13 +2,16 @@ package cn.enjoy.mall.service;
 
 import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.model.OrderAction;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 import java.util.Map;
 
-@RequestMapping("/order/mall/service/IOrderActionService")
-public interface IOrderActionService {
+@RequestMapping("/kill/order/service/IOrderActionService")
+public interface IKillOrderActionService {
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     void save(@RequestBody Order order, @RequestParam("actinNote") String actinNote, @RequestParam("userId") String userId);
 
@@ -21,7 +24,6 @@ public interface IOrderActionService {
     Long savePre(@RequestParam("orderStr") String orderStr,
                  @RequestParam("action") String action, @RequestParam("userId") String userId,
                  @RequestParam("remark") String remark);
-
     /**
      * 写订单日志
      * @param order

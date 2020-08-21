@@ -13,8 +13,8 @@ import cn.enjoy.mall.model.OrderGoods;
 import cn.enjoy.mall.model.SpecGoodsPrice;
 import cn.enjoy.mall.model.UserAddress;
 import cn.enjoy.mall.mongo.GoodsDao;
+import cn.enjoy.mall.service.IKillOrderActionService;
 import cn.enjoy.mall.service.IKillOrderService;
-import cn.enjoy.mall.service.IOrderActionService;
 import cn.enjoy.mall.vo.GoodsVo;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
@@ -55,7 +55,7 @@ public class OrderServiceImpl implements IKillOrderService {
     @Resource
     private GoodsDao goodsDao;
     @Resource
-    private IOrderActionService orderActionService;
+    private IKillOrderActionService orderActionService;
     @Resource
     private SequenceGenerator sequenceGenerator;
 
@@ -145,7 +145,7 @@ public class OrderServiceImpl implements IKillOrderService {
         //保存订单产品信息
         orderGoodsMapper.insertBatch(orderGoodsList);
         //订单日志
-        orderActionService.save(order, "创建秒杀订单", userId);
+//        orderActionService.save(order, "创建秒杀订单", userId);
 
         //清空用于分页的缓存
         redisTemplate.opsForHash().delete(userId);
@@ -309,5 +309,10 @@ public class OrderServiceImpl implements IKillOrderService {
     public List<Order> queryByPage(Integer type, String keywords, String userId, Long addTime,int pageSize) {
         List<Order> pageList = orderMapper.queryByPage(type, keywords,userId, addTime == 0 ? "" : addTime,pageSize);
         return pageList;
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderMapper.updateByPrimaryKeySelective(order);
     }
 }

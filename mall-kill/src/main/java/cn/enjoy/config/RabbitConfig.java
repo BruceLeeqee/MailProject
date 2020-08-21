@@ -1,6 +1,7 @@
 package cn.enjoy.config;
 
 import cn.enjoy.mall.service.mq.SecKillReceiver;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
@@ -14,6 +15,7 @@ import org.springframework.context.annotation.Configuration;
  *@author Mark老师   享学课堂 https://enjoy.ke.qq.com
  *类说明：
  */
+@Slf4j
 @Configuration
 public class RabbitConfig {
 

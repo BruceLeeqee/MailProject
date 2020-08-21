@@ -47,4 +47,7 @@ public interface IKillOrderService {
 
     @GetMapping("detail/{orderId}")
     public Order search(@RequestParam("orderId")@PathVariable("orderId") Long orderId);
+
+    @RequestMapping(value = "/updateOrder", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    void updateOrder(@RequestBody Order order);
 }

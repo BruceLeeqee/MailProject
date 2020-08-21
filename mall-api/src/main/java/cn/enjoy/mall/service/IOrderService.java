@@ -50,4 +50,7 @@ public interface IOrderService {
 
     @RequestMapping(value = "/confirmReceiveGoods", method = RequestMethod.POST)
     void confirmReceiveGoods(@RequestParam("orderId") Long orderId, @RequestParam("userId") String userId);
+
+    @RequestMapping(value = "/updateOrder", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    void updateOrder(@RequestBody Order order);
 }

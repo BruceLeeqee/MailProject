@@ -5,6 +5,7 @@ import cn.enjoy.mall.service.IPayService;
 import cn.enjoy.mall.wxsdk.WXPay;
 import cn.enjoy.mall.wxsdk.WXPayUtil;
 import cn.enjoy.mall.wxsdk.WxPayConfigImpl;
+import cn.enjoy.mq.OrderLogSender;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,6 +48,9 @@ public class NotifyController {
     @Value("${wx.notify_url}")
     private String notify_url = "http://www.weixin.qq.com/wxpay/pay.php";
 
+    @Autowired
+    private OrderLogSender secKillSender;
+
     @RequestMapping(value = "/wx/notify", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String payNotifyUrl(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -73,9 +77,11 @@ public class NotifyController {
         logger.info("--------map ------" + JSONObject.toJSONString(map));
         if (return_code.equals("SUCCESS")) {
             if (result_code.equals("SUCCESS")) {
-                String payResult = payService.updateByActionId(map.get("out_trade_no"));
-                logger.info("----------payResult:-----" + payResult);
-                return payResult;
+                //异步记录日志，修改订单状态
+                secKillSender.send(map.get("out_trade_no"));
+//                String payResult = payService.updateByActionId(map.get("out_trade_no"));
+//                logger.info("----------payResult:-----" + payResult);
+                return "SUCCESS";
             }
         }
         return "fail";

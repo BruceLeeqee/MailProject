@@ -10,6 +10,7 @@ import cn.enjoy.mall.service.IOrderActionService;
 import cn.enjoy.mall.service.IPayService;
 import cn.enjoy.mall.service.IWxPayService;
 import com.alibaba.fastjson.JSONObject;
+import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -30,11 +30,23 @@ public class PayServiceImpl implements IPayService {
     private IOrderActionService orderActionService;
     @Autowired
     private IWxPayService iWxPayService;
-    @Transactional
+
+    @Autowired
+    private DefaultUidGenerator defaultUidGenerator;
+
+    private Map<String,String> doKillPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId){
+        return null;
+    }
+
+//    @Transactional
     @Override
     public Map<String, String> doPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId){
 
-        Order order = orderMapper.selectByPrimaryKey(orderId);
+       /* Order order = orderMapper.selectByPrimaryKey(orderId);
+        //如果查询不到订单，则是秒杀订单
+        if(order == null)  {
+            return doKillPrePay(orderId,payCode,payAmount,userId);
+        }
         Map<String, String> return_map = new HashMap<>();
         if(payAmount.compareTo(order.getOrderAmount())!=0){
             return_map.put("result_code","fail");
@@ -59,11 +71,12 @@ public class PayServiceImpl implements IPayService {
         orderMapper.updateByPrimaryKeySelective(order);
         String orderStr = JSONObject.toJSONString(order);
         Long action_id = orderActionService.savePre(orderStr,null,"微信-预支付订单",userId,"微信-预支付订单");
-
-        Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(action_id),payAmount,userId);
-        orderActionService.updatePre(action_id,map);
+*/
+        Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(orderId),payAmount,userId);
+//        orderActionService.updatePre(action_id,map);
         return map;
     }
+
     @Transactional
     @Override
     public String updateByActionId(String actionId) {

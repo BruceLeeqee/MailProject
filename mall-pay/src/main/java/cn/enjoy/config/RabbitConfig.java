@@ -1,5 +1,6 @@
-package cn.enjoy.mall.config;
+package cn.enjoy.config;
 
+import cn.enjoy.mq.OrderLogReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -7,6 +8,7 @@ import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,8 +20,8 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class RabbitConfig {
 
-    public final static String EXCHANGE_SECKILL = "order.seckill.producer";
-    public final static String KEY_SECKILL = "order.seckill";
+    public final static String EXCHANGE_LOG = "order.log.producer";
+    public final static String KEY_LOG = "order.log";
 
     @Value("${spring.rabbitmq.host}")
     private String addresses;
@@ -68,21 +70,21 @@ public class RabbitConfig {
 
 
     @Bean
-    public Queue queueSecKillMessage() {
-        return new Queue("order.seckill.producer");
+    public Queue queuelogMessage() {
+        return new Queue("order.log.queue");
     }
 
     @Bean
     public DirectExchange exchange() {
-        return new DirectExchange(EXCHANGE_SECKILL);
+        return new DirectExchange(EXCHANGE_LOG);
     }
 
     @Bean
-    public Binding bindingSecKillExchangeMessage() {
+    public Binding bindingLogExchangeMessage() {
         return BindingBuilder
-                .bind(queueSecKillMessage())
+                .bind(queuelogMessage())
                 .to(exchange())
-                .with(KEY_SECKILL);
+                .with(KEY_LOG);
     }
 
 
@@ -122,6 +124,17 @@ public class RabbitConfig {
                 log.info("Returned Message："+msgJson);
             }
         };
+    }
+
+    //===============消费者确认==========
+    @Bean
+    public SimpleMessageListenerContainer messageContainer(OrderLogReceiver orderLogReceiver) {
+        SimpleMessageListenerContainer container
+                = new SimpleMessageListenerContainer(connectionFactory());
+        container.setQueues(queuelogMessage());
+        container.setAcknowledgeMode(AcknowledgeMode.MANUAL);
+        container.setMessageListener(orderLogReceiver);
+        return container;
     }
 
 }

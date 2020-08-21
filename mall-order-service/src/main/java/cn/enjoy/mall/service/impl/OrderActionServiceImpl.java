@@ -59,6 +59,24 @@ public class OrderActionServiceImpl implements IOrderActionService {
     }
 
     @Override
+    public Long savePre(String orderStr,String action, String userId, String remark) {
+        Order order = JSONObject.parseObject(orderStr,Order.class);
+        OrderAction orderAction = new OrderAction();
+        orderAction.setActionId(defaultUidGenerator.getUID());
+        orderAction.setActionUser(userId);
+        orderAction.setLogTime(System.currentTimeMillis());
+        orderAction.setOrderId(order.getOrderId());
+        orderAction.setOrderStatus(order.getOrderStatus());
+        orderAction.setPayStatus(order.getPayStatus());
+        orderAction.setShippingStatus(order.getShippingStatus());
+        orderAction.setStatusDesc(action);
+        orderAction.setActionNote(remark);
+        orderActionMapper.insert(orderAction);
+        return orderAction.getActionId();
+    }
+
+
+    @Override
     public Long updatePre(Long actionId,Map map ) {
         OrderAction orderAction = orderActionMapper.selectByPrimaryKey(actionId);
         if(map.get("trade_type")!=null){

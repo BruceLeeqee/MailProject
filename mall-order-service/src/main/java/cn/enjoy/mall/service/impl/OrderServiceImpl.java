@@ -100,9 +100,6 @@ public class OrderServiceImpl implements IOrderService {
         //未发货
         order.setShippingStatus(ShippingStatus.UNSHIPPED.getCode());
         //获取发货地址
-//        Map map = new HashMap();
-//        map.put("addressId",orderCreateVo.getAddressId());
-//        UserAddress userAddress = iUserAddressService.selectById(map).get(0);
         UserAddress userAddress = userAddressMapper.selectByPrimaryKey(orderCreateVo.getAddressId());
         BeanUtils.copyProperties(userAddress, order);
         order.setUserId(userId);
@@ -168,7 +165,7 @@ public class OrderServiceImpl implements IOrderService {
         //清除购物车中已下单的商品
         shoppingCartService.removeCheckedGoodsList(userId);
         //订单日志
-        orderActionService.save(order, "创建订单", userId);
+//        orderActionService.save(order, "创建订单", userId);
 
         //清空用于分页的缓存
         redisTemplate.opsForHash().delete(userId);
@@ -492,5 +489,10 @@ public class OrderServiceImpl implements IOrderService {
             payStatus = null;
         }
         return payStatus;
+    }
+
+    @Override
+    public void updateOrder(Order order) {
+        orderMapper.updateByPrimaryKeySelective(order);
     }
 }
