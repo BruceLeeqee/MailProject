@@ -84,7 +84,12 @@ spring:
     password: admin
     publisher-confirms: true
     virtual-host: /
-
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: pay_tx_group
 eureka:
   client:
     service-url:

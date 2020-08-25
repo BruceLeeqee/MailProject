@@ -31,6 +31,9 @@ spring:
         initial-interval: 1000
         max-interval: 2000
         max-attempts: 6
+    alibaba:
+      seata:
+        tx-service-group: pay_tx_group
   rabbitmq:
     host: 94.191.83.120
     port: 5672
