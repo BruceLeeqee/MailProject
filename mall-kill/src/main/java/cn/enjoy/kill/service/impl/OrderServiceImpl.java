@@ -23,6 +23,8 @@ import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,6 +71,9 @@ public class OrderServiceImpl implements IKillOrderService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     /**
      * 订单详情
@@ -313,6 +320,18 @@ public class OrderServiceImpl implements IKillOrderService {
 
     @Override
     public void updateOrder(Order order) {
-        orderMapper.updateByPrimaryKeySelective(order);
+        String sql = "update tp_order_kill set pay_status = ?,pay_code = ?,pay_name = ?,pay_time = ? where order_id = ?";
+        jdbcTemplate.update(sql, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps) throws SQLException {
+                ps.setInt(1,order.getPayStatus());
+                ps.setString(2,order.getPayCode());
+                ps.setString(3,order.getPayName());
+                ps.setLong(4,order.getPayTime());
+                ps.setLong(5,order.getOrderId());
+            }
+        });
+//        orderMapper.updateByPrimaryKeySelective(order);
+        throw new RuntimeException("秒杀订单异常！");
     }
 }

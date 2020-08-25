@@ -11,6 +11,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -44,8 +45,9 @@ public class DruidConfig {
     //这里需要注意默认是读取的application.properties配置文件。
     //如果你的配置文件不在默认文件中。
     //需要在类中引入配置文件例如：@PropertySource(value = "classpath:druid.properties")
+    @Primary
     @Bean(destroyMethod = "close",initMethod = "init")
-    public DataSource getMasterDs(){
+    public DataSource getMycatDs(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(driverClassName);
         druidDataSource.setUrl(jdbcUrl);
@@ -102,7 +104,7 @@ public class DruidConfig {
 //    @Bean
     public DataSource dynamicDataSource() {
         Map<Object, Object> targetDataSources = new HashMap<>();
-        DataSource masterDs = getMasterDs();
+        DataSource masterDs = getMycatDs();
         targetDataSources.put(DBTypeEnum.MASTER,masterDs);
         targetDataSources.put(DBTypeEnum.SLAVE,getSlave1Ds());
         MyRoutingDataSource myRoutingDataSource = new MyRoutingDataSource();

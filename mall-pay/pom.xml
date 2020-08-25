@@ -18,6 +18,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <jboss-resteasy-version>3.1.4.Final</jboss-resteasy-version>
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
+        <seata.version>1.0.0</seata.version>
     </properties>
 
     <parent>
@@ -130,6 +131,27 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.67</version>
         </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-seata</artifactId>
+            <version>2.1.0.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>seata-all</artifactId>
+                    <groupId>io.seata</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.11</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -182,18 +204,20 @@
             <resource>
                 <directory>src/main/java</directory>
                 <includes>
+                    <include>**/*.properties</include>
                     <include>**/*.xml</include>
                 </includes>
+                <filtering>false</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
+                    <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
                     <include>**/*.txt</include>
                     <include>**/*.keystore</include>
-                    <include>**/*.html</include>
-                    <include>**/*.yml</include>
+                    <include>**/*.conf</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

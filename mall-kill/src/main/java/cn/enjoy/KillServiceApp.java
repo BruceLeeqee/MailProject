@@ -3,6 +3,8 @@ package cn.enjoy;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.JdbcTemplateAutoConfiguration;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -14,7 +16,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * Date 2020/8/12 13:58
  * Version 1.0
  */
-@SpringBootApplication
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class, JdbcTemplateAutoConfiguration.class})
 @MapperScan("cn.enjoy.kill.dao")
 @EnableScheduling
 @EnableEurekaClient

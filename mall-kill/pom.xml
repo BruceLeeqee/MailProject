@@ -20,6 +20,7 @@
         <spring-cloud.version>Hoxton.SR1</spring-cloud.version>
         <jboss-resteasy-version>3.1.4.Final</jboss-resteasy-version>
         <c3p0-version>0.9.5.2</c3p0-version>
+        <seata.version>1.0.0</seata.version>
     </properties>
 
     <parent>
@@ -162,8 +163,8 @@
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <version>1.0.26</version>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.10</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
@@ -204,6 +205,27 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <!--百度id生成-->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-seata</artifactId>
+            <version>2.1.0.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>seata-all</artifactId>
+                    <groupId>io.seata</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+            <version>${seata.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.11</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -305,6 +327,7 @@
                     <include>**/*.xml</include>
                     <include>**/*.txt</include>
                     <include>**/*.keystore</include>
+                    <include>**/*.conf</include>
                 </includes>
                 <filtering>false</filtering>
             </resource>

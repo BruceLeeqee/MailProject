@@ -1,8 +1,8 @@
 dfs:
   url: 94.191.83.120:8181
 druid-master:
-  jdbcUrl: jdbc:mysql://94.191.83.120:3307/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
-  jdbcUrl1: jdbc:mysql://94.191.83.120:3308/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl: jdbc:mysql://106.55.152.41:3309/kill?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl1: jdbc:mysql://106.55.152.41:3310/kill?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   username: root
   password: root
   driver-class-name: com.mysql.jdbc.Driver
@@ -86,6 +86,10 @@ spring:
     virtual-host: /
   main:
     allow-bean-definition-overriding: true
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: pay_tx_group
 
 eureka:
   client:
@@ -131,3 +135,69 @@ logging:
       enjoy:
         kill:
           dao: debug
+
+#seata:
+#  enabled: true
+#  application-id: mall-pay
+#  tx-service-group: pay_tx_group
+#  enable-auto-data-source-proxy: true
+#  use-jdk-proxy: false
+#  excludes-for-auto-proxying: firstClassNameForExclude,secondClassNameForExclude
+#  client:
+#    rm:
+#      async-commit-buffer-limit: 1000
+#      report-retry-count: 5
+#      table-meta-check-enable: false
+#      report-success-enable: false
+#      saga-branch-register-enable: false
+#      lock:
+#        retry-interval: 10
+#        retry-times: 30
+#        retry-policy-branch-rollback-on-conflict: true
+#    tm:
+#      degrade-check: false
+#      degrade-check-period: 2000
+#      degrade-check-allow-times: 10
+#      commit-retry-count: 5
+#      rollback-retry-count: 5
+#    undo:
+#      data-validation: true
+#      log-serialization: jackson
+#      log-table: undo_log
+#      only-care-update-columns: true
+#    log:
+#      exceptionRate: 100
+#  #  service:
+#  #    vgroup-mapping:
+#  #      pay_tx_group: default
+#  #    grouplist:
+#  #      default: 127.0.0.1:8091
+#  #    enable-degrade: false
+#  #    disable-global-transaction: false
+#  transport:
+#    shutdown:
+#      wait: 3
+#    thread-factory:
+#      boss-thread-prefix: NettyBoss
+#      worker-thread-prefix: NettyServerNIOWorker
+#      server-executor-thread-prefix: NettyServerBizHandler
+#      share-boss-worker: false
+#      client-selector-thread-prefix: NettyClientSelector
+#      client-selector-thread-size: 1
+#      client-worker-thread-prefix: NettyClientWorkerThread
+#      worker-thread-size: default
+#      boss-thread-size: 1
+#    type: TCP
+#    server: NIO
+#    heartbeat: true
+#    serialization: seata
+#    compressor: none
+#    enable-client-batch-send-request: true
+#  config:
+#    type: file
+#  registry:
+#    redis:
+#      server-addr: 106.52.62.38:6379
+#      db: 0
+#      password: 123456
+#      timeout: 0
