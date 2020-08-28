@@ -332,6 +332,6 @@ public class OrderServiceImpl implements IKillOrderService {
             }
         });
 //        orderMapper.updateByPrimaryKeySelective(order);
-        throw new RuntimeException("秒杀订单异常！");
+//        throw new RuntimeException("秒杀订单异常！");
     }
 }

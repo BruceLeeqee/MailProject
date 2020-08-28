@@ -2,8 +2,8 @@ dfs:
   url: 94.191.83.120:8181
 # 114.115.171.119 root Mall123!#$
 druid-master:
-  jdbcUrl: jdbc:mysql://94.191.83.120:3307/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
-  jdbcUrl1: jdbc:mysql://94.191.83.120:3308/mall?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl: jdbc:mysql://106.52.62.38:3307/product?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl1: jdbc:mysql://106.52.62.38:3307/product?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   username: root
   password: root
   driver-class-name: com.mysql.jdbc.Driver
@@ -74,7 +74,12 @@ spring:
     initialize: false
   application:
     name: mall-product-service
-
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    alibaba:
+      seata:
+        tx-service-group: pay_tx_group
 eureka:
   client:
     service-url:

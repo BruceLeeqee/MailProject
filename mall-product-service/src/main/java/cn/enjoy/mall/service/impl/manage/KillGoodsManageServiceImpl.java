@@ -9,10 +9,15 @@ import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import com.github.miemiedev.mybatis.paginator.domain.PageBounds;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
 import com.github.miemiedev.mybatis.paginator.domain.Paginator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.concurrent.TimeUnit;
 
 @RestController
@@ -22,6 +27,9 @@ public class KillGoodsManageServiceImpl implements IKillSpecManageService {
 
     @Resource
     private KillGoodsPriceMapper killGoodsPriceMapper;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public int delete(Integer id) {
@@ -81,6 +89,20 @@ public class KillGoodsManageServiceImpl implements IKillSpecManageService {
     @Override
     public int updateSecKill(KillGoodsPrice record) {
         int i = killGoodsPriceMapper.updateSecKill(record);
+        return i;
+    }
+
+    @Override
+    public int updateBySpecGoodsId(KillGoodsPrice record) {
+        String sql = "update tp_kill_goods_price set kill_count = kill_count-? where spec_goods_id = ? and kill_count > 0";
+        int i = jdbcTemplate.update(sql, new PreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps) throws SQLException {
+                ps.setInt(1, record.getKillCount());
+                ps.setInt(2, record.getSpecGoodsId());
+            }
+        });
+//        int i = killGoodsPriceMapper.updateSecKill(record);
         return i;
     }
 

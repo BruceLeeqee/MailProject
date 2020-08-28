@@ -36,6 +36,9 @@ public interface IKillSpecManageService {
     @RequestMapping(value = "/updateSecKill", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     int updateSecKill(@RequestBody KillGoodsPrice record);
 
+    @RequestMapping(value = "/updateBySpecGoodsId", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    int updateBySpecGoodsId(@RequestBody KillGoodsPrice record);
+
     @RequestMapping(value = "/flushCache", method = RequestMethod.POST)
     void flushCache(@RequestBody KillGoodsPrice record);
 

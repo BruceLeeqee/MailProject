@@ -11,6 +11,7 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -45,6 +46,7 @@ public class DruidConfig {
     //如果你的配置文件不在默认文件中。
     //需要在类中引入配置文件例如：@PropertySource(value = "classpath:druid.properties")
     @Bean(destroyMethod = "close",initMethod = "init")
+    @Primary
     public DataSource getMasterDs(){
         DruidDataSource druidDataSource = new DruidDataSource();
         druidDataSource.setDriverClassName(driverClassName);

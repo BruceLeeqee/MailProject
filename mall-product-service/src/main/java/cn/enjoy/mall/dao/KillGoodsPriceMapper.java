@@ -20,6 +20,8 @@ public interface KillGoodsPriceMapper {
 
     int updateSecKill(KillGoodsPrice record);
 
+    int updateBySpecGoodsId(KillGoodsPrice record);
+
     PageList<KillGoodsSpecPriceDetailVo> select(@Param("keyword") String keyword, PageBounds pageBounds);
 
     Integer selectTotalCount(@Param("keyword") String keyword);

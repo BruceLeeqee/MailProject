@@ -14,18 +14,23 @@ import cn.enjoy.mall.vo.GoodsPageVo;
 import cn.enjoy.mall.vo.GoodsSpecPriceAttrVo;
 import cn.enjoy.mall.vo.GoodsVo;
 import com.github.pagehelper.PageHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
+import org.springframework.jdbc.core.BatchPreparedStatementSetter;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
@@ -72,6 +77,9 @@ public class GoodsServiceImpl implements IGoodsService {
 
     @Value("${dfs.url}")
     private String dfsurl;
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Override
     public GoodsVo findOneById(Integer goodsId) {
@@ -639,5 +647,23 @@ public class GoodsServiceImpl implements IGoodsService {
             }
         }
         return list;
+    }
+
+    @Override
+    public int updateBySpecGoodsIds(List<SpecGoodsPrice> records) {
+        String sql = "update tp_spec_goods_price set store_count = store_count-? where id = ? and store_count > 0";
+        int[] ints = jdbcTemplate.batchUpdate(sql, new BatchPreparedStatementSetter() {
+            @Override
+            public void setValues(PreparedStatement ps, int i) throws SQLException {
+                ps.setInt(1, records.get(i).getStoreCount());
+                ps.setInt(2, records.get(i).getId());
+            }
+
+            @Override
+            public int getBatchSize() {
+                return records.size();
+            }
+        });
+        return ints.length;
     }
 }

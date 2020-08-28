@@ -6,6 +6,7 @@ import cn.enjoy.mall.vo.GoodsDetailVo;
 import cn.enjoy.mall.vo.GoodsPageVo;
 import cn.enjoy.mall.vo.GoodsSpecPriceAttrVo;
 import cn.enjoy.mall.vo.GoodsVo;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -198,4 +199,7 @@ public interface IGoodsService {
      */
     @RequestMapping(value = "/queryHotSellingGoods", method = RequestMethod.POST)
     List<HotSellingGoods> queryHotSellingGoods(@RequestParam("showNum") Integer showNum);
+
+    @RequestMapping(value = "/updateBySpecGoodsId", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    int updateBySpecGoodsIds(@RequestBody List<SpecGoodsPrice> records);
 }

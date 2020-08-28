@@ -2,11 +2,18 @@ package cn.enjoy.mall.service;
 
 import cn.enjoy.mall.constant.PayStatus;
 import cn.enjoy.mall.constant.PayType;
+import cn.enjoy.mall.model.KillGoodsPrice;
 import cn.enjoy.mall.model.Order;
+import cn.enjoy.mall.model.OrderGoods;
+import cn.enjoy.mall.model.SpecGoodsPrice;
+import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import com.alibaba.fastjson.JSONObject;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 支付完成后的业务处理
@@ -32,6 +39,12 @@ public class PayCompleteServiceImpl implements PayCompleteService {
     @Autowired
     private IKillOrderActionService killOrderActionService;
 
+    @Autowired
+    private IKillSpecManageService killSpecManageService;
+
+    @Autowired
+    private IGoodsService goodsService;
+
     @GlobalTransactional
     @Override
     public void payCompleteBusiness(String orderId) {
@@ -45,6 +58,16 @@ public class PayCompleteServiceImpl implements PayCompleteService {
             order.setPayName(PayType.getDescByCode("weixin"));
             order.setPayTime(System.currentTimeMillis());
             orderService.updateOrder(order);
+
+            List<SpecGoodsPrice> sgps = new ArrayList<>();
+            for (OrderGoods orderGoods : order.getOrderGoodsList()) {
+                SpecGoodsPrice specGoodsPrice = new SpecGoodsPrice();
+                specGoodsPrice.setId(orderGoods.getSpecGoodsId());
+                specGoodsPrice.setStoreCount(Integer.valueOf(orderGoods.getGoodsNum()));
+                sgps.add(specGoodsPrice);
+            }
+            //扣减库存
+            goodsService.updateBySpecGoodsIds(sgps);
         } else {
             Order killorder = killorderService.search(Long.valueOf(orderId));
             String orderStr = JSONObject.toJSONString(killorder);
@@ -54,6 +77,12 @@ public class PayCompleteServiceImpl implements PayCompleteService {
             killorder.setPayName(PayType.getDescByCode("weixin"));
             killorder.setPayTime(System.currentTimeMillis());
             killorderService.updateOrder(killorder);
+
+            KillGoodsPrice killGoodsPrice = new KillGoodsPrice();
+            killGoodsPrice.setSpecGoodsId(killorder.getOrderGoodsList().get(0).getSpecGoodsId());
+            killGoodsPrice.setKillCount(1);
+            //扣减库存
+            killSpecManageService.updateBySpecGoodsId(killGoodsPrice);
         }
     }
 }
