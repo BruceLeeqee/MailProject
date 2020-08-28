@@ -20,6 +20,7 @@ import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
 import com.baidu.fsg.uid.impl.CachedUidGenerator;
 import com.baidu.fsg.uid.impl.DefaultUidGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -48,6 +49,7 @@ import java.util.Map;
  * 2|1|1 已完成
  * 4|1|1 已完成
  */
+@Slf4j
 @RestController
 public class OrderServiceImpl implements IKillOrderService {
     @Resource
@@ -82,6 +84,7 @@ public class OrderServiceImpl implements IKillOrderService {
      * @return
      */
     public Order search(@PathVariable("orderId") Long orderId) {
+        log.info("-------search@PathVariable(\"orderId\") Long orderId----");
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if (order != null) {
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);

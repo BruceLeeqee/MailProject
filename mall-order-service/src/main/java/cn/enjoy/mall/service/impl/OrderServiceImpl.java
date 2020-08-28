@@ -20,6 +20,7 @@ import cn.enjoy.mall.vo.OrderCreateVo;
 import cn.enjoy.mall.vo.ShoppingGoodsVo;
 import com.baidu.fsg.uid.impl.CachedUidGenerator;
 import com.baidu.fsg.uid.impl.DefaultUidGenerator;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -45,6 +46,7 @@ import java.util.stream.Collectors;
  * 2|1|1 已完成
  * 4|1|1 已完成
  */
+@Slf4j
 @RestController
 public class OrderServiceImpl implements IOrderService {
     @Resource
@@ -358,6 +360,7 @@ public class OrderServiceImpl implements IOrderService {
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
             order.setOrderGoodsList(goodsList);
         } else {
+            log.info("-------iKillOrderService.search------");
             //如果订单查询不到，则可能是秒杀订单，去秒杀订单
             Order search = iKillOrderService.search(orderId);
             return search;
