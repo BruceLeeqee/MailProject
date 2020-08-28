@@ -154,8 +154,10 @@ public class OrderServiceImpl implements IKillOrderService {
         //订单日志
 //        orderActionService.save(order, "创建秒杀订单", userId);
 
-        //清空用于分页的缓存
-        redisTemplate.opsForHash().delete(userId);
+        if(redisTemplate.hasKey(userId)) {
+            //清空用于分页的缓存
+            redisTemplate.opsForHash().delete(userId);
+        }
         return orderId;
     }
 
