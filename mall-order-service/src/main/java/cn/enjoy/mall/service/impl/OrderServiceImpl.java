@@ -278,8 +278,8 @@ public class OrderServiceImpl implements IOrderService {
         } else {
             if(redisTemplate.opsForHash().hasKey(userId, page)) {
                 Map<String, Long> addTimeMap = (Map) redisTemplate.opsForHash().get(userId, page);
-                naddTime = addTimeMap.get("n");
-                kaddTime = addTimeMap.get("k");
+                naddTime = addTimeMap.get("n") == null ? 0L : addTimeMap.get("n");
+                kaddTime = addTimeMap.get("k") == null ? 0L : addTimeMap.get("k");
             } else {
                 //如果缓存没有显示第一页数据
                 naddTime = 0L;
