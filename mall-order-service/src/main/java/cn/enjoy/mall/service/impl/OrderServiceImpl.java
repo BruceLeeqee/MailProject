@@ -303,7 +303,7 @@ public class OrderServiceImpl implements IOrderService {
         //这里是按照addTime时间降序排序
         allOrders.sort((x, y) -> x.getAddTime() > y.getAddTime() ? -1 : 1);
 
-        List<Order> orders = allOrders.subList(0, pageSize);
+        List<Order> orders = allOrders.subList(0, allOrders.size() < pageSize ? allOrders.size() : pageSize);
 
         //深拷贝这个list
         List<Order> sortOrders = Arrays.asList(new Order[orders.size()]);
