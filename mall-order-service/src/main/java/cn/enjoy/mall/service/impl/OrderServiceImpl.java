@@ -178,7 +178,7 @@ public class OrderServiceImpl implements IOrderService {
 
         if(redisTemplate.hasKey(userId)) {
             //清空用于分页的缓存
-            redisTemplate.opsForHash().delete(userId);
+            redisTemplate.delete(userId);
         }
 
         return orderId;
