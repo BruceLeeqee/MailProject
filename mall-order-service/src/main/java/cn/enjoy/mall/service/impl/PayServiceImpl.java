@@ -129,23 +129,23 @@ public class PayServiceImpl implements IPayService {
         return order;
     }
 
-    @Transactional
+//    @Transactional
     @Override
     public String doPay(Long orderId, String payCode, BigDecimal payAmount,String userId) {
-        Order order = orderMapper.selectByPrimaryKey(orderId);
-        if(payAmount.compareTo(order.getOrderAmount())!=0){
-            return "支付金额不正确";
-        }
-        String payName = PayType.getDescByCode(payCode);
-        if(StringUtils.isEmpty(payName)){
-            return "支付方式不存在";
-        }
-        order.setPayStatus(PayStatus.PAID.getCode());
-        order.setPayCode(payCode);
-        order.setPayName(PayType.getDescByCode(payCode));
-        order.setPayTime(System.currentTimeMillis());
-        orderMapper.updateByPrimaryKeySelective(order);
-        orderActionService.save(order,"支付成功",userId);
+//        Order order = orderMapper.selectByPrimaryKey(orderId);
+//        if(payAmount.compareTo(order.getOrderAmount())!=0){
+//            return "支付金额不正确";
+//        }
+//        String payName = PayType.getDescByCode(payCode);
+//        if(StringUtils.isEmpty(payName)){
+//            return "支付方式不存在";
+//        }
+//        order.setPayStatus(PayStatus.PAID.getCode());
+//        order.setPayCode(payCode);
+//        order.setPayName(PayType.getDescByCode(payCode));
+//        order.setPayTime(System.currentTimeMillis());
+//        orderMapper.updateByPrimaryKeySelective(order);
+//        orderActionService.save(order,"支付成功",userId);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("respCode","0");
         jsonObject.put("respMsg","成功");
