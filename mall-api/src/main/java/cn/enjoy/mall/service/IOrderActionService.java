@@ -40,4 +40,7 @@ public interface IOrderActionService {
 
     @RequestMapping(value = "/queryByOrderId", method = RequestMethod.POST)
     List<OrderAction> queryByOrderId(@RequestParam("orderId") Long orderId);
+
+    @RequestMapping(value = "/queryByActionId", method = RequestMethod.POST)
+    OrderAction queryByActionId(@RequestParam("actionId") Long actionId);
 }

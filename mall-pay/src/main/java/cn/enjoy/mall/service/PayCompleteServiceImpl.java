@@ -1,13 +1,7 @@
 package cn.enjoy.mall.service;
 
-import cn.enjoy.mall.constant.PayStatus;
-import cn.enjoy.mall.constant.PayType;
-import cn.enjoy.mall.model.KillGoodsPrice;
-import cn.enjoy.mall.model.Order;
-import cn.enjoy.mall.model.OrderGoods;
-import cn.enjoy.mall.model.SpecGoodsPrice;
+import cn.enjoy.mall.model.*;
 import cn.enjoy.mall.service.manage.IKillSpecManageService;
-import com.alibaba.fastjson.JSONObject;
 import io.seata.spring.annotation.GlobalTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,19 +39,27 @@ public class PayCompleteServiceImpl implements PayCompleteService {
     @Autowired
     private IGoodsService goodsService;
 
+    @Autowired
+    private IPayService iPayService;
+
+    @Autowired
+    private IKillPayService iKillPayService;
+
     @GlobalTransactional
     @Override
-    public void payCompleteBusiness(String orderId) {
+    public void payCompleteBusiness(String actionId) {
         //1、根据订单id查询是什么订单
-        Order order = orderService.selectOrderDetail(Long.valueOf(orderId));
-        if (order != null) {
-            String orderStr = JSONObject.toJSONString(order);
-            orderActionService.savePre(orderStr, "微信支付成功", order.getUserId(), "微信支付成功");
-            order.setPayStatus(PayStatus.PAID.getCode());
-            order.setPayCode("weixin");
-            order.setPayName(PayType.getDescByCode("weixin"));
-            order.setPayTime(System.currentTimeMillis());
-            orderService.updateOrder(order);
+//        Order order = orderService.selectOrderDetail(Long.valueOf(orderId));
+        OrderAction orderAction = orderActionService.queryByActionId(Long.valueOf(actionId));
+        if (orderAction != null) {
+//            String orderStr = JSONObject.toJSONString(order);
+//            orderActionService.savePre(orderStr, "微信支付成功", order.getUserId(), "微信支付成功");
+//            order.setPayStatus(PayStatus.PAID.getCode());
+//            order.setPayCode("weixin");
+//            order.setPayName(PayType.getDescByCode("weixin"));
+//            order.setPayTime(System.currentTimeMillis());
+//            orderService.updateOrder(order);
+            Order order = iPayService.updateStatusByActionId(actionId);
 
             List<SpecGoodsPrice> sgps = new ArrayList<>();
             for (OrderGoods orderGoods : order.getOrderGoodsList()) {
@@ -69,17 +71,18 @@ public class PayCompleteServiceImpl implements PayCompleteService {
             //扣减库存
             goodsService.updateBySpecGoodsIds(sgps);
         } else {
-            Order killorder = killorderService.search(Long.valueOf(orderId));
-            String orderStr = JSONObject.toJSONString(killorder);
-            killOrderActionService.savePre(orderStr, "微信支付成功", killorder.getUserId(), "微信支付成功");
-            killorder.setPayStatus(PayStatus.PAID.getCode());
-            killorder.setPayCode("weixin");
-            killorder.setPayName(PayType.getDescByCode("weixin"));
-            killorder.setPayTime(System.currentTimeMillis());
-            killorderService.updateOrder(killorder);
+//            Order killorder = killorderService.search(Long.valueOf(orderId));
+//            String orderStr = JSONObject.toJSONString(killorder);
+//            killOrderActionService.savePre(orderStr, "微信支付成功", killorder.getUserId(), "微信支付成功");
+//            killorder.setPayStatus(PayStatus.PAID.getCode());
+//            killorder.setPayCode("weixin");
+//            killorder.setPayName(PayType.getDescByCode("weixin"));
+//            killorder.setPayTime(System.currentTimeMillis());
+//            killorderService.updateOrder(killorder);
+            Order order = iKillPayService.updateStatusByActionId(actionId);
 
             KillGoodsPrice killGoodsPrice = new KillGoodsPrice();
-            killGoodsPrice.setSpecGoodsId(killorder.getOrderGoodsList().get(0).getSpecGoodsId());
+            killGoodsPrice.setSpecGoodsId(order.getOrderGoodsList().get(0).getSpecGoodsId());
             killGoodsPrice.setKillCount(1);
             //扣减库存
             killSpecManageService.updateBySpecGoodsId(killGoodsPrice);

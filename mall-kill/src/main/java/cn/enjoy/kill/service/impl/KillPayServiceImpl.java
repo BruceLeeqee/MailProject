@@ -1,18 +1,15 @@
-package cn.enjoy.mall.service.impl;
+package cn.enjoy.kill.service.impl;
 
+import cn.enjoy.kill.dao.OrderActionMapper;
+import cn.enjoy.kill.dao.OrderMapper;
 import cn.enjoy.mall.constant.PayStatus;
 import cn.enjoy.mall.constant.PayType;
-import cn.enjoy.mall.dao.OrderActionMapper;
-import cn.enjoy.mall.dao.OrderMapper;
 import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.model.OrderAction;
+import cn.enjoy.mall.service.IKillOrderActionService;
 import cn.enjoy.mall.service.IKillPayService;
-import cn.enjoy.mall.service.IOrderActionService;
-import cn.enjoy.mall.service.IPayService;
 import cn.enjoy.mall.service.IWxPayService;
 import com.alibaba.fastjson.JSONObject;
-import com.baidu.fsg.uid.impl.DefaultUidGenerator;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
@@ -27,23 +24,17 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-@Slf4j
 @RestController
-public class PayServiceImpl implements IPayService {
+public class KillPayServiceImpl implements IKillPayService {
+
     @Resource
     private OrderMapper orderMapper;
     @Resource
     private OrderActionMapper orderActionMapper;
     @Resource
-    private IOrderActionService orderActionService;
+    private IKillOrderActionService orderActionService;
     @Autowired
     private IWxPayService iWxPayService;
-
-    @Autowired
-    private IKillPayService killPayService;
-
-    @Autowired
-    private DefaultUidGenerator defaultUidGenerator;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -51,13 +42,7 @@ public class PayServiceImpl implements IPayService {
     @Transactional
     @Override
     public Map<String, String> doPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId){
-
         Order order = orderMapper.selectByPrimaryKey(orderId);
-        //如果查询不到订单，则是秒杀订单
-        if(order == null)  {
-            log.info("-----------killPayService.doPrePay--------");
-            return killPayService.doPrePay(orderId, payCode, payAmount, userId);
-        }
         Map<String, String> return_map = new HashMap<>();
         if(payAmount.compareTo(order.getOrderAmount())!=0){
             return_map.put("result_code","fail");
@@ -108,7 +93,7 @@ public class PayServiceImpl implements IPayService {
         OrderAction orderAction = orderActionMapper.selectByPrimaryKey(Long.parseLong(actionId));
         Order order = orderMapper.selectByPrimaryKey(orderAction.getOrderId());
 
-        String updateOrderSql = "update tp_order set pay_status = ?,pay_time = ? where order_id = ?";
+        String updateOrderSql = "update tp_order_kill set pay_status = ?,pay_time = ? where order_id = ?";
         jdbcTemplate.update(updateOrderSql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
@@ -117,7 +102,7 @@ public class PayServiceImpl implements IPayService {
                 ps.setLong(3,order.getOrderId());
             }
         });
-        String orderActionSql = "update tp_order_action set pay_status = ?,log_time = ? where action_id = ?";
+        String orderActionSql = "update tp_order_action_kill set pay_status = ?,log_time = ? where action_id = ?";
         jdbcTemplate.update(orderActionSql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
@@ -126,6 +111,7 @@ public class PayServiceImpl implements IPayService {
                 ps.setLong(3,orderAction.getActionId());
             }
         });
+        if(false)throw new RuntimeException("异常测试");
         return order;
     }
 
@@ -154,15 +140,12 @@ public class PayServiceImpl implements IPayService {
 
     @Override
     public String queryByPrepayId(String prepayId) {
+
         OrderAction orderAction = orderActionService.queryByPrepayId(prepayId);
-        if(orderAction == null) {
-            return killPayService.queryByPrepayId(prepayId);
-        } else {
-            if(orderAction.getPayStatus() != null){
-                return orderAction.getPayStatus().toString();
-            }else{
-                return "0";
-            }
+        if(orderAction != null && orderAction.getPayStatus() != null){
+            return orderAction.getPayStatus().toString();
+        }else{
+            return "0";
         }
     }
 }

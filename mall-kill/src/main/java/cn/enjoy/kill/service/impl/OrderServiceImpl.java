@@ -84,7 +84,6 @@ public class OrderServiceImpl implements IKillOrderService {
      * @return
      */
     public Order search(@PathVariable("orderId") Long orderId) {
-        log.info("-------search@PathVariable(\"orderId\") Long orderId----");
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if (order != null) {
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
@@ -155,7 +154,7 @@ public class OrderServiceImpl implements IKillOrderService {
         //保存订单产品信息
         orderGoodsMapper.insertBatch(orderGoodsList);
         //订单日志
-//        orderActionService.save(order, "创建秒杀订单", userId);
+        orderActionService.save(order, "创建秒杀订单", userId);
 
         if(redisTemplate.hasKey(userId)) {
             //清空用于分页的缓存

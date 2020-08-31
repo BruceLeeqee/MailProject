@@ -174,7 +174,7 @@ public class OrderServiceImpl implements IOrderService {
         //清除购物车中已下单的商品
         shoppingCartService.removeCheckedGoodsList(userId);
         //订单日志
-//        orderActionService.save(order, "创建订单", userId);
+        orderActionService.save(order, "创建订单", userId);
 
         if(redisTemplate.hasKey(userId)) {
             //清空用于分页的缓存
@@ -360,7 +360,6 @@ public class OrderServiceImpl implements IOrderService {
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
             order.setOrderGoodsList(goodsList);
         } else {
-            log.info("-------iKillOrderService.search------");
             //如果订单查询不到，则可能是秒杀订单，去秒杀订单
             Order search = iKillOrderService.search(orderId);
             return search;

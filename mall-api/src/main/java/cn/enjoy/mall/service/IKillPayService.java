@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.math.BigDecimal;
 import java.util.Map;
 
-@RequestMapping("/order/mall/service/IPayService")
-public interface IPayService {
+@RequestMapping("/kill/order/service/IPayService")
+public interface IKillPayService {
 
-    @RequestMapping(value = "/doPrePay", method = RequestMethod.POST)
+    @RequestMapping(value = "/doPrePay", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     Map<String, String> doPrePay(@RequestParam("orderId") Long orderId, @RequestParam("payCode") String payCode,
                                  @RequestParam("payAmount") BigDecimal payAmount, @RequestParam("userId") String userId) ;
 

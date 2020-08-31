@@ -103,6 +103,7 @@ public class KillGoodsManageServiceImpl implements IKillSpecManageService {
             }
         });
 //        int i = killGoodsPriceMapper.updateSecKill(record);
+//        if(true)throw new RuntimeException("异常测试");
         return i;
     }
 
