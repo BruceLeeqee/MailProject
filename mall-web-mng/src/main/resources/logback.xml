@@ -12,7 +12,7 @@
     <jmxConfigurator />
      
     <!-- 定义日志文件 输出位置 -->
-    <property name="log_dir" value="logs/web-mng" />
+    <property name="log_dir" value="logs/mall-mng" />
      
     <!-- 日志最大的历史 30天 -->
     <property name="maxHistory" value="30" /> 
@@ -20,10 +20,11 @@
     <!-- ConsoleAppender 控制台输出日志 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>
-                <!-- 设置日志输出格式 -->
+            <!--<pattern>
+                &lt;!&ndash; 设置日志输出格式 &ndash;&gt;
                 %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger - %msg%n
-            </pattern>
+            </pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
  
@@ -53,7 +54,7 @@
         <encoder>
             <pattern>
                 <!-- 设置日志输出格式 -->
-                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5level %logger - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %msg%n
             </pattern>
         </encoder>
     </appender>
@@ -71,7 +72,8 @@
         </rollingPolicy>
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>
+<!--            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n</pattern>-->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%X{traceId}/%X{spanId}] [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 

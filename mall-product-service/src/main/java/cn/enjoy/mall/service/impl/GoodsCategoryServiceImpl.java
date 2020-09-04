@@ -124,10 +124,7 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
                 }
             }
             categoryTree.setNodes(goods);
-
         }
-
-
         return list;
     }
 

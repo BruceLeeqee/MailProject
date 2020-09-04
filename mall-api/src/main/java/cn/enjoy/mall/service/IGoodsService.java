@@ -192,6 +192,9 @@ public interface IGoodsService {
     @RequestMapping(value = "/publishGoods2MongoDB", method = RequestMethod.POST)
     void publishGoods2MongoDB(@RequestParam("goodsId") Integer goodsId);
 
+    @RequestMapping(value = "/publishGoods2MongoDB1", method = RequestMethod.POST)
+    void publishGoods2MongoDB(List<Goods> goods);
+
     /**
      * 查询热销商品
      * @param showNum

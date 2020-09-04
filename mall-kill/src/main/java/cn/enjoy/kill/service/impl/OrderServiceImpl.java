@@ -85,6 +85,7 @@ public class OrderServiceImpl implements IKillOrderService {
      */
     public Order search(@PathVariable("orderId") Long orderId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
+        log.info("----order:-----" + order);
         if (order != null) {
             List<OrderGoods> goodsList = orderGoodsMapper.selectByOrderId(orderId);
             order.setOrderGoodsList(goodsList);

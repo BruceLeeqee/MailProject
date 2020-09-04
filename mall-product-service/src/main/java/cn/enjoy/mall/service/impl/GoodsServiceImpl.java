@@ -392,7 +392,6 @@ public class GoodsServiceImpl implements IGoodsService {
         return goodsDao.queryPage(page, pageSize, GoodsPageVo.class, query);
     }
 
-
     /**
      * 发布所有商品到mongodb
      */
@@ -526,9 +525,8 @@ public class GoodsServiceImpl implements IGoodsService {
             goodsDao.insert(voList);
     }
 
-
-
-    private void publishGoods2MongoDB(List<Goods> list){
+    @Override
+    public void publishGoods2MongoDB(List<Goods> list){
         List<GoodsVo> voList = new ArrayList<>();
         for(Goods goods: list){
             GoodsVo vo = new GoodsVo();

@@ -13,7 +13,7 @@ server:
     min-spare-threads: 100
 spring:
   profiles:
-    active: ${spring.profiles.active:test}
+    active: ${cn.pro.active:test}
 goods:
   pic:
     domain: http://demo5.tp-shop.cn

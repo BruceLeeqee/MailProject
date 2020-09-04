@@ -63,6 +63,23 @@ mybatis:
   mapper-locations: classpath*:mapping/**/*.xml
   config-location: classpath:SqlMapConfig.xml
 spring:
+  sleuth:
+    sampler:
+      percentage: 1.0
+    web:
+      client:
+        enabled: true
+  zipkin:
+    base-url: http://106.55.152.41:9411/
+    sender:
+      type: kafka
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 106.52.62.38:9092
+  kafka:
+    bootstrap-servers: 106.52.62.38:9092
   redis:
     host: 106.52.62.38
     port: 6379
@@ -120,3 +137,7 @@ logging:
       enjoy:
         users:
           dao: debug
+    org:
+      springframework:
+        cloud:
+          sleuth: debug
