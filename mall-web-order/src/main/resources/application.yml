@@ -15,4 +15,4 @@ server:
 
 spring:
   profiles:
-    active: ${spring.profiles.active:test}
+    active: ${cn.pro.active:test}
