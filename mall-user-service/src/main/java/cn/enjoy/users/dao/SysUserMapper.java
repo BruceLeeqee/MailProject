@@ -70,7 +70,7 @@ public interface SysUserMapper {
 
 	List<SysUser> queryByPage(@Param("loginAccount") String loginAccount, @Param("identityCode") String identityCode, PageBounds pageBounds);
 
-	List<SysUser> queryByPage(@Param("loginAccount") String loginAccount, @Param("identityCode") Integer identityCode);
+	List<SysUser> queryByPage(@Param("loginAccount") String loginAccount);
 
 	List<SysUser> queryList();
 

@@ -507,7 +507,7 @@
 			#{itemId}
 		</foreach>
 	</delete>
-
+<!--			and u.identity_code = #{identityCode}-->
 	<select id="queryByPage" resultMap="BaseResultMap" parameterType="java.util.Map" >
 		select
 			u.id,
@@ -536,7 +536,7 @@
 			u.user_name LIKE CONCAT('%',#{loginAccount},'%')
 			)
 		</if>
-		    and u.identity_code = #{identityCode}
+
 			and u.status in (1,2)  AND  left(u.user_name, 5) !='admin'
 	</select>
 
