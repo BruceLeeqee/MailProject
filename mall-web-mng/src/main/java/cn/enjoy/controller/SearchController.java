@@ -11,7 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Ray
+ * 分类和品牌查询
+ *
+ * @author Jack
  * @date 2018/2/11.
  */
 @RestController
@@ -21,8 +23,17 @@ public class SearchController {
     @Autowired
     private IGoodsCategoryService goodsCategoryService;
 
+    /**
+     * 分类和品牌查询
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
+     */
     @GetMapping("getClassification")
-    public HttpResponseBody getClafication(){
+    public HttpResponseBody getClafication() {
         Map<String, Object> data = new HashMap<>();
         //分类
         data.put("types", goodsCategoryService.getClassification());

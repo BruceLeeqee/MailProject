@@ -17,9 +17,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
 
+
+/**
+ * 订单管理
+ *
+ * @author Jack
+ * @date 2020/9/7
+ */
 @RestController
 @RequestMapping("/api/order")
-public class OrderController  extends BaseController {
+public class OrderController extends BaseController {
     @Autowired
     private IOrderService orderService;
     @Autowired
@@ -30,33 +37,45 @@ public class OrderController  extends BaseController {
     private IShippingService shippingService;
     @Autowired
     private IDeliveryService deliveryService;
+
     /**
      * 创建订单
+     *
      * @param crderCreateVo
      * @return
      */
     @PostMapping("save")
-    public HttpResponseBody save(@RequestBody OrderCreateVo crderCreateVo){
-        Long orderId = orderService.createOrder(crderCreateVo,getSessionUserId());
-        return HttpResponseBody.successResponse("ok",orderId);
+    public HttpResponseBody save(@RequestBody OrderCreateVo crderCreateVo) {
+        Long orderId = orderService.createOrder(crderCreateVo, getSessionUserId());
+        return HttpResponseBody.successResponse("ok", orderId);
     }
 
     /**
      * 分页查询订单
+     *
      * @param page
      * @param pageSize
      * @return
      */
     @GetMapping("queryByPage")
     public HttpResponseBody queryByPage(
-                                   @RequestParam(required = false, defaultValue = "0") int page,
-                                   @RequestParam(required = false, defaultValue = "10") int pageSize,
-                                   OrderVo orderVo) {
+            @RequestParam(required = false, defaultValue = "0") int page,
+            @RequestParam(required = false, defaultValue = "10") int pageSize,
+            OrderVo orderVo) {
         return HttpResponseBody.successResponse("ok",
-                orderManageService.queryByPage(page,pageSize, orderVo));
+                orderManageService.queryByPage(page, pageSize, orderVo));
     }
 
-
+    /**
+     * 查询订单详细信息
+     *
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
+     */
     @GetMapping("detail/{orderId}")
     public HttpResponseBody detail(@PathVariable("orderId") Long orderId) {
         return HttpResponseBody.successResponse("ok",
@@ -64,7 +83,18 @@ public class OrderController  extends BaseController {
     }
 
 
-
+    /**
+     * 更新订单信息
+     *
+     * @param order
+     * @param action
+     * @param remark
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
+     */
     @PostMapping("update")
     public HttpResponseBody update(Order order, String action, String remark) {
         orderManageService.update(order);
@@ -74,8 +104,13 @@ public class OrderController  extends BaseController {
     }
 
     /**
-     * 查询物流公司
+     * 快递查询
+     *
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
      */
     @GetMapping("queryShipping")
     public HttpResponseBody queryShipping() {
@@ -84,6 +119,8 @@ public class OrderController  extends BaseController {
 
     /**
      * 根据订单ID查询发货信息
+     *
+     * @param orderId
      * @return
      */
     @GetMapping("queryDeliveryDocByOrderId")
@@ -91,6 +128,17 @@ public class OrderController  extends BaseController {
         return HttpResponseBody.successResponse("ok", deliveryService.queryDeliveryDocByOrderId(orderId));
     }
 
+    /**
+     * 快递信息保存
+     *
+     * @param deliveryDoc
+     * @param selectedIds
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
+     */
     @PostMapping("shipping")
     public HttpResponseBody shipping(DeliveryDoc deliveryDoc, Long[] selectedIds) {
         deliveryDoc.setAdminId(this.getSessionUserId());
@@ -99,12 +147,30 @@ public class OrderController  extends BaseController {
         return HttpResponseBody.successResponse("操作成功");
     }
 
-
+    /**
+     * 根据订单id查询商品信息
+     *
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
+     */
     @GetMapping("queryGoodsByOrderId")
     public HttpResponseBody queryGoodsByOrderId(Long orderId) {
         return HttpResponseBody.successResponse("ok", orderManageService.selectGoodsByOrderId(orderId));
     }
 
+    /**
+     * 根据订单id查询订单日志信息
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
+     */
     @GetMapping("queryLogByOrderId")
     public HttpResponseBody queryLogByOrderId(Long orderId) {
         return HttpResponseBody.successResponse("ok", orderActionService.queryByOrderId(orderId));
@@ -113,34 +179,37 @@ public class OrderController  extends BaseController {
 
     /**
      * 取消订单
+     *
      * @param orderId
      * @return
      */
     @PostMapping("cancel")
-    public HttpResponseBody cancel(@RequestParam Long orderId){
-        orderService.selfCancel(orderId,getSessionUserId());
+    public HttpResponseBody cancel(@RequestParam Long orderId) {
+        orderService.selfCancel(orderId, getSessionUserId());
         return HttpResponseBody.successResponse("ok");
     }
 
     /**
      * 确认收货
+     *
      * @param orderId
      * @return
      */
     @PostMapping("confirmReceiveGoods")
-    public HttpResponseBody confirmReceiveGoods(@RequestParam Long orderId){
-        orderService.confirmReceiveGoods(orderId,getSessionUserId());
+    public HttpResponseBody confirmReceiveGoods(@RequestParam Long orderId) {
+        orderService.confirmReceiveGoods(orderId, getSessionUserId());
         return HttpResponseBody.successResponse("ok");
     }
 
     /**
      * 查询各状态的订单数
+     *
      * @param type 0-全部订单，1-全部有效订单，2-待支付，3-待收货，4-已关闭
      * @return
      */
     @GetMapping("queryOrderNum")
     public HttpResponseBody queryOrderNum(@RequestParam(required = false, defaultValue = "") Integer type) {
-        return HttpResponseBody.successResponse("ok",orderService.queryOrderNum(type,getSessionUserId()));
+        return HttpResponseBody.successResponse("ok", orderService.queryOrderNum(type, getSessionUserId()));
     }
 
 }

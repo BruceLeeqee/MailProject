@@ -9,6 +9,9 @@ import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
 import lombok.extern.slf4j.Slf4j;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,20 +47,92 @@ public class KillGoodsService {
     @Autowired
     private IKillSpecManageService killSpecManageService;
 
+    @Autowired
+    private CacheManager cacheManager;
+
+    /**
+     * 避免缓存雪崩情况出现
+     *
+     * @param
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/4
+     * @version
+     */
     public GridModel<KillGoodsSpecPriceDetailVo> queryByPage() {
+        //1、先从缓存里面拿
         GridModel<KillGoodsSpecPriceDetailVo> gridModel = (GridModel) redisTemplate.opsForValue().get(KillConstants.KILLGOODS_LIST);
         if (null != gridModel) {
             return gridModel;
         }
 
-        gridModel = iKillSpecManageService.queryView(1, 100);
-        if (null != gridModel) {
-            redisTemplate.opsForValue().set(KillConstants.KILLGOODS_LIST, gridModel, 50000, TimeUnit.MILLISECONDS);//set缓存
+        //所有线程在这里等待，避免大量请求怼到数据库，只有获取锁成功的线程允许去查询数据库
+        synchronized (iKillSpecManageService) {
+            //1、获取到锁后，先从缓存里面拿
+            gridModel = (GridModel) redisTemplate.opsForValue().get(KillConstants.KILLGOODS_LIST);
+            if (null != gridModel) {
+                return gridModel;
+            }
+
+            //2、缓存里面没有，再去数据库拿
+            gridModel = iKillSpecManageService.queryView(1, 100);
+
+            //3、如果数据库里面能拿到就设置到缓存中
+            if (null != gridModel) {
+                redisTemplate.opsForValue().set(KillConstants.KILLGOODS_LIST, gridModel, 50000, TimeUnit.MILLISECONDS);//set缓存
+            }
         }
         return gridModel;
     }
 
     public KillGoodsSpecPriceDetailVo detail(Integer id) {
+        String killgoodDetail = KillConstants.KILLGOOD_DETAIL + id;
+
+        //1、先查询本地缓存有没有
+        Cache killgoodsCache = cacheManager.getCache("killgoodDetail");
+        KillGoodsSpecPriceDetailVo killGoodsPrice = null;
+
+        //2、如果本地缓存中有，直接返回
+        if (null != killgoodsCache.get(killgoodDetail)) {
+            log.info(Thread.currentThread().getName() + "---------ehcache缓存中得到数据----------");
+            killGoodsPrice = (KillGoodsSpecPriceDetailVo)killgoodsCache.get(killgoodDetail).getObjectValue();
+            return killGoodsPrice;
+        }
+
+        //3、如果本地缓存中没有，则走redis缓存
+        killGoodsPrice = (KillGoodsSpecPriceDetailVo) redisTemplate.opsForValue()
+                .get(killgoodDetail);
+        if (null != killGoodsPrice) {
+            log.info(Thread.currentThread().getName() + "---------redis缓存中得到数据----------");
+            return killGoodsPrice;
+        }
+        //4、本地缓存，redis缓存都没有，走数据库，防止缓存雪崩情况出现，这里加锁
+        synchronized (iKillSpecManageService) {
+            //2、如果本地缓存中有，直接返回
+            if (null != killgoodsCache.get(killgoodDetail)) {
+                log.info(Thread.currentThread().getName() + "---------ehcache缓存中得到数据----------");
+                killGoodsPrice = (KillGoodsSpecPriceDetailVo)killgoodsCache.get(killgoodDetail).getObjectValue();
+                return killGoodsPrice;
+            }
+
+            killGoodsPrice = (KillGoodsSpecPriceDetailVo) redisTemplate.opsForValue().get(killgoodDetail);
+            if (null != killGoodsPrice) {
+                log.info(Thread.currentThread().getName() + "---------redis缓存中得到数据----------");
+                return killGoodsPrice;
+            }
+
+            killGoodsPrice = iKillSpecManageService.detailById(id);
+            if (null != killGoodsPrice) {
+                killgoodsCache.putIfAbsent(new Element(killgoodDetail,killGoodsPrice));
+                //缓存2天，redis缓存时间比本地缓存长
+                redisTemplate.opsForValue().set(killgoodDetail, killGoodsPrice, 2, TimeUnit.DAYS);//set缓存
+            }
+        }
+        return killGoodsPrice;
+    }
+
+/*    public KillGoodsSpecPriceDetailVo detail(Integer id) {
         String killgoodDetail = KillConstants.KILLGOOD_DETAIL + id;
         KillGoodsSpecPriceDetailVo killGoodsPrice = (KillGoodsSpecPriceDetailVo) redisTemplate.opsForValue()
                 .get(killgoodDetail);
@@ -65,12 +140,20 @@ public class KillGoodsService {
             log.info(Thread.currentThread().getName() + "---------缓存中得到数据----------");
             return killGoodsPrice;
         }
-        killGoodsPrice = iKillSpecManageService.detailById(id);
-        if (null != killGoodsPrice) {
-            redisTemplate.opsForValue().set(killgoodDetail, killGoodsPrice, 50000, TimeUnit.MILLISECONDS);//set缓存
+        synchronized (iKillSpecManageService) {
+            killGoodsPrice = (KillGoodsSpecPriceDetailVo) redisTemplate.opsForValue().get(killgoodDetail);
+            if (null != killGoodsPrice) {
+                log.info(Thread.currentThread().getName() + "---------缓存中得到数据----------");
+                return killGoodsPrice;
+            }
+
+            killGoodsPrice = iKillSpecManageService.detailById(id);
+            if (null != killGoodsPrice) {
+                redisTemplate.opsForValue().set(killgoodDetail, killGoodsPrice, 50000, TimeUnit.MILLISECONDS);//set缓存
+            }
         }
         return killGoodsPrice;
-    }
+    }*/
 
     /**
      * @param killId

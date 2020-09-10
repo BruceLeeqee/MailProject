@@ -32,10 +32,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Ray
+ * 商品目录管理
+ *
+ * @author Jack
  * @date 2018/2/5.
  */
 @RestController
+//@RequestMapping("/product/mall/service/IGoodsCategoryService")
 public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
@@ -67,57 +70,103 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
 
     @PostConstruct
     public void cacheCategoryTree() {
-        if(!redisTemplate.hasKey(topCategoryTree)) {
+        if (!redisTemplate.hasKey(topCategoryTree)) {
             new Thread(() -> {
                 List<CategoryTree> categoryTrees = goodsCategoryMapper.selectCategoryTree3("0", "");
-                redisTemplate.opsForValue().set(topCategoryTree,categoryTrees);
+                redisTemplate.opsForValue().set(topCategoryTree, categoryTrees);
             }).start();
         }
     }
 
+    /**
+     * 查询商品目录树
+     *
+     * @param parentId
+     * @param keywords
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectCategoryTree", method = RequestMethod.POST)
     @Override
     public List<CategoryTree> selectCategoryTree(String parentId, String keywords) {
         return goodsCategoryMapper.selectCategoryTree(parentId, keywords);
     }
 
+    /**
+     * 查询3级目录树
+     *
+     * @param parentId
+     * @param keywords
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectCategoryTree3", method = RequestMethod.POST)
     @Override
     public List<CategoryTree> selectCategoryTree3(String parentId, String keywords) {
-        if(redisTemplate.hasKey(topCategoryTree)) {
+        if (redisTemplate.hasKey(topCategoryTree)) {
             log.info("----------从缓存获取商品分类数据---------");
-            List<CategoryTree> categoryTrees = (List<CategoryTree>)redisTemplate.opsForValue().get(topCategoryTree);
+            List<CategoryTree> categoryTrees = (List<CategoryTree>) redisTemplate.opsForValue().get(topCategoryTree);
             return categoryTrees;
         } else {
             log.info("----------从数据库获取商品分类数据---------");
             List<CategoryTree> categoryTrees = goodsCategoryMapper.selectCategoryTree3(parentId, keywords);
-            redisTemplate.opsForValue().set(topCategoryTree,categoryTrees);
+            redisTemplate.opsForValue().set(topCategoryTree, categoryTrees);
             return categoryTrees;
         }
     }
 
+    /**
+     * 根据父id查询目录
+     *
+     * @param parentId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectCategoryByParentId", method = RequestMethod.POST)
     @Override
     public List<CategoryTree> selectCategoryByParentId(Integer parentId) {
         return goodsCategoryMapper.selectCategoryByParentId(parentId, null);
     }
 
+    /**
+     * 查询主页的目录
+     *
+     * @param parentId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectCategory4Home", method = RequestMethod.POST)
     @Override
     public List<CategoryTree> selectCategory4Home(Integer parentId) {
-        List<CategoryTree> list =  goodsCategoryMapper.selectCategoryByParentId(parentId, 1);
-        for(CategoryTree categoryTree :list){
+        List<CategoryTree> list = goodsCategoryMapper.selectCategoryByParentId(parentId, 1);
+        for (CategoryTree categoryTree : list) {
             List<CategoryTree> goods = new ArrayList<>();
             //查找所有的子类
             List<GoodsCategory> categories = goodsCategoryMapper.selectSubCategoryByParentId(categoryTree.getId());
             //根据子类来找商品
             outer:
-            for(GoodsCategory category:categories){
+            for (GoodsCategory category : categories) {
                 List<GoodsVo> subGoodsList = goodsDao.findByCategory(category.getId());
-                for(GoodsVo goodsVo:subGoodsList){
+                for (GoodsVo goodsVo : subGoodsList) {
                     //取默认的商品规格，因为查商品详情是按规格ID来查的
                     List<SpecGoodsPrice> specGoodsPriceList = goodsVo.getSpecGoodsPriceList();
-                    if(specGoodsPriceList != null && specGoodsPriceList.size() > 0){
+                    if (specGoodsPriceList != null && specGoodsPriceList.size() > 0) {
                         goodsVo.setDefaultSpecId(specGoodsPriceList.get(0).getId());
                         goods.add(this.map2Obj(goodsVo));
                         //一个分类最多显示24个商品
-                        if(goods.size() > 23){
+                        if (goods.size() > 23) {
                             break outer;
                         }
                     }
@@ -128,7 +177,7 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
         return list;
     }
 
-    private CategoryTree map2Obj(GoodsVo goodsVo){
+    private CategoryTree map2Obj(GoodsVo goodsVo) {
         CategoryTree categoryTree = new CategoryTree();
         String goodsName = goodsVo.getBase().getGoodsName();
         categoryTree.setName(goodsName);
@@ -137,6 +186,16 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
         return categoryTree;
     }
 
+    /**
+     * 查询主页目录树并加入mongodb
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/produceCategory4Home")
     @Override
     public void produceCategory4Home() {
         List<CategoryTree> list = this.selectCategory4Home(0);
@@ -145,25 +204,45 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
         goodsCategoryDao.insert(list);
     }
 
+    /**
+     * 从mongodb中查询主页目录
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/getCategory4HomeFromMg")
     @Override
-    public List<CategoryTree> getCategory4HomeFromMg(){
+    public List<CategoryTree> getCategory4HomeFromMg() {
         List<CategoryTree> categoryTrees = goodsCategoryDao.findAll(null, CategoryTree.class);
         return categoryTrees;
     }
 
+    /**
+     * 自动计算每个分类下的商品数据，存入mongodb
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/produceCategoryGoodsCount")
     @Override
-    public void produceCategoryGoodsCount(){
+    public void produceCategoryGoodsCount() {
         List<GoodsCategory> categories = goodsCategoryMapper.selectAll();
 
         List<CategoryCountVo> list = new ArrayList<>();
-        for(GoodsCategory goodsCategory:categories){
+        for (GoodsCategory goodsCategory : categories) {
             //查找所有的子类
             List<GoodsCategory> subCategories = goodsCategoryMapper.selectSubCategoryByParentId(goodsCategory.getId());
             int subGoodsCount = 0;
-            for(GoodsCategory subCategory:subCategories) {
+            for (GoodsCategory subCategory : subCategories) {
                 subGoodsCount += goodsDao.countByCategory(subCategory.getId());
             }
-            if(subGoodsCount > 0) {
+            if (subGoodsCount > 0) {
                 CategoryCountVo vo = new CategoryCountVo();
                 vo.setCatId(goodsCategory.getId());
                 vo.setName(goodsCategory.getName());
@@ -177,9 +256,16 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
 
     /**
      * 查询热门2级分类
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/produceHotCategories")
     @Override
-    public void produceHotCategories(){
+    public void produceHotCategories() {
         GoodsCategory param = new GoodsCategory();
         param.setLevel((short) 2);
         param.setIsHot(true);
@@ -189,27 +275,38 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
         hotCategoryDao.insert(categories);
     }
 
+    /**
+     * 搜索框自动提示
+     *
+     * @param keyword
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/searchList", method = RequestMethod.POST)
     @Override
     public List<CategoryCountVo> searchList(String keyword) {
         List<CategoryCountVo> list = new ArrayList<>();
-        if(StringUtils.isEmpty(keyword)){
+        if (StringUtils.isEmpty(keyword)) {
             SysParam sysParam = sysParamService.selectByCode(SysParamCode.HOME_SEARCH_KEYWORDS);
-            if(sysParam != null){
+            if (sysParam != null) {
                 String[] keywords = sysParam.getValue().split(",");
-                for(String searchKey : keywords){
+                for (String searchKey : keywords) {
                     List<CategoryCountVo> categories = categoryCountDao.find(new Query(Criteria.where("name").regex(searchKey)), CategoryCountVo.class);
                     list.addAll(categories);
                 }
             }
         } else {
             list = categoryCountDao.find(new Query(Criteria.where("name").regex(keyword)).limit(10), CategoryCountVo.class);
-            if(list == null){
+            if (list == null) {
                 list = new ArrayList<>();
             }
             //如果根据分类只找到9个以下，那就根据商品名称来搜索
-            if(list.size() < 10){
+            if (list.size() < 10) {
                 int goodsCount = goodsDao.countByName(keyword);
-                if(goodsCount > 0) {
+                if (goodsCount > 0) {
                     CategoryCountVo vo = new CategoryCountVo();
                     vo.setName(keyword);
                     vo.setCount(goodsCount);
@@ -220,37 +317,67 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
         //list去重
         List<CategoryCountVo> newList = new ArrayList<>();
         list.forEach(categoryCountVo -> {
-            if(!newList.contains(categoryCountVo)){
+            if (!newList.contains(categoryCountVo)) {
                 newList.add(categoryCountVo);
             }
         });
         return newList;
     }
 
+    /**
+     * 从mongodb查询分类信息
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/getClassification")
     @Override
     public List<GoodsCategory> getClassification() {
         return hotCategoryDao.find(new Query(), GoodsCategory.class);
     }
 
+    /**
+     * 查询品牌信息
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/getBrands")
     @Override
-    public List<Brand> getBrands(){
+    public List<Brand> getBrands() {
         Brand param = new Brand();
         param.setIsHot(true);
         return brandMapper.selectList(param);
     }
 
+    /**
+     * 查询热门商品
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/getHotGoods")
     @Override
     public List<HotGoodsVo> getHotGoods() {
         //查询推荐二级分类TOP5
         List<String> propertiesList = new ArrayList();
         List<HotGoodsVo> hotCats = hotCategoryDao.find(new Query().with(Sort.by("sortOrder")).limit(5), HotGoodsVo.class);
-        for(HotGoodsVo vo : hotCats){
+        for (HotGoodsVo vo : hotCats) {
             //找商品: 属于该分类或其子分类，并且是推荐的商品
-           List<GoodsPageVo> list = goodsDao.findList(new Query(new Criteria()
-                                                            .and("base.isOnSale").is(true)
-                                                            .and("base.isRecommend").is(true)
-                                                            .and("base.catId").in(this.getSubCats(vo.getId())))
-                                                            .limit(10), GoodsPageVo.class);
+            List<GoodsPageVo> list = goodsDao.findList(new Query(new Criteria()
+                    .and("base.isOnSale").is(true)
+                    .and("base.isRecommend").is(true)
+                    .and("base.catId").in(this.getSubCats(vo.getId())))
+                    .limit(10), GoodsPageVo.class);
             vo.setList(list);
         }
         return hotCats;
@@ -261,19 +388,24 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
      *
      * @param catId
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/getSubCats", method = RequestMethod.POST)
     @Override
     public List<Integer> getSubCats(int catId) {
         List<Integer> allCatIds = new ArrayList<>();
-            allCatIds.add(catId);
+        allCatIds.add(catId);
 
-            //找到分类的子分类
-            List<GoodsCategory> subCats = goodsCategoryMapper.selectSubCategoryByParentId(catId);
-            if (subCats != null && subCats.size() > 0) {
-                for (GoodsCategory subCat : subCats) {
-                    allCatIds.add(subCat.getId());
-                }
+        //找到分类的子分类
+        List<GoodsCategory> subCats = goodsCategoryMapper.selectSubCategoryByParentId(catId);
+        if (subCats != null && subCats.size() > 0) {
+            for (GoodsCategory subCat : subCats) {
+                allCatIds.add(subCat.getId());
             }
+        }
         return allCatIds;
     }
 
@@ -282,7 +414,12 @@ public class GoodsCategoryServiceImpl implements IGoodsCategoryService {
      *
      * @param catName
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/getSubCats1", method = RequestMethod.POST)
     @Override
     public List<Integer> getSubCats(String catName) {
         List<Integer> allCatIds = new ArrayList<>();

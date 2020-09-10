@@ -1,4 +1,4 @@
-package cn.enjoy.mall.service.mq;
+package cn.enjoy.kill.service.mq;
 
 import cn.enjoy.mall.constant.KillConstants;
 import cn.enjoy.mall.service.IKillOrderService;

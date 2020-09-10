@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.concurrent.*;
 
 /**
- * 商品相关
+ * 商品管理
+ *
+ * @author Jack
  */
 @RestController
 @RequestMapping("/api/goods")
@@ -24,21 +26,35 @@ public class GoodsContoller extends BaseController {
     private IGoodsService goodsService;
 
     /**
-     * 根据关键字搜索商品
+     * 查询商品信息列表
      *
+     * @param catIdAll
+     * @param catId
      * @param param
+     * @param page
+     * @param pageSize
+     * @param sidx
+     * @param sord
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
      */
     @GetMapping("searchList")
-    public HttpResponseBody searchList(@RequestParam(required = false) Integer[] catIdAll, Integer catId, String param, int page, int pageSize, String sidx, String sord){
+    public HttpResponseBody searchList(@RequestParam(required = false) Integer[] catIdAll, Integer catId, String param, int page, int pageSize, String sidx, String sord) {
         return HttpResponseBody.successResponse("ok", goodsService.queryListPageFromDB(catId, param, page, pageSize, sidx, sord));
     }
 
     /**
-     * 商品详情
+     * 查询商品详情
      *
      * @param goodsId
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
      */
     @GetMapping("/detail")
     public HttpResponseBody detail(Integer goodsId) {
@@ -46,10 +62,14 @@ public class GoodsContoller extends BaseController {
     }
 
     /**
-     * 保存商品到数据库
+     * 保存商品信息
      *
      * @param goods
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
      */
     @PostMapping("save")
     public HttpResponseBody save(Goods goods) {
@@ -57,10 +77,14 @@ public class GoodsContoller extends BaseController {
     }
 
     /**
-     * 删除商品
+     * 根据商品Id删除商品信息
      *
      * @param goodsId
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
      */
     @PostMapping("delete")
     public HttpResponseBody delete(Integer goodsId) {
@@ -69,9 +93,12 @@ public class GoodsContoller extends BaseController {
 
     /**
      * 批量删除商品
-     *
-     * @param ids
+     * @param ids 商品id数组
      * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/7
+     * @version
      */
     @PostMapping("batchDelete")
     public HttpResponseBody batchDelete(Integer[] ids) {
@@ -110,10 +137,10 @@ public class GoodsContoller extends BaseController {
      */
     @GetMapping("querySpecAndAttrByType")
     public HttpResponseBody querySpecAndAttrByType(Integer goodsId, Short type) {
-        ExecutorService service  = Executors.newFixedThreadPool(2);
+        ExecutorService service = Executors.newFixedThreadPool(2);
 
-        Callable<List<Spec>> specListCallable = ()->goodsService.querySpecListByGoodsIdAndTypeIdFromDB(goodsId, type);
-        Callable<List<GoodsAttribute>> attributeListCallable = () ->goodsService.queryGoodsAttributeListByGoodsIdAndTypeFromDB(goodsId, type);
+        Callable<List<Spec>> specListCallable = () -> goodsService.querySpecListByGoodsIdAndTypeIdFromDB(goodsId, type);
+        Callable<List<GoodsAttribute>> attributeListCallable = () -> goodsService.queryGoodsAttributeListByGoodsIdAndTypeFromDB(goodsId, type);
 
         FutureTask<List<Spec>> specListTask = new FutureTask<List<Spec>>(specListCallable);
         FutureTask<List<GoodsAttribute>> attributeListTask = new FutureTask<List<GoodsAttribute>>(attributeListCallable);

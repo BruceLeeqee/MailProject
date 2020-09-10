@@ -14,15 +14,27 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zw on 2017/4/25.
+ * 图片上传
+ *
+ * @author Jack
+ * @date 2020/9/9
  */
-
 @RestController
 public class CommonController extends BaseController {
 
     @Resource
     private FastDFSClientService dfsClient;
 
+    /**
+     * 图片上传
+     *
+     * @param file
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping(value = "/api/upload", method = RequestMethod.POST)
     public HttpResponseBody<Map<String, Object>> upload(@RequestParam(value = "file", required = false) MultipartFile file) throws Exception {
         String imgUrl = dfsClient.uploadFile(file);
@@ -31,6 +43,16 @@ public class CommonController extends BaseController {
         return HttpResponseBody.successResponse("上传成功", result);
     }
 
+    /**
+     * 图片批量上传
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping(value = "/api/batchUpload", method = RequestMethod.POST)
     @ResponseBody
     public HttpResponseBody<List<Map<String, String>>> handleFileUpload(HttpServletRequest request) throws Exception {

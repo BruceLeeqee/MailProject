@@ -19,9 +19,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * @author zm
+ * 购物车管理
+ * @author Jack
  */
 @RestController
+//@RequestMapping("/order/mall/service/IShoppingCartService")
 public class ShoppingCartServiceImpl implements IShoppingCartService {
     @Resource
     private ShoppingCartDao shoppingCartDao;
@@ -31,33 +33,35 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
 
     /**
      * 添加商品到购物车
+     *
      * @param specGoodsId
      * @param num
      * @param userId
      * @param saveMode
      */
+    //@RequestMapping(value = "/save", method = RequestMethod.POST)
     @Override
-    public void save(Integer specGoodsId,Integer num,String userId,Integer saveMode) {
+    public void save(Integer specGoodsId, Integer num, String userId, Integer saveMode) {
         num = num == null ? 1 : num;
         //1查询mongdb当前用户是否有购物车信息
         UserShoppingGoodsVo userShoppingGoodsVo = shoppingCartDao.findOne(userId);
-        if(userShoppingGoodsVo == null){
+        if (userShoppingGoodsVo == null) {
             userShoppingGoodsVo = new UserShoppingGoodsVo();
         }
         userShoppingGoodsVo.setUserId(userId);
         //2查询mongdb里面具体的商品信息
         GoodsVo goodsVo = goodsDao.findOneBySpecGoodsId(specGoodsId);
-        if(goodsVo == null){
+        if (goodsVo == null) {
             throw new BusinessException("没有找到对应的商品");
         }
-        if(goodsVo.getBase().getIsOnSale() == false){
+        if (goodsVo.getBase().getIsOnSale() == false) {
             throw new BusinessException("对不起，该商品已下架");
         }
-        List<SpecGoodsPrice> machedSpecGoodsPriceList = goodsVo.getSpecGoodsPriceList().stream().filter(specGoodsPrice -> specGoodsPrice.getId().intValue()==specGoodsId.intValue()).collect(Collectors.toList());
-        if(machedSpecGoodsPriceList==null || machedSpecGoodsPriceList.size()==0){
+        List<SpecGoodsPrice> machedSpecGoodsPriceList = goodsVo.getSpecGoodsPriceList().stream().filter(specGoodsPrice -> specGoodsPrice.getId().intValue() == specGoodsId.intValue()).collect(Collectors.toList());
+        if (machedSpecGoodsPriceList == null || machedSpecGoodsPriceList.size() == 0) {
             throw new BusinessException("没有找到对应的商品");
         }
-        if(machedSpecGoodsPriceList.get(0).getStoreCount().intValue()<num.intValue()){
+        if (machedSpecGoodsPriceList.get(0).getStoreCount().intValue() < num.intValue()) {
             throw new BusinessException("对不起，该商品的库存不足");
         }
         BigDecimal price = machedSpecGoodsPriceList.get(0).getPrice();
@@ -65,12 +69,12 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
 
         //取出购物车的商品集合
         List<ShoppingGoodsVo> shoppingGoodsList = userShoppingGoodsVo.getShoppingGoodsList();
-        if(shoppingGoodsList == null ){
+        if (shoppingGoodsList == null) {
             shoppingGoodsList = new ArrayList<>();
         }
         //购物车中没有该类型商品，则直接添加
-        if(CollectionUtils.isEmpty(shoppingGoodsList)
-                || shoppingGoodsList.stream().filter(shoppingGoodsVo -> shoppingGoodsVo.getSpecGoodsId().intValue()== specGoodsId.intValue()).count() == 0 ){
+        if (CollectionUtils.isEmpty(shoppingGoodsList)
+                || shoppingGoodsList.stream().filter(shoppingGoodsVo -> shoppingGoodsVo.getSpecGoodsId().intValue() == specGoodsId.intValue()).count() == 0) {
             ShoppingGoodsVo shoppingGoodsVo = new ShoppingGoodsVo();
             shoppingGoodsVo.setSpecGoodsId(specGoodsId);
             shoppingGoodsVo.setGoodsId(goodsVo.getBase().getGoodsId());
@@ -82,17 +86,17 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
             shoppingGoodsVo.setKeyName(keyName);
             shoppingGoodsList.add(shoppingGoodsVo);
             userShoppingGoodsVo.setShoppingGoodsList(shoppingGoodsList);
-        }else { //购物车中有该类型商品，则根据保存模式决定累加还是替换
-            for (ShoppingGoodsVo vo : shoppingGoodsList ) {
+        } else { //购物车中有该类型商品，则根据保存模式决定累加还是替换
+            for (ShoppingGoodsVo vo : shoppingGoodsList) {
                 if (vo.getSpecGoodsId().intValue() == specGoodsId.intValue()) {
                     vo.setGoodsId(goodsVo.getBase().getGoodsId());
                     vo.setGoodsName(goodsVo.getBase().getGoodsName());
                     vo.setOriginalImg(goodsVo.getBase().getOriginalImg());
                     vo.setPrice(price);
-                    if(saveMode == SAVE_MODE_APPEND.intValue()){
+                    if (saveMode == SAVE_MODE_APPEND.intValue()) {
                         vo.setNum(vo.getNum() + num);
                         vo.setStatus(1);
-                    }else{
+                    } else {
                         vo.setNum(num);
                     }
                     break;
@@ -103,12 +107,24 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         shoppingCartDao.save(userShoppingGoodsVo);
     }
 
+    /**
+     * 从购物车中移除
+     *
+     * @param specGoodsId
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/remove", method = RequestMethod.POST)
     @Override
-    public void remove(Integer specGoodsId,String userId) {
+    public void remove(Integer specGoodsId, String userId) {
         UserShoppingGoodsVo userShoppingGoodsVo = shoppingCartDao.findOne(userId);
-        if(userShoppingGoodsVo == null || userShoppingGoodsVo.getShoppingGoodsList()==null){
+        if (userShoppingGoodsVo == null || userShoppingGoodsVo.getShoppingGoodsList() == null) {
             return;
-        }else{
+        } else {
             for (ShoppingGoodsVo vo : userShoppingGoodsVo.getShoppingGoodsList()) {
                 if (vo.getSpecGoodsId().intValue() == specGoodsId.intValue()) {
                     userShoppingGoodsVo.getShoppingGoodsList().remove(vo);
@@ -119,61 +135,119 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
         }
     }
 
+    /**
+     * 移除购物车中的所有商品
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/removeAll", method = RequestMethod.POST)
     @Override
     public void removeAll(String userId) {
         shoppingCartDao.removeByUserId(userId);
     }
 
+    /**
+     * 查询用户购物车中的商品
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/list", method = RequestMethod.POST)
     @Override
     public List<ShoppingGoodsVo> list(String userId) {
         UserShoppingGoodsVo vo = shoppingCartDao.findOne(userId);
-        if(vo!=null){
+        if (vo != null) {
             return vo.getShoppingGoodsList();
-        }else{
+        } else {
             return null;
         }
     }
 
+    /**
+     * 根据specGoodsId从购物车中查询商品
+     *
+     * @param specGoodsId
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/findBySpecGoodsId", method = RequestMethod.POST)
     @Override
     public ShoppingGoodsVo findBySpecGoodsId(Integer specGoodsId, String userId) {
         UserShoppingGoodsVo userShoppingGoodsVo = shoppingCartDao.findOne(userId);
-        if(userShoppingGoodsVo==null || CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())){
+        if (userShoppingGoodsVo == null || CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())) {
             return null;
         }
         List<ShoppingGoodsVo> shoppingGoodsList =
-                userShoppingGoodsVo.getShoppingGoodsList().stream().filter(shoppingGood -> shoppingGood.getSpecGoodsId().intValue()==specGoodsId.intValue()).collect(Collectors.toList());
-        if(CollectionUtils.isEmpty(shoppingGoodsList)){
+                userShoppingGoodsVo.getShoppingGoodsList().stream().filter(shoppingGood -> shoppingGood.getSpecGoodsId().intValue() == specGoodsId.intValue()).collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(shoppingGoodsList)) {
             return null;
-        }else{
+        } else {
             return shoppingGoodsList.get(0);
         }
     }
 
+    /**
+     * 修改购物车中的状态
+     *
+     * @param specGoodsIds
+     * @param status
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/updateStatus", method = RequestMethod.POST)
     @Override
     public void updateStatus(String specGoodsIds, Integer status, String userId) {
         UserShoppingGoodsVo userShoppingGoodsVo = shoppingCartDao.findOne(userId);
-        if(userShoppingGoodsVo == null || CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())){
+        if (userShoppingGoodsVo == null || CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())) {
             throw new BusinessException("没有找到对应的商品");
         }
         String[] specGoodsIdArray = specGoodsIds.split("_");
-        if(specGoodsIdArray.length==0){
+        if (specGoodsIdArray.length == 0) {
             throw new BusinessException("没有找到对应的商品");
         }
         List<String> specGoodsIdList = Arrays.asList(specGoodsIds.split("_"));
         List<ShoppingGoodsVo> shoppingGoodsList = userShoppingGoodsVo.getShoppingGoodsList();
-        shoppingGoodsList.stream().filter(shoppingGoodsVo -> specGoodsIdList.contains(shoppingGoodsVo.getSpecGoodsId()+""))
+        shoppingGoodsList.stream().filter(shoppingGoodsVo -> specGoodsIdList.contains(shoppingGoodsVo.getSpecGoodsId() + ""))
                 .forEach(shoppingGoodsVo -> shoppingGoodsVo.setStatus(status));
         userShoppingGoodsVo.setShoppingGoodsList(shoppingGoodsList);
         shoppingCartDao.save(userShoppingGoodsVo);
     }
 
+    /**
+     * 获取购物车中选中的商品
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/findCheckedGoodsList", method = RequestMethod.POST)
     @Override
-    public List<ShoppingGoodsVo> findCheckedGoodsList(String userId){
+    public List<ShoppingGoodsVo> findCheckedGoodsList(String userId) {
         List<ShoppingGoodsVo> checkedShoppingGoodsList = null;
         UserShoppingGoodsVo userShoppingGoodsVo = shoppingCartDao.findOne(userId);
-        if(userShoppingGoodsVo != null && !CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())){
+        if (userShoppingGoodsVo != null && !CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())) {
             checkedShoppingGoodsList = userShoppingGoodsVo.getShoppingGoodsList()
-                    .stream().filter( x -> x.getStatus() == 1 )
+                    .stream().filter(x -> x.getStatus() == 1)
                     .collect(Collectors.toList());
         }
         return checkedShoppingGoodsList;
@@ -181,15 +255,17 @@ public class ShoppingCartServiceImpl implements IShoppingCartService {
 
     /**
      * 清除购物车内容
+     *
      * @param userId
      */
+    //@RequestMapping(value = "/removeCheckedGoodsList", method = RequestMethod.POST)
     @Override
-    public void removeCheckedGoodsList(String userId){
+    public void removeCheckedGoodsList(String userId) {
         List<ShoppingGoodsVo> unCheckedShoppingGoodsList = null;
         UserShoppingGoodsVo userShoppingGoodsVo = shoppingCartDao.findOne(userId);
-        if(userShoppingGoodsVo != null && !CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())){
+        if (userShoppingGoodsVo != null && !CollectionUtils.isEmpty(userShoppingGoodsVo.getShoppingGoodsList())) {
             unCheckedShoppingGoodsList = userShoppingGoodsVo.getShoppingGoodsList()
-                    .stream().filter( x -> x.getStatus() != 1 )
+                    .stream().filter(x -> x.getStatus() != 1)
                     .collect(Collectors.toList());
         }
         userShoppingGoodsVo.setShoppingGoodsList(unCheckedShoppingGoodsList);

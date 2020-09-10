@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 商品秒杀
+* @author Jack
+* @date 2020/9/7
+*/
 @RestController
 @RequestMapping("/api/killgoodsSpec")
 public class KillSpecController extends BaseController {
@@ -17,16 +22,43 @@ public class KillSpecController extends BaseController {
     @Autowired
     private IKillSpecManageService iKillSpecManageService;
 
+    /**
+     * 秒杀商品查询
+    * @param name
+    * @author Jack
+    * @date 2020/9/7
+    * @throws Exception
+    * @return
+    * @version
+    */
     @GetMapping("/queryByPage")
     public HttpResponseBody queryByPage(String name){
         return HttpResponseBody.successResponse("ok", iKillSpecManageService.queryByPage(name,1,20));
     }
 
+    /**
+     * 秒杀商品详细信息查询
+    * @param id
+    * @author Jack
+    * @date 2020/9/7
+    * @throws Exception
+    * @return
+    * @version
+    */
     @GetMapping("/detail")
     public HttpResponseBody detail(Integer id) {
         return HttpResponseBody.successResponse("ok", iKillSpecManageService.selectByPrimaryKey(id));
     }
 
+    /**
+     * 秒杀商品保存
+    * @param killGoodsPrice
+    * @author Jack
+    * @date 2020/9/7
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("/save")
     public HttpResponseBody save(KillGoodsPrice killGoodsPrice){
         if (killGoodsPrice.getId() == null || killGoodsPrice.getId() == 0){
@@ -47,6 +79,15 @@ public class KillSpecController extends BaseController {
         return HttpResponseBody.successResponse("保存成功");
     }
 
+    /**
+     * 秒杀商品删除
+    * @param id
+    * @author Jack
+    * @date 2020/9/7
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("/delete")
     public HttpResponseBody delete(Integer id){
         iKillSpecManageService.delete(id);

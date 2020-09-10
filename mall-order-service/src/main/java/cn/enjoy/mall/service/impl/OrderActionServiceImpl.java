@@ -19,9 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Administrator
+ * 订单日志
+ *
+ * @author Jack
  */
 @RestController
+//@RequestMapping("/order/mall/service/IOrderActionService")
 public class OrderActionServiceImpl implements IOrderActionService {
     @Resource
     private OrderActionMapper orderActionMapper;
@@ -35,13 +38,42 @@ public class OrderActionServiceImpl implements IOrderActionService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 保存订单日志
+     *
+     * @param order
+     * @param action
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/save", method = RequestMethod.POST)
     @Override
     public void save(Order order, String action, String userId) {
         this.save(order, action, userId, null);
     }
+
+    /**
+     * 保存预支付订单日志
+     *
+     * @param orderStr
+     * @param map
+     * @param action
+     * @param userId
+     * @param remark
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/savePre", method = RequestMethod.POST)
     @Override
-    public Long savePre(String orderStr, Map map , String action, String userId, String remark) {
-        Order order = JSONObject.parseObject(orderStr,Order.class);
+    public Long savePre(String orderStr, Map map, String action, String userId, String remark) {
+        Order order = JSONObject.parseObject(orderStr, Order.class);
         OrderAction orderAction = new OrderAction();
         orderAction.setActionId(defaultUidGenerator.getUID());
         orderAction.setActionUser(userId);
@@ -52,22 +84,36 @@ public class OrderActionServiceImpl implements IOrderActionService {
         orderAction.setShippingStatus(order.getShippingStatus());
         orderAction.setStatusDesc(action);
         orderAction.setActionNote(remark);
-        if(map !=null&&map.get("trade_type")!=null){
+        if (map != null && map.get("trade_type") != null) {
             orderAction.setTradeType(map.get("trade_type").toString());
         }
-        if(map !=null&&map.get("prepay_id")!=null){
+        if (map != null && map.get("prepay_id") != null) {
             orderAction.setPrepayId(map.get("prepay_id").toString());
         }
-        if(map !=null&&map.get("code_url")!=null){
+        if (map != null && map.get("code_url") != null) {
             orderAction.setCodeUrl(map.get("code_url").toString());
         }
         orderActionMapper.insert(orderAction);
         return orderAction.getActionId();
     }
 
+    /**
+     * seata保存预支付订单日志
+     *
+     * @param orderStr
+     * @param action
+     * @param userId
+     * @param remark
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/savePresync", method = RequestMethod.POST)
     @Override
-    public Long savePre(String orderStr,String action, String userId, String remark) {
-        Order order = JSONObject.parseObject(orderStr,Order.class);
+    public Long savePre(String orderStr, String action, String userId, String remark) {
+        Order order = JSONObject.parseObject(orderStr, Order.class);
         OrderAction orderAction = new OrderAction();
         orderAction.setActionId(defaultUidGenerator.getUID());
         orderAction.setActionUser(userId);
@@ -84,41 +130,65 @@ public class OrderActionServiceImpl implements IOrderActionService {
         jdbcTemplate.update(sql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setLong(1,orderAction.getActionId());
-                ps.setLong(2,orderAction.getOrderId());
-                ps.setString(3,orderAction.getActionUser());
-                ps.setString(4,orderAction.getTradeType());
-                ps.setString(5,orderAction.getPrepayId());
-                ps.setString(6,orderAction.getCodeUrl());
-                ps.setInt(7,orderAction.getOrderStatus());
-                ps.setInt(8,orderAction.getShippingStatus());
-                ps.setInt(9,orderAction.getPayStatus());
-                ps.setString(10,orderAction.getActionNote());
-                ps.setLong(11,orderAction.getLogTime());
-                ps.setString(12,orderAction.getStatusDesc());
+                ps.setLong(1, orderAction.getActionId());
+                ps.setLong(2, orderAction.getOrderId());
+                ps.setString(3, orderAction.getActionUser());
+                ps.setString(4, orderAction.getTradeType());
+                ps.setString(5, orderAction.getPrepayId());
+                ps.setString(6, orderAction.getCodeUrl());
+                ps.setInt(7, orderAction.getOrderStatus());
+                ps.setInt(8, orderAction.getShippingStatus());
+                ps.setInt(9, orderAction.getPayStatus());
+                ps.setString(10, orderAction.getActionNote());
+                ps.setLong(11, orderAction.getLogTime());
+                ps.setString(12, orderAction.getStatusDesc());
             }
         });
         return orderAction.getActionId();
     }
 
-
+    /**
+     * 修改预支付订单日志
+     *
+     * @param actionId
+     * @param map
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/updatePre", method = RequestMethod.POST)
     @Override
-    public Long updatePre(Long actionId,Map map ) {
+    public Long updatePre(Long actionId, Map map) {
         OrderAction orderAction = orderActionMapper.selectByPrimaryKey(actionId);
-        if(map.get("trade_type")!=null){
+        if (map.get("trade_type") != null) {
             orderAction.setTradeType(map.get("trade_type").toString());
         }
-        if(map.get("prepay_id")!=null){
+        if (map.get("prepay_id") != null) {
             orderAction.setPrepayId(map.get("prepay_id").toString());
         }
-        if(map.get("code_url")!=null){
+        if (map.get("code_url") != null) {
             orderAction.setCodeUrl(map.get("code_url").toString());
         }
         orderActionMapper.updateByPrimaryKey(orderAction);
         return orderAction.getActionId();
     }
 
-
+    /**
+     * 保存订单日志
+     *
+     * @param order
+     * @param action
+     * @param userId
+     * @param remark
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/save2", method = RequestMethod.POST)
     @Override
     public void save(Order order, String action, String userId, String remark) {
         OrderAction orderAction = new OrderAction();
@@ -135,6 +205,17 @@ public class OrderActionServiceImpl implements IOrderActionService {
         orderActionMapper.insert(orderAction);
     }
 
+    /**
+     * 根据prepayId查询订单日志
+     *
+     * @param prepayId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryByPrepayId", method = RequestMethod.POST)
     @Override
     public OrderAction queryByPrepayId(String prepayId) {
         OrderAction orderAction = new OrderAction();
@@ -142,11 +223,33 @@ public class OrderActionServiceImpl implements IOrderActionService {
         return orderAction;
     }
 
+    /**
+     * 根据订单Id查询订单日志
+     *
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryByOrderId", method = RequestMethod.POST)
     @Override
     public List<OrderAction> queryByOrderId(Long orderId) {
         return orderActionMapper.queryByOrderId(orderId);
     }
 
+    /**
+     * 根据主键查询订单日志
+     *
+     * @param actionId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryByActionId", method = RequestMethod.POST)
     @Override
     public OrderAction queryByActionId(Long actionId) {
         return orderActionMapper.selectByPrimaryKey(actionId);

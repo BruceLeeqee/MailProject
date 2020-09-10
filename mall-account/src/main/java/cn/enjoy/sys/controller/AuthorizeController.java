@@ -31,7 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author Ray
+ * 鉴权管理
+ *
+ * @author Jack
  * @date 2018/3/23.
  */
 @RestController
@@ -46,6 +48,17 @@ public class AuthorizeController extends BaseController {
     @Resource
     private ShiroCacheUtil shiroCacheUtil;
 
+    /**
+     * 校验是否登录及后去授权码
+     *
+     * @param model
+     * @param request
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping("authorize")
     public Object authorize(Model model, HttpServletRequest request) throws OAuthSystemException, URISyntaxException {
 
@@ -104,6 +117,17 @@ public class AuthorizeController extends BaseController {
         }
     }
 
+    /**
+     * 用户登录接口
+     *
+     * @param subject
+     * @param request
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     private boolean login(Subject subject, HttpServletRequest request) {
         logger.info("-----------------request.getMethod():" + request.getMethod());
         if ("get".equalsIgnoreCase(request.getMethod())) {

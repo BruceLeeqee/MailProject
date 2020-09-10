@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 
 /**
- *  注意此类中的方法都可在不登录的情况下调用
- * @author Ray
+ * 系统管理
+ *
+ * @author Jack
  * @date 2017/10/16
  */
 @RestController
@@ -23,19 +24,35 @@ public class SystemController extends BaseController {
     @Resource
     private Config config;
 
+    /**
+     * 获取工程配置信息
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
     @GetMapping("config")
-    public HttpResponseBody getConfig(){
+    public HttpResponseBody getConfig() {
         return HttpResponseBody.successResponse("ok", config);
     }
 
+    /**
+     * 登出接口
+     * @param sid
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
     @PostMapping("logout")
-    public HttpResponseBody logoutBySessionId(String sid){
+    public HttpResponseBody logoutBySessionId(String sid) {
         Session session = MySessionContext.getSession(sid);
-        if(session != null){
+        if (session != null) {
             session.stop();
         }
         return HttpResponseBody.successResponse("ok");
     }
-
-
 }

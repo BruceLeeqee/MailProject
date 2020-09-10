@@ -27,8 +27,14 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * 支付管理
+* @author Jack
+* @date 2020/9/8
+*/
 @Slf4j
 @RestController
+//@RequestMapping("/order/mall/service/IPayService")
 public class PayServiceImpl implements IPayService {
     @Resource
     private OrderMapper orderMapper;
@@ -48,31 +54,45 @@ public class PayServiceImpl implements IPayService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 微信预支付
+     *
+     * @param orderId
+     * @param payCode
+     * @param payAmount
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/doPrePay", method = RequestMethod.POST)
     @Transactional
     @Override
-    public Map<String, String> doPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId){
+    public Map<String, String> doPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId) {
 
         Order order = orderMapper.selectByPrimaryKey(orderId);
         //如果查询不到订单，则是秒杀订单
-        if(order == null)  {
+        if (order == null) {
             log.info("-----------killPayService.doPrePay--------");
             return killPayService.doPrePay(orderId, payCode, payAmount, userId);
         }
         Map<String, String> return_map = new HashMap<>();
-        if(payAmount.compareTo(order.getOrderAmount())!=0){
-            return_map.put("result_code","fail");
-            return_map.put("return_msg","支付金额不正确");
+        if (payAmount.compareTo(order.getOrderAmount()) != 0) {
+            return_map.put("result_code", "fail");
+            return_map.put("return_msg", "支付金额不正确");
             return return_map;
         }
         String payName = PayType.getDescByCode(payCode);
-        if(StringUtils.isEmpty(payName)){
-            return_map.put("result_code","fail");
-            return_map.put("return_msg","支付方式不存在");
+        if (StringUtils.isEmpty(payName)) {
+            return_map.put("result_code", "fail");
+            return_map.put("return_msg", "支付方式不存在");
             return return_map;
         }
-        if(order.getPayStatus() ==1){
-            return_map.put("result_code","fail");
-            return_map.put("return_msg","此订单已经付款完成！");
+        if (order.getPayStatus() == 1) {
+            return_map.put("result_code", "fail");
+            return_map.put("return_msg", "此订单已经付款完成！");
             return return_map;
         }
         order.setPayStatus(PayStatus.UNPAID.getCode());
@@ -81,12 +101,23 @@ public class PayServiceImpl implements IPayService {
         order.setPayTime(System.currentTimeMillis());
         orderMapper.updateByPrimaryKeySelective(order);
         String orderStr = JSONObject.toJSONString(order);
-        Long action_id = orderActionService.savePre(orderStr,null,"微信-预支付订单",userId,"微信-预支付订单");
-        Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(action_id),payAmount,userId);
-        orderActionService.updatePre(action_id,map);
+        Long action_id = orderActionService.savePre(orderStr, null, "微信-预支付订单", userId, "微信-预支付订单");
+        Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(action_id), payAmount, userId);
+        orderActionService.updatePre(action_id, map);
         return map;
     }
 
+    /**
+     * 根据主键修改订单日志
+     *
+     * @param actionId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/updateByActionId", method = RequestMethod.POST)
     @Transactional
     @Override
     public String updateByActionId(String actionId) {
@@ -103,6 +134,17 @@ public class PayServiceImpl implements IPayService {
         return "SUCCESS";
     }
 
+    /**
+     * seata修改订单和订单日志
+     *
+     * @param actionId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/updateStatusByActionId", method = RequestMethod.POST)
     @Override
     public Order updateStatusByActionId(String actionId) {
         OrderAction orderAction = orderActionMapper.selectByPrimaryKey(Long.parseLong(actionId));
@@ -112,26 +154,40 @@ public class PayServiceImpl implements IPayService {
         jdbcTemplate.update(updateOrderSql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setInt(1,PayStatus.PAID.getCode());
-                ps.setLong(2,System.currentTimeMillis());
-                ps.setLong(3,order.getOrderId());
+                ps.setInt(1, PayStatus.PAID.getCode());
+                ps.setLong(2, System.currentTimeMillis());
+                ps.setLong(3, order.getOrderId());
             }
         });
         String orderActionSql = "update tp_order_action set pay_status = ?,log_time = ? where action_id = ?";
         jdbcTemplate.update(orderActionSql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setInt(1,PayStatus.PAID.getCode());
-                ps.setLong(2,System.currentTimeMillis());
-                ps.setLong(3,orderAction.getActionId());
+                ps.setInt(1, PayStatus.PAID.getCode());
+                ps.setLong(2, System.currentTimeMillis());
+                ps.setLong(3, orderAction.getActionId());
             }
         });
         return order;
     }
 
+    /**
+     * 支付校验
+     *
+     * @param orderId
+     * @param payCode
+     * @param payAmount
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/doPay", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
 //    @Transactional
     @Override
-    public String doPay(Long orderId, String payCode, BigDecimal payAmount,String userId) {
+    public String doPay(Long orderId, String payCode, BigDecimal payAmount, String userId) {
 //        Order order = orderMapper.selectByPrimaryKey(orderId);
 //        if(payAmount.compareTo(order.getOrderAmount())!=0){
 //            return "支付金额不正确";
@@ -147,20 +203,31 @@ public class PayServiceImpl implements IPayService {
 //        orderMapper.updateByPrimaryKeySelective(order);
 //        orderActionService.save(order,"支付成功",userId);
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("respCode","0");
-        jsonObject.put("respMsg","成功");
+        jsonObject.put("respCode", "0");
+        jsonObject.put("respMsg", "成功");
         return jsonObject.toJSONString();
     }
 
+    /**
+     * 校验是否支付成功
+     *
+     * @param prepayId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryByPrepayId", method = RequestMethod.POST)
     @Override
     public String queryByPrepayId(String prepayId) {
         OrderAction orderAction = orderActionService.queryByPrepayId(prepayId);
-        if(orderAction == null) {
+        if (orderAction == null) {
             return killPayService.queryByPrepayId(prepayId);
         } else {
-            if(orderAction.getPayStatus() != null){
+            if (orderAction.getPayStatus() != null) {
                 return orderAction.getPayStatus().toString();
-            }else{
+            } else {
                 return "0";
             }
         }

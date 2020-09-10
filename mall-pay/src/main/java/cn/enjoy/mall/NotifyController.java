@@ -23,8 +23,10 @@ import java.util.Map;
 
 
 /**
- *
- */
+ * 支付成功回调
+* @author Jack
+* @date 2020/9/8
+*/
 @Controller
 //http请求控制类  Contoller
 public class NotifyController {
@@ -51,6 +53,16 @@ public class NotifyController {
     @Autowired
     private OrderLogSender secKillSender;
 
+    /**
+     * 支付成功后的回调接口
+    * @param request
+     * @param response
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
     @RequestMapping(value = "/wx/notify", produces = "application/json;charset=UTF-8")
     @ResponseBody
     public String payNotifyUrl(HttpServletRequest request, HttpServletResponse response) throws Exception {

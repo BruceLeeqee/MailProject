@@ -25,114 +25,252 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * <p>Title: </p>
- * <p>Description: </p>
- * <p>Copyright: Copyright (c) 2009</p>
- * <p>Company:享学信息科技有限公司 Co., Ltd.</p>
- * @author Caiming
+ * 字典数据管理
+ *
+ * @author Jack
  * @version 1.0
- * 修改记录：
- * 修改序号，修改日期，修改人，修改内容
  */
 @RestController
-//@Path("/sys/dictData")
+//@RequestMapping("/user/sys/dictData")
 public class DictDataServiceImpl implements IDictDataService {
-	
-	@Autowired
-	private SysDictDataMapper dictDataMapper;
-	
-	@Autowired
-	private SysDictTypeMapper dictTypeMapper;
 
-	@Override
-//	@Path("findDictByType")
-//	@GET
-//	@Produces(value = {MediaType.APPLICATION_JSON})
-	public List<SysDictData> findDictByType(/*@QueryParam("type") */String type) {
-		return dictDataMapper.queryDictDataByType(type);
-	}
+    @Autowired
+    private SysDictDataMapper dictDataMapper;
 
-	@Override
-	public List<SysDictData> queryDictDataByCode(String code) {
-		return dictDataMapper.queryDictDataByCode(code);
-	}
+    @Autowired
+    private SysDictTypeMapper dictTypeMapper;
 
-	@Override
-	public List<SysDictData> findAllDict() {
-		return dictDataMapper.queryAllDictData();
-	}
-	
-	@Override
-	public List<SysDictType> findAllDictType(){
-		return dictTypeMapper.queryAllDictType();
-	}
-	
-	@Override
-	public List<SelectModel> findSelectModelsByType(String type){
-		return dictDataMapper.querySelectModelByType(type);
-	}
+    /**
+     * 根据字典类型查询字典数据
+     *
+     * @param type
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/findDictByType", method = RequestMethod.POST)
+    @Override
+    public List<SysDictData> findDictByType(String type) {
+        return dictDataMapper.queryDictDataByType(type);
+    }
 
-	@Override
-	public List<SysDictData> queryDictDataByTypeAndORDER(Map param) {
-		return dictDataMapper.queryDictDataByTypeAndORDER(param);
-	}
+    /**
+     * 根据编码查询字典数据
+     *
+     * @param code
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryDictDataByCode", method = RequestMethod.POST)
+    @Override
+    public List<SysDictData> queryDictDataByCode(String code) {
+        return dictDataMapper.queryDictDataByCode(code);
+    }
+
+    /**
+     * 查询所有的字典数据
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/findAllDict")
+    @Override
+    public List<SysDictData> findAllDict() {
+        return dictDataMapper.queryAllDictData();
+    }
+
+    /**
+     * 查询所有的字段类型
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/findAllDictType")
+    @Override
+    public List<SysDictType> findAllDictType() {
+        return dictTypeMapper.queryAllDictType();
+    }
+
+    /**
+     * 查询下拉框的字典数据
+     *
+     * @param type
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/findSelectModelsByType", method = RequestMethod.POST)
+    @Override
+    public List<SelectModel> findSelectModelsByType(String type) {
+        return dictDataMapper.querySelectModelByType(type);
+    }
+
+    /**
+     * 根据类型查询字典数据
+     *
+     * @param param
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryDictDataByTypeAndORDER", method = RequestMethod.POST)
+    @Override
+    public List<SysDictData> queryDictDataByTypeAndORDER(Map param) {
+        return dictDataMapper.queryDictDataByTypeAndORDER(param);
+    }
 
 
-	@Override
-//	@Path("queryAllDictDataPage")
-	public GridModel<SysDictData> queryAllDictDataPage(String param, String type, Integer pageNo, Integer pageSize, String sidx, String sord) {
-		if(null==type) {
-			throw new BusinessException("操作失败，type为空");
-		}
-		String orderString = "";
-		if (!StringUtils.isEmpty(sidx)) {
-			orderString = sidx + "." + sord;
-		}
-		PageBounds pageBounds = new PageBounds(pageNo, pageSize, Order.formString(orderString));
-		PageList<SysDictData> pageList =(PageList<SysDictData>)dictDataMapper.queryAllDictDataPage(param,type,pageBounds);
-		return new GridModel<SysDictData>(pageList);
-	}
+    /**
+     * 查询字典数据列表
+     *
+     * @param param
+     * @param type
+     * @param pageNo
+     * @param pageSize
+     * @param sidx
+     * @param sord
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    @Override
+    //@RequestMapping(value = "/queryAllDictDataPage", method = RequestMethod.POST)
+    public GridModel<SysDictData> queryAllDictDataPage(String param, String type, Integer pageNo, Integer pageSize, String sidx, String sord) {
+        if (null == type) {
+            throw new BusinessException("操作失败，type为空");
+        }
+        String orderString = "";
+        if (!StringUtils.isEmpty(sidx)) {
+            orderString = sidx + "." + sord;
+        }
+        PageBounds pageBounds = new PageBounds(pageNo, pageSize, Order.formString(orderString));
+        PageList<SysDictData> pageList = (PageList<SysDictData>) dictDataMapper.queryAllDictDataPage(param, type, pageBounds);
+        return new GridModel<SysDictData>(pageList);
+    }
 
-	@Override
-	public void deleteByIds(List<String> ids) {
-		dictDataMapper.deleteByIds(ids);
-	}
+    /**
+     * 删除字典数据
+     *
+     * @param ids
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+   // @RequestMapping(value = "/deleteByIds", method = RequestMethod.POST)
+    @Override
+    public void deleteByIds(List<String> ids) {
+        dictDataMapper.deleteByIds(ids);
+    }
 
-	@Override
-	@Transactional
-	public void addDictData(SysDictData sysDictData){
-		sysDictData.setId(UUIDGenerator.getUUID());
-		dictDataMapper.insert(sysDictData);
-	}
+    /**
+     * 新增字典数据
+     *
+     * @param sysDictData
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/addDictData", method = RequestMethod.POST)
+    @Override
+    @Transactional
+    public void addDictData(SysDictData sysDictData) {
+        sysDictData.setId(UUIDGenerator.getUUID());
+        dictDataMapper.insert(sysDictData);
+    }
 
-	@Override
-	public SysDictData selectByPrimaryKey(String id){
-		return dictDataMapper.selectByPrimaryKey(id);
-	}
+    /**
+     * 根据id查询字典数据
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectByPrimaryKey", method = RequestMethod.POST)
+    @Override
+    public SysDictData selectByPrimaryKey(String id) {
+        return dictDataMapper.selectByPrimaryKey(id);
+    }
 
-	@Override
-	@Transactional
-	public void deleteDictData(String id) {
-		dictDataMapper.deleteByPrimaryKey(id);
+    /**
+     * 根据id删除字典数据
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/deleteDictData", method = RequestMethod.POST)
+    @Override
+    @Transactional
+    public void deleteDictData(String id) {
+        dictDataMapper.deleteByPrimaryKey(id);
 
-	}
+    }
 
-	@Override
-	@Transactional
-	public void freezeDictData(String id,String status) {
-		SysDictData da = dictDataMapper.selectByPrimaryKey(id);
-		da.setValid(Integer.parseInt(status));
-		dictDataMapper.updateByPrimaryKey(da);
+    /**
+     * 冻结字典数据
+     *
+     * @param id
+     * @param status
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/freezeDictData", method = RequestMethod.POST)
+    @Override
+    @Transactional
+    public void freezeDictData(String id, String status) {
+        SysDictData da = dictDataMapper.selectByPrimaryKey(id);
+        da.setValid(Integer.parseInt(status));
+        dictDataMapper.updateByPrimaryKey(da);
 
-	}
+    }
 
-	@Override
-	@Transactional
-	public void updateDictData(SysDictData sysDictData) {
-		dictDataMapper.updateByPrimaryKey(sysDictData);
+    /**
+     * 更新字典数据
+     *
+     * @param sysDictData
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/updateDictData", method = RequestMethod.POST)
+    @Override
+    @Transactional
+    public void updateDictData(SysDictData sysDictData) {
+        dictDataMapper.updateByPrimaryKey(sysDictData);
 
-	}
-
+    }
 
 
 }

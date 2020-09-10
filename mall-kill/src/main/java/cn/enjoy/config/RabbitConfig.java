@@ -1,6 +1,6 @@
 package cn.enjoy.config;
 
-import cn.enjoy.mall.service.mq.SecKillReceiver;
+import cn.enjoy.kill.service.mq.SecKillReceiver;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;

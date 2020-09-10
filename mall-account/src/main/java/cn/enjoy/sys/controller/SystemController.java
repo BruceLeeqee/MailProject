@@ -15,8 +15,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- *
- * @author Ray
+ * 系统管理
+ * @author Jack
  * @date 2017/10/16
  */
 @RestController
@@ -28,12 +28,29 @@ public class SystemController extends BaseController {
     @Resource
     private ShiroCacheUtil shiroCacheUtil;
 
+    /**
+     * 获取工程配置信息
+    * @author Jack
+    * @date 2020/9/9
+    * @throws Exception
+    * @return
+    * @version
+    */
     @GetMapping(value = "/config")
     public HttpResponseBody getConfig(){
         return HttpResponseBody.successResponse("ok", config);
     }
 
-
+    /**
+     * 用户登出
+    * @param request
+     * @param response
+    * @author Jack
+    * @date 2020/9/9
+    * @throws Exception
+    * @return
+    * @version
+    */
     @RequestMapping(value = "logout", method = {RequestMethod.POST, RequestMethod.GET})
     public HttpResponseBody logout(HttpServletRequest request, HttpServletResponse response){
         if(this.getSessionUser() != null) {

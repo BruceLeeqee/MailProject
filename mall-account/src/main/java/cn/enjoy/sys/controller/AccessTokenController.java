@@ -37,8 +37,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @author fangxiaobai on 2017/10/15 14:59.
- * @description
+ * AccessToken管理
+ *
+ * @author Jack
  */
 @RestController
 @RequestMapping("/api")
@@ -53,7 +54,16 @@ public class AccessTokenController extends BaseController {
     @Resource
     private RedisTemplate<String, String> redisTemplate;
 
-
+    /**
+     * 授权码模式生成AccessToken
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping("/accessToken")
     public HttpEntity token(HttpServletRequest request) throws OAuthSystemException {
         try {
@@ -117,6 +127,16 @@ public class AccessTokenController extends BaseController {
         }
     }
 
+    /**
+     * 根据AccessToken获取用户信息
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping("/userInfo")
     public HttpEntity userInfo(HttpServletRequest request) throws OAuthSystemException {
         try {
@@ -171,6 +191,16 @@ public class AccessTokenController extends BaseController {
         }
     }
 
+    /**
+     * 用户登出
+     *
+     * @param request
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping("logout")
     public Object logout(HttpServletRequest request) {
         shiroCacheUtil.removeUser(this.getSessionUser().getUserName());

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by zw on 2017/8/14.
+ * 用户管理
  */
 @RestController
 @RequestMapping("/api/personal/")
@@ -28,7 +28,14 @@ public class PersonalController extends BaseController {
     @Autowired
     private ILoginService iLoginService;
 
-
+    /**
+     * 获取用户详细信息
+    * @author Jack
+    * @date 2020/9/9
+    * @throws Exception
+    * @return
+    * @version
+    */
     @GetMapping("getPersonalInfo")
     public HttpResponseBody<Map<String, Object>> getPersonInfo() {
         SysUser sysUser = iUserService.selectByPrimaryKey(getSessionUserId());
@@ -46,7 +53,17 @@ public class PersonalController extends BaseController {
         return HttpResponseBody.successResponse("查询成功", result);
     }
 
-
+    /**
+     * 修改用户、部门、角色信息
+    * @param user
+     * @param departIds
+     * @param roleIds
+    * @author Jack
+    * @date 2020/9/9
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("updatePersonalInfo")
     public HttpResponseBody updatePersonalInfo(SysUser user, @RequestParam(name = "departIds", required = false, defaultValue = "") String[] departIds,
                                                @RequestParam(name = "roleIds", required = false, defaultValue = "") String[] roleIds) {
@@ -54,6 +71,15 @@ public class PersonalController extends BaseController {
         return HttpResponseBody.successResponse("修改成功");
     }
 
+    /**
+     * 修改用户信息
+    * @param user
+    * @author Jack
+    * @date 2020/9/9
+    * @throws Exception
+    * @return
+    * @version
+    */
     @PostMapping("updateUserInfo")
     public HttpResponseBody updateUserInfo(SysUser user) {
         user.setId(getSessionUserId());

@@ -147,6 +147,11 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.37</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.yedaxia</groupId>
+            <artifactId>japidocs</artifactId>
+            <version>1.4.2</version>
+        </dependency>
     </dependencies>
 
     <dependencyManagement>

@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.net.Inet6Address;
 import java.net.InetAddress;
@@ -24,10 +23,13 @@ import java.util.Map;
 
 
 /**
- *
- */
+ * 微信预支付
+* @author Jack
+* @date 2020/9/8
+*/
 @RefreshScope
 @RestController
+//@RequestMapping("/pay/mall/service/IWxPayService")
 public class WxPayServiceImpl implements IWxPayService {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
@@ -52,16 +54,23 @@ public class WxPayServiceImpl implements IWxPayService {
     @Value("${wx.spbill_create_ip}")
     private String spbill_create_ip = "";
 
-    @PostConstruct
-    public void tet() {
-        String appId = this.appId;
-    }
+//    @PostConstruct
+//    public void tet() {
+//        String appId = this.appId;
+//    }
 
     /**
-     * 微信H5 支付
-     * 注意：必须再web页面中发起支付且域名已添加到开发配置中
-     */
-    //微信预支付订单
+     * 微信预支付订单
+    * @param actionId
+     * @param payAmount
+     * @param userId
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/unifiedorder", method = RequestMethod.POST)
     @Override
     public Map<String, String> unifiedorder(String actionId, BigDecimal payAmount, String userId) {
         Map<String, String> reqData = new HashMap<>();

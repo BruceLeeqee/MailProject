@@ -12,8 +12,13 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
-
+/**
+ * 用户地址管理
+* @author Jack
+* @date 2020/9/8
+*/
 @RestController
+//@RequestMapping("/user/sys/service/IUserAddressService")
 public class UserAddressServiceImpl implements IUserAddressService {
     @Resource
     private UserAddressMapper userAddressMapper;
@@ -24,6 +29,16 @@ public class UserAddressServiceImpl implements IUserAddressService {
     @Autowired
     private CachedUidGenerator cachedUidGenerator;
 
+    /**
+     * 保存用户地址
+    * @param userAddress
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/save", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public void save(@RequestBody UserAddress userAddress) {
         if(userAddress.getAddressId()==null || userAddress.getAddressId() == 0){
@@ -33,12 +48,31 @@ public class UserAddressServiceImpl implements IUserAddressService {
             userAddressMapper.updateByPrimaryKey(userAddress);
         }
     }
-
+    /**
+     * 删除用户地址
+    * @param addressId
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/remove", method = RequestMethod.POST)
     @Override
     public void remove(Integer addressId) {
         userAddressMapper.deleteByPrimaryKey(addressId);
     }
 
+    /**
+     * 查询用户地址
+    * @param map
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/selectById", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public List<UserAddress> selectById(Map map) {
         return userAddressMapper.selectById(map);

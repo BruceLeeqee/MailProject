@@ -18,10 +18,13 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * @author Ray
+ * 订单管理
+ *
+ * @author Jack
  * @date 2018/3/8.
  */
 @RestController
+//@RequestMapping("/order/mall/service/manage/IOrderManageService")
 public class OrderManageServiceImpl implements IOrderManageService {
 
 
@@ -33,12 +36,36 @@ public class OrderManageServiceImpl implements IOrderManageService {
     private OrderGoodsMapper orderGoodsMapper;
 
 
+    /**
+     * 查询订单列表
+     *
+     * @param page
+     * @param pageSize
+     * @param params
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
     @Override
     public GridModel<OrderVo> queryByPage(int page, int pageSize, OrderVo params) {
         PageBounds pageBounds = new PageBounds(page, pageSize);
         return new GridModel<>(orderManageMapper.queryByPage(params, pageBounds));
     }
 
+    /**
+     * 查询订单详情
+     *
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryOrderDetail", method = RequestMethod.POST)
     @Override
     public OrderVo queryOrderDetail(Long orderId) {
         return orderMapper.selectOrderById(orderId);
@@ -59,21 +86,43 @@ public class OrderManageServiceImpl implements IOrderManageService {
 
     }
 
+    /**
+     * 查询订单商品
+     *
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectGoodsByOrderId", method = RequestMethod.POST)
     @Override
     public List<OrderGoods> selectGoodsByOrderId(Long orderId) {
-        return  orderGoodsMapper.selectByOrderId(orderId);
+        return orderGoodsMapper.selectByOrderId(orderId);
     }
 
+    /**
+     * 修改订单记录
+     *
+     * @param order
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/update", method = RequestMethod.POST)
     @Override
     public int update(Order order) {
-        if(OrderStatus.CONFIRMED.getCode().equals(order.getOrderStatus())){
-            order.setConfirmTime(System.currentTimeMillis()/1000);
+        if (OrderStatus.CONFIRMED.getCode().equals(order.getOrderStatus())) {
+            order.setConfirmTime(System.currentTimeMillis() / 1000);
         }
-        if(PayStatus.PAID.getCode().equals(order.getPayStatus())){
-            order.setPayTime(System.currentTimeMillis()/1000);
+        if (PayStatus.PAID.getCode().equals(order.getPayStatus())) {
+            order.setPayTime(System.currentTimeMillis() / 1000);
         }
-        if(ShippingStatus.SHIPPED.getCode().equals(order.getShippingStatus())){
-            order.setShippingTime(System.currentTimeMillis()/1000);
+        if (ShippingStatus.SHIPPED.getCode().equals(order.getShippingStatus())) {
+            order.setShippingTime(System.currentTimeMillis() / 1000);
         }
         return orderMapper.updateByPrimaryKeySelective(order);
     }

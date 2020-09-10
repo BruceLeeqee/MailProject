@@ -29,7 +29,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author chenlin
+ * 登录管理
+ *
+ * @author Jack
  * @date 2017/4/19
  */
 @RestController
@@ -53,6 +55,16 @@ public class LoginController extends BaseController {
     @Resource
     private ShiroCacheUtil shiroCacheUtil;
 
+    /**
+     * 获取用户菜单
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @GetMapping("getLoginResource")
     public HttpResponseBody<Map<String, Object>> getLoginResource(String userId) {
         List<SysResource> sysResources = iResourceService.selectbyUserId(userId);
@@ -61,27 +73,76 @@ public class LoginController extends BaseController {
         return HttpResponseBody.successResponse("查询成功", result);
     }
 
+    /**
+     * 获取图片上传地址
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @GetMapping("getFileServerUrl")
     public HttpResponseBody<String> getFileServerUrl() {
         String dfsPath = fastDFSClientService.getDfsPath();
         return HttpResponseBody.successResponse("查询成功", dfsPath);
     }
 
+    /**
+     * 没有登录
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping(value = "unLogin", method = {RequestMethod.GET, RequestMethod.POST})
     public HttpResponseBody unLogin() {
         return new HttpResponseBody(ResponseCodeConstant.UN_LOGIN_ERROR, "没有登陆");
     }
 
+    /**
+     * 没有权限,请重新登陆
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @RequestMapping(value = "accessDenied", method = {RequestMethod.GET, RequestMethod.POST})
     public HttpResponseBody accessDenied() {
         return new HttpResponseBody(ResponseCodeConstant.ACCESS_DENIED, "没有权限,请重新登陆！");
     }
 
+    /**
+     * 已经登陆成功
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @GetMapping("logined")
     public HttpResponseBody logined() {
         return new HttpResponseBody(ResponseCodeConstant.SUCCESS, "已经登陆成功！");
     }
 
+    /**
+     * 用户登录
+     *
+     * @param session
+     * @param userName
+     * @param password
+     * @param rememberMe
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @PostMapping("login")
     public HttpResponseBody toLogin(HttpSession session, String userName, String password, @RequestParam(defaultValue = "false", required = false) boolean rememberMe) {
         Map<String, Object> data = null;
@@ -99,6 +160,15 @@ public class LoginController extends BaseController {
         }
     }
 
+    /**
+     * 用户登出
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @PostMapping("logout")
     public HttpResponseBody logout() {
         SecurityUtils.getSubject().logout();
@@ -145,6 +215,16 @@ public class LoginController extends BaseController {
         return data;
     }
 
+    /**
+     * 获取父节点的菜单信息
+     *
+     * @param parentId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/9
+     * @version
+     */
     @GetMapping("getResourceByParentId")
     public HttpResponseBody<Map<String, Object>> getResourceByParentId(String parentId) {
         List<SysResource> sysResources = iResourceService.selectResourceByParentId(parentId);

@@ -18,9 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
@@ -29,10 +27,13 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Administrator
+ * 用户登录模块
+ *
+ * @author Jack
  */
 @Slf4j
 @RestController
+//@RequestMapping("/user/sys/service/ILoginService")
 public class LoginServiceImpl implements ILoginService {
     @Resource
     private SysUserMapper sysUserMapper;
@@ -47,11 +48,15 @@ public class LoginServiceImpl implements ILoginService {
     private String dfsUrl;
 
     /**
-     * 支持微信登录
+     * 用户登录
      *
      * @param token
      * @return
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/loginByToken", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public Map<String, Object> login(@RequestBody AuthenticationToken token) {
         SysUser user = null;
@@ -114,6 +119,17 @@ public class LoginServiceImpl implements ILoginService {
         return resultUser;
     }
 
+    /**
+     * 用户登录
+     *
+     * @param token
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/loginByTokenStr", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public Map<String, Object> loginByStrToken(@RequestParam("token") String token) {
         log.info(token);
@@ -175,8 +191,17 @@ public class LoginServiceImpl implements ILoginService {
     }
 
     /**
-     * 登录处理
+     * 根据账号密码登录
+     *
+     * @param loginAccount
+     * @param password
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/loginByAccount", method = RequestMethod.POST)
     @Override
     public Map<String, Object> login(String loginAccount, String password) {
         SysUser user = null;
@@ -231,7 +256,16 @@ public class LoginServiceImpl implements ILoginService {
 
     /**
      * 查询菜单
+     *
+     * @param userId
+     * @param parentId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/queryMenus", method = RequestMethod.POST)
     @Override
     public List<MenuModel> queryMenus(@RequestParam("userId") String userId, @RequestParam("parentId") String parentId) {
         Map<String, Object> paramMap = new HashMap<String, Object>();
@@ -254,7 +288,15 @@ public class LoginServiceImpl implements ILoginService {
 
     /**
      * 查询权限
+     *
+     * @param user
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/queryPermissionList", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public List<MenuModel> queryPermissionList(@RequestBody SysUser user) {
         List<MenuModel> menuList;
@@ -266,7 +308,15 @@ public class LoginServiceImpl implements ILoginService {
 
     /**
      * 查询权限
+     *
+     * @param userStr
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
      */
+    //@RequestMapping(value = "/queryPermissionListStr", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public List<MenuModel> queryPermissionList(String userStr) {
         SysUser user = JSONObject.parseObject(userStr, SysUser.class);
@@ -277,6 +327,17 @@ public class LoginServiceImpl implements ILoginService {
         return menuList;
     }
 
+    /**
+     * 账号登录
+     *
+     * @param loginAccount
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/login", method = RequestMethod.POST)
     @Override
     public SysUser login(String loginAccount) {
         SysUser user = null;

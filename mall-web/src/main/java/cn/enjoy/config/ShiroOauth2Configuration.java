@@ -18,6 +18,7 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Primary;
 
 import javax.servlet.Filter;
 import java.util.*;
@@ -88,6 +89,7 @@ public class ShiroOauth2Configuration {
      * @return
      */
     @Bean
+    @Primary
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());

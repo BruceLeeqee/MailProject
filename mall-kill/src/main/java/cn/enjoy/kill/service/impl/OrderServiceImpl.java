@@ -42,15 +42,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * 0|0|0 待支付
- * 0|0|1 已付款待配货
- * 1|0|1 已配货待出库
- * 1|1|1 待收货
- * 2|1|1 已完成
- * 4|1|1 已完成
+ * 秒杀订单管理
  */
 @Slf4j
 @RestController
+//@RequestMapping("/kill/order/service/IKillOrderService")
 public class OrderServiceImpl implements IKillOrderService {
     @Resource
     private OrderMapper orderMapper;
@@ -83,6 +79,7 @@ public class OrderServiceImpl implements IKillOrderService {
      * @param orderId
      * @return
      */
+    //@GetMapping("detail/{orderId}")
     public Order search(@PathVariable("orderId") Long orderId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
         log.info("----order:-----" + order);
@@ -93,6 +90,17 @@ public class OrderServiceImpl implements IKillOrderService {
         return order;
     }
 
+    /**
+     * 查询用户的订单
+     *
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryOrderByUserId", method = RequestMethod.POST)
     @Override
     public List<Order> queryOrderByUserId(String userId) {
         Map map = new HashMap();
@@ -100,6 +108,19 @@ public class OrderServiceImpl implements IKillOrderService {
         return orderMapper.queryByPage(map);
     }
 
+    /**
+     * 秒杀商品保存订单
+     *
+     * @param addressId
+     * @param killGoods
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/killOrder", method = RequestMethod.POST)
     @Transactional
     public Long killOrder(Long addressId, KillGoodsSpecPriceDetailVo killGoods, String userId) {
         //创建一个订单
@@ -157,13 +178,24 @@ public class OrderServiceImpl implements IKillOrderService {
         //订单日志
         orderActionService.save(order, "创建秒杀订单", userId);
 
-        if(redisTemplate.hasKey(userId)) {
+        if (redisTemplate.hasKey(userId)) {
             //清空用于分页的缓存
             redisTemplate.delete(userId);
         }
         return orderId;
     }
 
+    /**
+     * 保存订单
+     *
+     * @param killOrderVo
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/killOrder2", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     @Override
     public Long killOrder(KillOrderVo killOrderVo) {
@@ -171,6 +203,18 @@ public class OrderServiceImpl implements IKillOrderService {
                 killOrderVo.getKillGoodsSpecPriceDetailVo(), killOrderVo.getUserId());
     }
 
+    /**
+     * 查询订单详情
+     *
+     * @param orderId
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selectMyOrderDetail", method = RequestMethod.POST)
     @Override
     public Order selectMyOrderDetail(Long orderId, String userId) {
         Order order = orderMapper.selectByPrimaryKey(orderId);
@@ -184,6 +228,17 @@ public class OrderServiceImpl implements IKillOrderService {
         return order;
     }
 
+    /**
+     * 取消订单
+     *
+     * @param orderId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/cancel", method = RequestMethod.POST)
     @Transactional
     @Override
     public void cancel(Long orderId) {
@@ -217,12 +272,34 @@ public class OrderServiceImpl implements IKillOrderService {
         orderActionService.save(order, checkUser == true ? "取消订单" : "自动取消订单", userId);
     }
 
+    /**
+     * 自动取消订单
+     *
+     * @param orderId
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/selfCancel", method = RequestMethod.POST)
     @Transactional
     @Override
     public void selfCancel(Long orderId, String userId) {
         cancel(orderId, userId, true);
     }
 
+    /**
+     * 取消过期订单
+     *
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/autoCancelExpiredOrder")
     @Transactional
     @Override
     public void autoCancelExpiredOrder() {
@@ -240,11 +317,24 @@ public class OrderServiceImpl implements IKillOrderService {
      * @param type 0-全部订单，1-全部有效订单，2-待支付，3-待收货，4-已关闭
      * @return
      */
+    //@RequestMapping(value = "/queryOrderNum", method = RequestMethod.POST)
     @Override
     public Integer queryOrderNum(Integer type, String userId) {
         return orderMapper.selectOrderNum(type, userId);
     }
 
+    /**
+     * 确认收货
+     *
+     * @param orderId
+     * @param userId
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/confirmReceiveGoods", method = RequestMethod.POST)
     @Transactional
     @Override
     public void confirmReceiveGoods(Long orderId, String userId) {
@@ -273,12 +363,6 @@ public class OrderServiceImpl implements IKillOrderService {
         orderActionService.save(order, "确认收货", userId);
     }
 
-    /**
-     * 根据类型获取订单状态
-     *
-     * @param type
-     * @return
-     */
     private Integer getOrderStatusByType(Integer type) {
         Integer orderStatus = null;
         if (type == 0) {
@@ -295,12 +379,6 @@ public class OrderServiceImpl implements IKillOrderService {
         return orderStatus;
     }
 
-    /**
-     * 根据类型获取支付状态
-     *
-     * @param type
-     * @return
-     */
     private Integer getPayStatusByType(Integer type) {
         Integer payStatus = null;
         if (type == 0) {
@@ -317,23 +395,49 @@ public class OrderServiceImpl implements IKillOrderService {
         return payStatus;
     }
 
+    /**
+     * 查询分页订单
+     *
+     * @param type
+     * @param keywords
+     * @param userId
+     * @param addTime
+     * @param pageSize
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/queryByPage", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
-    public List<Order> queryByPage(Integer type, String keywords, String userId, Long addTime,int pageSize) {
-        List<Order> pageList = orderMapper.queryByPage(type, keywords,userId, addTime == 0 ? "" : addTime,pageSize);
+    public List<Order> queryByPage(Integer type, String keywords, String userId, Long addTime, int pageSize) {
+        List<Order> pageList = orderMapper.queryByPage(type, keywords, userId, addTime == 0 ? "" : addTime, pageSize);
         return pageList;
     }
 
+    /**
+     * seata修改订单状态
+     *
+     * @param order
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/8
+     * @version
+     */
+    //@RequestMapping(value = "/updateOrder", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     @Override
     public void updateOrder(Order order) {
         String sql = "update tp_order_kill set pay_status = ?,pay_code = ?,pay_name = ?,pay_time = ? where order_id = ?";
         jdbcTemplate.update(sql, new PreparedStatementSetter() {
             @Override
             public void setValues(PreparedStatement ps) throws SQLException {
-                ps.setInt(1,order.getPayStatus());
-                ps.setString(2,order.getPayCode());
-                ps.setString(3,order.getPayName());
-                ps.setLong(4,order.getPayTime());
-                ps.setLong(5,order.getOrderId());
+                ps.setInt(1, order.getPayStatus());
+                ps.setString(2, order.getPayCode());
+                ps.setString(3, order.getPayName());
+                ps.setLong(4, order.getPayTime());
+                ps.setLong(5, order.getOrderId());
             }
         });
 //        orderMapper.updateByPrimaryKeySelective(order);

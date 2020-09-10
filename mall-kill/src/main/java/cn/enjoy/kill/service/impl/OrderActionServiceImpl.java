@@ -19,9 +19,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author Administrator
+ * 订单日志
+ * @author Jack
  */
 @RestController
+//@RequestMapping("/kill/order/service/IOrderActionService")
 public class OrderActionServiceImpl implements IKillOrderActionService {
     @Resource
     private OrderActionMapper orderActionMapper;
@@ -35,10 +37,36 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * 保存订单日志
+    * @param order
+     * @param action
+     * @param userId
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/save", method = RequestMethod.POST)
     @Override
     public void save(Order order, String action, String userId) {
         this.save(order, action, userId, null);
     }
+    /**
+     * 保存预支付订单日志
+    * @param orderStr
+     * @param map
+     * @param action
+     * @param userId
+     * @param remark
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/savePre", method = RequestMethod.POST)
     @Override
     public Long savePre(String orderStr, Map map , String action, String userId, String remark) {
         Order order = JSONObject.parseObject(orderStr,Order.class);
@@ -65,6 +93,19 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
         return orderAction.getActionId();
     }
 
+    /**
+     * seata保存预支付订单日志
+     * @param orderStr
+     * @param action
+     * @param userId
+     * @param remark
+     * @author Jack
+     * @date 2020/9/8
+     * @throws Exception
+     * @return
+     * @version
+     */
+    //@RequestMapping(value = "/savePresync", method = RequestMethod.POST)
     @Override
     public Long savePre(String orderStr, String action, String userId, String remark) {
         Order order = JSONObject.parseObject(orderStr,Order.class);
@@ -101,6 +142,17 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
         return orderAction.getActionId();
     }
 
+    /**
+     * 修改预支付订单日志
+    * @param actionId
+     * @param map
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/updatePre", method = RequestMethod.POST)
     @Override
     public Long updatePre(Long actionId,Map map ) {
         OrderAction orderAction = orderActionMapper.selectByPrimaryKey(actionId);
@@ -117,7 +169,19 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
         return orderAction.getActionId();
     }
 
-
+    /**
+     * 保存订单日志
+    * @param order
+     * @param action
+     * @param userId
+     * @param remark
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/save2", method = RequestMethod.POST)
     @Override
     public void save(Order order, String action, String userId, String remark) {
         OrderAction orderAction = new OrderAction();
@@ -134,6 +198,16 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
         orderActionMapper.insert(orderAction);
     }
 
+    /**
+     * 根据prepayId查询订单日志
+    * @param prepayId
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/queryByPrepayId", method = RequestMethod.POST)
     @Override
     public OrderAction queryByPrepayId(String prepayId) {
         OrderAction orderAction = new OrderAction();
@@ -141,6 +215,16 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
         return orderAction;
     }
 
+    /**
+     * 查询订单日志
+    * @param orderId
+    * @author Jack
+    * @date 2020/9/8
+    * @throws Exception
+    * @return
+    * @version
+    */
+    //@RequestMapping(value = "/queryByOrderId", method = RequestMethod.POST)
     @Override
     public List<OrderAction> queryByOrderId(Long orderId) {
         return orderActionMapper.queryByOrderId(orderId);
