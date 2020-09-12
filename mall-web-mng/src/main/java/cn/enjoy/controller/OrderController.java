@@ -63,7 +63,7 @@ public class OrderController extends BaseController {
             @RequestParam(required = false, defaultValue = "10") int pageSize,
             OrderVo orderVo) {
         return HttpResponseBody.successResponse("ok",
-                orderManageService.queryByPage(page, pageSize, orderVo));
+                orderManageService.queryByPage(page, pageSize, orderVo,getSessionUserId()));
     }
 
     /**

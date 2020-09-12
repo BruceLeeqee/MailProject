@@ -14,6 +14,24 @@ public class OrderVo extends Order{
     private String orderStatusStr;
     private String shippingStatusStr;
     private String userName;
+    private int offset;
+    private int limit;
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
+    public int getLimit() {
+        return limit;
+    }
+
+    public void setLimit(int limit) {
+        this.limit = limit;
+    }
 
     public String getFromTime() {
         return fromTime;

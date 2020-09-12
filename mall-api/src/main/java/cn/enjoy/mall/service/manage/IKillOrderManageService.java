@@ -1,9 +1,11 @@
 package cn.enjoy.mall.service.manage;
 
-import cn.enjoy.core.utils.GridModel;
 import cn.enjoy.mall.model.Order;
 import cn.enjoy.mall.model.OrderGoods;
 import cn.enjoy.mall.vo.OrderVo;
+import com.alibaba.fastjson.JSONObject;
+import com.github.miemiedev.mybatis.paginator.domain.PageList;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,14 +17,12 @@ import java.util.List;
  * @author Ray
  * @date 2018/3/7.
  */
-@RequestMapping("/order/mall/service/manage/IOrderManageService")
-public interface IOrderManageService {
+@RequestMapping("/kill/mall/service/manage/IOrderManageService")
+public interface IKillOrderManageService {
 
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST)
-    GridModel<OrderVo> queryByPage(@RequestParam("page") int page,
-                                   @RequestParam("pageSize") int pageSize,
-                                   @RequestBody OrderVo params,
-                                   @RequestParam("userId") String userId);
+    JSONObject queryByPage(@RequestParam("page") int page,
+                    @RequestParam("pageSize") int pageSize, @RequestBody OrderVo params);
 
     @RequestMapping(value = "/queryOrderDetail", method = RequestMethod.POST)
     OrderVo queryOrderDetail(@RequestParam("orderId") Long orderId);
@@ -42,4 +42,10 @@ public interface IOrderManageService {
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     int update(@RequestBody Order order);
 
+    @RequestMapping(value = "/firstQuery", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    JSONObject firstQuery(@RequestParam("page") int page,
+                          @RequestParam("pageSize") int pageSize, @RequestBody OrderVo params);
+
+    @RequestMapping(value = "/secondQuery", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
+    PageList<OrderVo> secondQuery(@RequestParam("addTimeMin") Long addTimeMin,@RequestParam("addTimeMax") Long addTimeMax);
 }

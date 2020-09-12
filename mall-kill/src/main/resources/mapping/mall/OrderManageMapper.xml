@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cn.enjoy.mall.dao.OrderManageMapper">
+<mapper namespace="cn.enjoy.kill.dao.OrderManageMapper">
   <resultMap id="BaseResultMap" type="cn.enjoy.mall.vo.OrderVo">
     <!--
       WARNING - @mbggenerated
@@ -62,7 +62,7 @@
 
   <select id="queryByPageCount" parameterType="cn.enjoy.mall.vo.OrderVo" resultType="java.lang.Long">
     select count(1)
-    from tp_order o
+    from tp_order_kill o
     where 1=1
 
     <if test="orderStatus != null">
@@ -96,7 +96,7 @@
         <include refid="Base_Column_List" />
     , (select dd.cname from sys_dict_data dd where dd.code = o.order_status and dd.type='ORDER_STATUS') orderStatusStr
     , (select dd.cname from sys_dict_data dd where dd.code = o.shipping_status and dd.type='SHIPPING_STATUS') shippingStatusStr
-    from tp_order o
+    from tp_order_kill o
       where 1=1
 
     <if test="orderStatus != null">
@@ -128,46 +128,12 @@
     order by o.add_time limit #{offset},#{limit}
   </select>
 
-  <select id="queryByPageByTime" parameterType="cn.enjoy.mall.vo.OrderVo" resultMap="BaseResultMap">
-    select
-    <include refid="Base_Column_List" />
-    , (select dd.cname from sys_dict_data dd where dd.code = o.order_status and dd.type='ORDER_STATUS') orderStatusStr
-    , (select dd.cname from sys_dict_data dd where dd.code = o.shipping_status and dd.type='SHIPPING_STATUS') shippingStatusStr
-    from tp_order o
-    where 1=1
-
-    <if test="orderStatus != null">
-      and o.order_status = #{orderStatus}
-    </if>
-    <if test="shippingStatus != null">
-      and o.shipping_status = #{shippingStatus}
-    </if>
-    <if test="payStatus != null">
-      and o.pay_status = #{payStatus}
-    </if>
-    <if test="orderSn != null">
-      and o.order_sn like concat('%',#{orderSn}, '%')
-    </if>
-    <if test="consignee != null">
-      and o.consignee like concat('%',#{consignee}, '%')
-    </if>
-
-    <if test="fromTime != null">
-      and o.add_time >= UNIX_TIMESTAMP(#{fromTime})
-    </if>
-
-    <if test="toTime != null">
-      <![CDATA[  and o.add_time <= UNIX_TIMESTAMP(#{toTime}) ]]>
-    </if>
-    order by o.add_time limit #{offset},#{limit}
-  </select>
-
   <select id="secondQuerySql" parameterType="java.util.Map" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
     , (select dd.cname from sys_dict_data dd where dd.code = o.order_status and dd.type='ORDER_STATUS') orderStatusStr
     , (select dd.cname from sys_dict_data dd where dd.code = o.shipping_status and dd.type='SHIPPING_STATUS') shippingStatusStr
-    from tp_order o
+    from tp_order_kill o
     where 1=1
     <if test="addTimeMin != null and addTimeMax != null">
       and o.add_time between #{addTimeMin} and #{addTimeMax}

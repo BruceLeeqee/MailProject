@@ -1,4 +1,4 @@
-package cn.enjoy.mall.dao;
+package cn.enjoy.kill.dao;
 
 import cn.enjoy.mall.vo.OrderVo;
 import com.github.miemiedev.mybatis.paginator.domain.PageList;
@@ -11,9 +11,9 @@ import org.apache.ibatis.annotations.Param;
  */
 public interface OrderManageMapper {
 
-    PageList<OrderVo> queryByPage(OrderVo params);
-
     Long queryByPageCount(OrderVo params);
 
-    PageList<OrderVo> secondQuerySql(@Param("addTimeMin") Long addTimeMin,@Param("addTimeMax") Long addTimeMax);
+    PageList<OrderVo> queryByPage(OrderVo params);
+
+    PageList<OrderVo> secondQuerySql(@Param("addTimeMin") Long addTimeMin, @Param("addTimeMax") Long addTimeMax);
 }

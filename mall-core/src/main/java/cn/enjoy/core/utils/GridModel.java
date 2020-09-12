@@ -19,7 +19,7 @@ public class GridModel<T> implements Serializable {
     private Integer page;
     //总记录数
     private Long records;
-    //总页数
+    //页的大小
     private Integer total;
 
     private List<T> rows;
