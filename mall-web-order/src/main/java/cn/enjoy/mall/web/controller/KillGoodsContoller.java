@@ -5,15 +5,23 @@ import cn.enjoy.mall.service.IKillOrderService;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.web.service.KillGoodsService;
 import cn.enjoy.sys.controller.BaseController;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * 秒杀服务接口
  */
+@Slf4j
 @RestController
 @RequestMapping("/api/killgoodsSpec")
 public class KillGoodsContoller extends BaseController {
@@ -22,6 +30,8 @@ public class KillGoodsContoller extends BaseController {
     @Autowired
     private IKillOrderService iKillOrderService;
 
+//    @Autowired
+//    private RedissonClient redissonClient;
     /**
      * 查询秒杀商品
     * @author Jack
@@ -49,6 +59,38 @@ public class KillGoodsContoller extends BaseController {
         return HttpResponseBody.successResponse("ok", killGoodsService.detail(id));
     }
 
+/*    int y = 0;
+    private CountDownLatch cdl = new CountDownLatch(100);
+    @GetMapping("/redisson")
+    public HttpResponseBody redisson() {
+        for (Integer i = 0; i < 100; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        cdl.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    RLock lock = redissonClient.getLock("kill_store_redisson_lock");
+                    lock.lock();
+                    try {
+                        log.info("-------i--------" + y++);
+                    } finally {
+                        lock.unlock();
+                    }
+                }
+            }).start();
+            cdl.countDown();
+        }
+        try {
+            Thread.sleep(90000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return HttpResponseBody.successResponse("ok", y);
+    }*/
+
     /**
      * 秒杀接口，这里对redis做了预减库存，并把秒杀了的用户做了标识缓存
     * @param killId
@@ -67,11 +109,81 @@ public class KillGoodsContoller extends BaseController {
         if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
             return HttpResponseBody.failResponse("抢购已结束");
         }
-        if (!killGoodsService.secKill(killId,getSessionUserId())){
+        if (!killGoodsService.secKillByLock(killId,getSessionUserId())){
+            log.info("----抢购失败----");
             return HttpResponseBody.failResponse("抢购失败");
         }
 
         return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    @PostMapping("killOnlyIncr")
+    public HttpResponseBody killOnlyIncr(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.secKill(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    @PostMapping("killByDb")
+    public HttpResponseBody killByDb(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.secKillByDb(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    @GetMapping("killByQueueSSe")
+    public HttpResponseBody killByQueueSSe(int killId){
+        SseEmitter sseEmitter = new SseEmitter();
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.secKillByQueue(killId,getSessionUserId(),sseEmitter)){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    @GetMapping("killByQueue")
+    public SseEmitter killByQueue(int killId){
+        SseEmitter sseEmitter = new SseEmitter();
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            log.info("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            log.info("抢购已结束");
+        }
+        if (!killGoodsService.secKillByQueue(killId,getSessionUserId(),sseEmitter)){
+            log.info("----抢购失败----");
+        }
+
+        return sseEmitter;
     }
 
     /**

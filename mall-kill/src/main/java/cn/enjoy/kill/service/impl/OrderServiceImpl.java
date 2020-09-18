@@ -108,6 +108,11 @@ public class OrderServiceImpl implements IKillOrderService {
         return orderMapper.queryByPage(map);
     }
 
+    @Override
+    public Integer queryCountByUserId(String userId) {
+        return orderMapper.selectOrderNum(1,userId);
+    }
+
     /**
      * 秒杀商品保存订单
      *

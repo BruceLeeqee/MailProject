@@ -14,6 +14,9 @@ public interface IKillOrderService {
     @RequestMapping(value = "/queryOrderByUserId", method = RequestMethod.POST)
     List<Order> queryOrderByUserId(@RequestParam("userId") String userId);
 
+    @RequestMapping(value = "/queryCountByUserId", method = RequestMethod.POST)
+    Integer queryCountByUserId(@RequestParam("userId") String userId);
+
     @RequestMapping(value = "/queryByPage", method = RequestMethod.POST,consumes = MediaType.APPLICATION_JSON_VALUE)
     List<Order> queryByPage(@RequestParam("type") Integer type,
                             @RequestParam("keywords") String keywords,

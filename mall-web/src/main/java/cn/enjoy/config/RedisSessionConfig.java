@@ -28,7 +28,41 @@ public class RedisSessionConfig {
         return template;
     }
 
-    public static void main(String[] args) {
-        System.out.println(new Integer(111));
+    /*@Bean(name = "redisTemplate")
+    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(redisConnectionFactory);
+
+        redisTemplate.setKeySerializer(keySerializer());
+        redisTemplate.setHashKeySerializer(keySerializer());
+        redisTemplate.setValueSerializer(valueSerializer());
+        redisTemplate.setHashValueSerializer(valueSerializer());
+
+        return redisTemplate;
     }
+
+    @Bean
+    public org.springframework.data.redis.cache.RedisCacheManager springCacheManager(RedisConnectionFactory redisConnectionFactory) {
+        RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig()
+                .entryTtl(Duration.ofDays(1))
+                .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(keySerializer()))
+                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(valueSerializer()))
+                .disableCachingNullValues();
+
+        org.springframework.data.redis.cache.RedisCacheManager redisCacheManager = org.springframework.data.redis.cache.RedisCacheManager.builder(redisConnectionFactory)
+                .cacheDefaults(config)
+                .transactionAware()
+                .build();
+
+        return redisCacheManager;
+    }
+
+    private RedisSerializer<String> keySerializer() {
+        return new StringRedisSerializer();
+    }
+
+    private RedisSerializer<Object> valueSerializer() {
+        return new GenericJackson2JsonRedisSerializer();
+    }*/
+
 }

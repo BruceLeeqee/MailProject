@@ -34,12 +34,20 @@ spring:
     host: 106.52.62.38
     port: 6379
     password: 123456
+    database: 0
+    timeout: 10000000
     jedis:
       pool:
         max-wait: -1
         max-active: 100
         max-idle: 100
         min-idle: 10
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-idle: 8
+#        min-idle: 0
+#        max-wait: -1ms
   jmx:
     enabled: false
   rabbitmq:
@@ -53,6 +61,10 @@ spring:
     name: mall-web-order
   main:
     allow-bean-definition-overriding: true
+  cache:
+    redis:
+      use-key-prefix: true
+      time-to-live: 1d
 shiro:
   maxAge:
     day: 10

@@ -18,7 +18,6 @@ import org.crazycake.shiro.RedisCacheManager;
 import org.crazycake.shiro.RedisManager;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 
 import javax.servlet.Filter;
 import java.util.*;
@@ -28,7 +27,6 @@ import java.util.*;
  * @author cl
  */
 public class ShiroOauth2Configuration {
-
 
     @Value("${shiro.maxAge.day}")
     private Integer maxAgeDay =  10;
@@ -89,7 +87,6 @@ public class ShiroOauth2Configuration {
      * @return
      */
     @Bean
-    @Primary
     public RedisCacheManager cacheManager() {
         RedisCacheManager redisCacheManager = new RedisCacheManager();
         redisCacheManager.setRedisManager(redisManager());
@@ -131,6 +128,7 @@ public class ShiroOauth2Configuration {
         filterChainDefinitionMap.put("/wx/login", "anon");
         filterChainDefinitionMap.put("/api/system/logout", "anon");
         filterChainDefinitionMap.put("/api/logout", "logout");
+        filterChainDefinitionMap.put("/api/killgoodsSpec/killByQueue","anon");
         //配置记住我过滤器或认证通过可以访问的地址(当上次登录时，记住我以后，在下次访问/或/index时，可以直接访问，不需要登陆)
         filterChainDefinitionMap.put("/", "anon");
         filterChainDefinitionMap.put("/**.js", "anon");
