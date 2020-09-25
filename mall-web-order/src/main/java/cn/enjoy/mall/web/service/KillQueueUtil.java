@@ -7,12 +7,9 @@ import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
-import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
 import javax.annotation.Resource;
-import java.io.IOException;
 import java.util.Queue;
 import java.util.concurrent.*;
 
@@ -39,10 +36,10 @@ public class KillQueueUtil {
     private final int QUEUE_LENGTH = 10000;
 
     /**
-     是一个适用于高并发场景下的队列，通过无所的方式，实现了高并发状态下的高性能，
-     通常ConcurrentLinkedQueue性能好于BlockingQueue。
-     他是一个基于连接节点的无界线程安全队列。
-    */
+     * 是一个适用于高并发场景下的队列，通过无所的方式，实现了高并发状态下的高性能，
+     * 通常ConcurrentLinkedQueue性能好于BlockingQueue。
+     * 他是一个基于连接节点的无界线程安全队列。
+     */
     private Queue<KUBean> queue = new ConcurrentLinkedQueue<KUBean>();
 
     private ScheduledExecutorService ses = Executors.newScheduledThreadPool(4);
@@ -60,57 +57,43 @@ public class KillQueueUtil {
     private void execute() {
         ses.scheduleWithFixedDelay(() -> {
             KUBean kuBean = queue.poll();
-            if(kuBean != null) {
-                stock(kuBean.getKillId(),kuBean.getUserId());
+            if (kuBean != null) {
+                stock(kuBean.getKillId(), kuBean.getUserId());
             }
-        },0,1,TimeUnit.MILLISECONDS);
+        }, 0, 1, TimeUnit.MILLISECONDS);
     }
 
-    private void stock(Integer killId,String userId) {
+    private void stock(Integer killId, String userId) {
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
-        long stock = killGoodsService.stock(killGoodCount, 1);
+        long stock = killGoodsService.stock(killGoodCount, 1,killGoodsService.STOCK_LUA);
         // 初始化库存
         if (stock == killGoodsService.UNINITIALIZED_STOCK) {
-//            RedisLock redisLock = new RedisLock(redisTemplate, "stock:lock");
+            RedisLock redisLock = new RedisLock(redisTemplate, "stock:lock");
             try {
                 // 获取锁
-//                if (redisLock.tryLock()) {
+                if (redisLock.tryLock()) {
                     // 双重验证，避免并发时重复回源到数据库
-                    stock = killGoodsService.stock(killGoodCount, 1);
+                    stock = killGoodsService.stock(killGoodCount, 1,killGoodsService.STOCK_LUA);
                     if (stock == killGoodsService.UNINITIALIZED_STOCK) {
                         // 获取初始化库存
                         KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
                         // 将库存设置到redis
                         redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
                         // 调一次扣库存的操作
-                        stock = killGoodsService.stock(killGoodCount, 1);
+                        stock = killGoodsService.stock(killGoodCount, 1,killGoodsService.STOCK_LUA);
                     }
-//                }
+                }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
-            } /*finally {
+            } finally {
                 redisLock.unlock();
-            }*/
+            }
         }
 
-        if(stock >= 0) {
-            SseEmitter sseEmitter = killGoodsService.map.get(userId);
-            try {
-                sseEmitter.send("------秒杀成功--------", MediaType.APPLICATION_JSON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if (stock >= 0) {
             log.info("------秒杀成功--------");
-            killGoodsService.map.remove(userId);
         } else {
-            SseEmitter sseEmitter = killGoodsService.map.get(userId);
-            try {
-                sseEmitter.send("------秒杀成功--------", MediaType.APPLICATION_JSON);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
             log.info("------秒杀失败--------");
-            killGoodsService.map.remove(userId);
         }
     }
 }

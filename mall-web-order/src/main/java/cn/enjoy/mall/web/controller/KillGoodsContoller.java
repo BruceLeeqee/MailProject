@@ -7,16 +7,11 @@ import cn.enjoy.mall.web.service.KillGoodsService;
 import cn.enjoy.sys.controller.BaseController;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
-
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.CountDownLatch;
 
 /**
  * 秒杀服务接口
@@ -147,13 +142,11 @@ public class KillGoodsContoller extends BaseController {
             log.info("----抢购失败----");
             return HttpResponseBody.failResponse("抢购失败");
         }
-
         return HttpResponseBody.successResponse("ok",  killGoods);
     }
 
-    @GetMapping("killByQueueSSe")
-    public HttpResponseBody killByQueueSSe(int killId){
-        SseEmitter sseEmitter = new SseEmitter();
+    @GetMapping("killByQueue")
+    public HttpResponseBody killByQueue(int killId){
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
         if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
             return HttpResponseBody.failResponse("抢购还未开始");
@@ -161,7 +154,7 @@ public class KillGoodsContoller extends BaseController {
         if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
             return HttpResponseBody.failResponse("抢购已结束");
         }
-        if (!killGoodsService.secKillByQueue(killId,getSessionUserId(),sseEmitter)){
+        if (!killGoodsService.secKillByQueue(killId,getSessionUserId())){
             log.info("----抢购失败----");
             return HttpResponseBody.failResponse("抢购失败");
         }
@@ -169,8 +162,8 @@ public class KillGoodsContoller extends BaseController {
         return HttpResponseBody.successResponse("ok",  killGoods);
     }
 
-    @GetMapping("killByQueue")
-    public SseEmitter killByQueue(int killId){
+    @GetMapping("killByQueueSSe")
+    public SseEmitter killByQueueSSe(int killId){
         SseEmitter sseEmitter = new SseEmitter();
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
         if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
@@ -184,6 +177,57 @@ public class KillGoodsContoller extends BaseController {
         }
 
         return sseEmitter;
+    }
+
+    @PostMapping("secKillByRedissonLockNoLua")
+    public HttpResponseBody secKillByRedissonLockNoLua(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.secKillByRedissonLockNoLua(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    @PostMapping("secKillBySegStockNoLua")
+    public HttpResponseBody secKillBySegStockNoLua(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.secKillBySegmentLockNoLua(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    @PostMapping("secKillByRedissonLock")
+    public HttpResponseBody secKillByRedissonLock(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.secKillByRedissonLock(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+
+        return HttpResponseBody.successResponse("ok",  killGoods);
     }
 
     /**

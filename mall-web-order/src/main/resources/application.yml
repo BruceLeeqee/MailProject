@@ -16,3 +16,7 @@ server:
 spring:
   profiles:
     active: ${cn.pro.active:test}
+
+enjoy:
+  lock:
+    seg: 4
