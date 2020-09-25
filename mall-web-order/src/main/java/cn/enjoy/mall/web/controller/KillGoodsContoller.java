@@ -145,7 +145,7 @@ public class KillGoodsContoller extends BaseController {
         return HttpResponseBody.successResponse("ok",  killGoods);
     }
 
-    @GetMapping("killByQueue")
+    @PostMapping("killByQueue")
     public HttpResponseBody killByQueue(int killId){
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
         if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
@@ -162,7 +162,7 @@ public class KillGoodsContoller extends BaseController {
         return HttpResponseBody.successResponse("ok",  killGoods);
     }
 
-    @GetMapping("killByQueueSSe")
+    @PostMapping("killByQueueSSe")
     public SseEmitter killByQueueSSe(int killId){
         SseEmitter sseEmitter = new SseEmitter();
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
