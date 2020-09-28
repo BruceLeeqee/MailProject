@@ -4,14 +4,19 @@ import cn.enjoy.FrontApp;
 import cn.enjoy.mall.web.service.KillGoodsService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.redisson.RedissonRedLock;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @Classname MyTest
@@ -74,5 +79,58 @@ public class MyTest {
     @Test
     public void test3() {
         redisTemplate.opsForValue().set("fdasfd",90);
+    }
+
+    @Autowired
+    @Qualifier("redissonClient1")
+    private RedissonClient redissonClient1;
+
+    @Autowired
+    @Qualifier("redissonClient2")
+    private RedissonClient redissonClient2;
+
+    @Autowired
+    @Qualifier("redissonClient3")
+    private RedissonClient redissonClient3;
+
+    int j = 0;
+    @Test
+    public void redLockTest() {
+        String resourceName = "test_redlock";
+        RLock lock1 = redissonClient1.getLock(resourceName);
+        RLock lock2 = redissonClient2.getLock(resourceName);
+        RLock lock3 = redissonClient3.getLock(resourceName);
+        RedissonRedLock redLock = new RedissonRedLock(lock1, lock2, lock3);
+//        try {
+//            redLock.lock(5, TimeUnit.SECONDS);
+//            logger.info("===========>" + ++j);
+//        } finally {
+//            redLock.unlock();
+//        }
+        for (Integer i = 0; i < count; i++) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        cdl.await();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        redLock.lock(5, TimeUnit.SECONDS);
+                        logger.info("===========>" + ++j);
+                    } finally {
+                        redLock.unlock();
+                    }
+                }
+            }).start();
+            cdl.countDown();
+        }
+
+        try {
+            Thread.currentThread().join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

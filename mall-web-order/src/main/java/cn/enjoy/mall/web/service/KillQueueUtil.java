@@ -9,42 +9,34 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.util.Queue;
+import java.util.Timer;
 import java.util.concurrent.*;
 
 /**
  * @Classname KillQueueUtil
  * @Description TODO
  * @Author Jack
- * Date 2020/9/15 22:03
+ * Date 2020/9/28 20:15
  * Version 1.0
  */
-@Slf4j
 @Component
+@Slf4j
 public class KillQueueUtil {
+    private Queue<KUBean> queue = new ConcurrentLinkedQueue<>();
+
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+
+    private ScheduledExecutorService ses = Executors.newScheduledThreadPool(4);
 
     @Autowired
     private KillGoodsService killGoodsService;
 
     @Autowired
-    private IKillSpecManageService iKillSpecManageService;
-
-    @Resource
     private RedisTemplate redisTemplate;
 
-    private final int QUEUE_LENGTH = 10000;
-
-    /**
-     * 是一个适用于高并发场景下的队列，通过无所的方式，实现了高并发状态下的高性能，
-     * 通常ConcurrentLinkedQueue性能好于BlockingQueue。
-     * 他是一个基于连接节点的无界线程安全队列。
-     */
-    private Queue<KUBean> queue = new ConcurrentLinkedQueue<KUBean>();
-
-    private ScheduledExecutorService ses = Executors.newScheduledThreadPool(4);
-
-    private ExecutorService executorService = Executors.newCachedThreadPool();
+    @Autowired
+    private IKillSpecManageService iKillSpecManageService;
 
     public void addQueue(KUBean kuBean) {
         queue.offer(kuBean);
@@ -56,44 +48,41 @@ public class KillQueueUtil {
 
     private void execute() {
         ses.scheduleWithFixedDelay(() -> {
-            KUBean kuBean = queue.poll();
-            if (kuBean != null) {
-                stock(kuBean.getKillId(), kuBean.getUserId());
+            KUBean kubean = queue.poll();
+            if(kubean != null) {
+                stock(kubean.getKillId(),kubean.getUserId());
             }
         }, 0, 1, TimeUnit.MILLISECONDS);
     }
 
-    private void stock(Integer killId, String userId) {
-        final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
-        long stock = killGoodsService.stock(killGoodCount, 1,killGoodsService.STOCK_LUA);
-        // 初始化库存
+    private void stock(Integer killId,String userId) {
+        String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
+        //返回的数值,执行了lua脚本
+        Long stock = killGoodsService.stock(killGoodCount, 1, killGoodsService.STOCK_LUA);
         if (stock == killGoodsService.UNINITIALIZED_STOCK) {
+            Timer timer = null;
             RedisLock redisLock = new RedisLock(redisTemplate, "stock:lock");
             try {
-                // 获取锁
+                //如果竞争锁成功  如果其他线程没竞争锁成功，这里是阻塞的
                 if (redisLock.tryLock()) {
-                    // 双重验证，避免并发时重复回源到数据库
-                    stock = killGoodsService.stock(killGoodCount, 1,killGoodsService.STOCK_LUA);
+                    stock = killGoodsService.stock(killGoodCount, 1, killGoodsService.STOCK_LUA);
                     if (stock == killGoodsService.UNINITIALIZED_STOCK) {
-                        // 获取初始化库存
                         KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
-                        // 将库存设置到redis
-                        redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
-                        // 调一次扣库存的操作
-                        stock = killGoodsService.stock(killGoodCount, 1,killGoodsService.STOCK_LUA);
+                        redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount(), 60 * 60, TimeUnit.SECONDS);
+                        //再次去执行lua脚本，扣减库存
+                        stock = killGoodsService.stock(killGoodCount, 1, killGoodsService.STOCK_LUA);
                     }
                 }
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             } finally {
+                if (timer != null) {
+                    timer.cancel();
+                }
+                //释放锁 。自己加的锁不能让别人释放，自己只能释放自己的锁
+                //这里要进行一个value值的比较，只要自己的value值相等才能释放
                 redisLock.unlock();
             }
-        }
-
-        if (stock >= 0) {
-            log.info("------秒杀成功--------");
-        } else {
-            log.info("------秒杀失败--------");
         }
     }
 }

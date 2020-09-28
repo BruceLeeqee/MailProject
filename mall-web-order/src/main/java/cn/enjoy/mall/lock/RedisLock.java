@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 import org.springframework.util.StringUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
-import redis.clients.jedis.commands.JedisCommands;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -306,6 +305,7 @@ public class RedisLock {
      */
     private boolean set(final String key, final String value, final long seconds) {
         Assert.isTrue(!StringUtils.isEmpty(key), "key不能为空");
+        //如果返回为true单表 这个key在redis里面没有，并且返回true  setNX
         return redisTemplate.opsForValue().setIfAbsent(key, value,expireTime, TimeUnit.SECONDS);
 /*        return (String) redisTemplate.execute(new RedisCallback<String>() {
             @Override

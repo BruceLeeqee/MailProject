@@ -13,7 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
-import org.omg.PortableInterceptor.INACTIVE;
+import org.apache.curator.framework.CuratorFramework;
+import org.apache.curator.framework.recipes.locks.InterProcessMutex;
 import org.redisson.RedissonRedLock;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
@@ -26,7 +27,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
 import org.springframework.data.redis.core.*;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
@@ -95,7 +95,7 @@ public class KillGoodsService {
     private RedissonClient redissonClient3;
 
     private RLock lock;
-
+    //setNX
     public static String REDIS_LOCK = "stock:lock";
 
     @PostConstruct
@@ -236,7 +236,7 @@ public class KillGoodsService {
         Object killGoodsPriceOb = redisTemplate.opsForValue().get(killGoodsDetail);
         if (null != killGoodsPriceOb) {
             log.info(Thread.currentThread().getName() + "---redis缓存中得到的数据---------");
-            return JSONObject.parseObject(killGoodsPriceOb.toString(),KillGoodsSpecPriceDetailVo.class);
+            return JSONObject.parseObject(killGoodsPriceOb.toString(), KillGoodsSpecPriceDetailVo.class);
         }
         //程序要健壮一些
         synchronized (iKillSpecManageService) {
@@ -252,7 +252,7 @@ public class KillGoodsService {
             killGoodsPriceOb = redisTemplate.opsForValue().get(killGoodsDetail);
             if (null != killGoodsPriceOb) {
                 log.info(Thread.currentThread().getName() + "---redis缓存中得到的数据---------");
-                return JSONObject.parseObject(killGoodsPriceOb.toString(),KillGoodsSpecPriceDetailVo.class);
+                return JSONObject.parseObject(killGoodsPriceOb.toString(), KillGoodsSpecPriceDetailVo.class);
             }
             //2、去数据库里面查询数据
             killGoodsPrice = iKillSpecManageService.detailById(id);
@@ -336,7 +336,7 @@ public class KillGoodsService {
 
     public Map<String, SseEmitter> map = new ConcurrentHashMap<>();
 
-    public boolean secKillByQueue(int killId, String userId, SseEmitter sseEmitter) {
+/*    public boolean secKillByQueue(int killId, String userId, SseEmitter sseEmitter) {
         Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
         if (member) {
             logger.info("--------userId:" + userId + "--has secKilled");
@@ -345,14 +345,24 @@ public class KillGoodsService {
         killQueueUtil.addQueue(new KUBean(killId, userId));
         map.put(userId, sseEmitter);
         return true;
-    }
+    }*/
 
+    /**
+     * 所有请求不处理，单纯的丢到本地队列里面去
+    * @param
+    * @author Jack
+    * @date 2020/9/28
+    * @throws Exception
+    * @return
+    * @version
+    */
     public boolean secKillByQueue(int killId, String userId) {
         Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
         if (member) {
             logger.info("--------userId:" + userId + "--has secKilled");
             return false;
         }
+        //这里把并行改为了串行
         killQueueUtil.addQueue(new KUBean(killId, userId));
         return true;
     }
@@ -365,7 +375,7 @@ public class KillGoodsService {
         }
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
 
-        long stock = stock(killGoodCount, 1,STOCK_LUA);
+        long stock = stock(killGoodCount, 1, STOCK_LUA);
         // 初始化库存
         if (stock == UNINITIALIZED_STOCK) {
             RLock lock = redissonClient.getLock("store_lock_cn_order");
@@ -373,14 +383,14 @@ public class KillGoodsService {
                 // 获取锁,支持过期解锁功能 2秒钟以后自动解锁
                 lock.lock(2, TimeUnit.SECONDS);
                 // 双重验证，避免并发时重复回源到数据库
-                stock = stock(killGoodCount, 1,STOCK_LUA);
+                stock = stock(killGoodCount, 1, STOCK_LUA);
                 if (stock == UNINITIALIZED_STOCK) {
                     // 获取初始化库存
                     KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
                     // 将库存设置到redis
                     redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
                     // 调一次扣库存的操作
-                    stock = stock(killGoodCount, 1,STOCK_LUA);
+                    stock = stock(killGoodCount, 1, STOCK_LUA);
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
@@ -396,6 +406,7 @@ public class KillGoodsService {
         }
         return flag;
     }
+
     /**
      * redis分段锁
      *
@@ -463,6 +474,7 @@ public class KillGoodsService {
         }
         String seg = getStockSegment();
         log.info("-------choice seg is---" + seg);
+        //KILL_COUNT_24_seg_1 KILL_COUNT_24_seg_2 KILL_COUNT_24_seg_3 KILL_COUNT_24_seg_4
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId + "_" + seg;
         RLock lock = redissonClient.getLock("store_lock_cn_order_" + seg);
 /*        if (!redisTemplate.hasKey(killGoodCount)) {
@@ -495,6 +507,57 @@ public class KillGoodsService {
             }
         } finally {
             lock.unlock();
+        }
+        return false;
+    }
+
+    @Autowired
+    private CuratorFramework client;
+
+    public boolean secKillByZkLockNoLua(int killId, String userId) {
+        Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
+        if (member) {
+            logger.info("--------userId:"
+                    + userId + "--has secKilled");
+            return false;
+        }
+        final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
+        if (!redisTemplate.hasKey(killGoodCount)) {
+            // 获取锁,支持过期解锁功能 2秒钟以后自动解锁
+            lock.lock(2, TimeUnit.SECONDS);
+            try {
+                // 获取初始化库存
+                KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
+                // 将库存设置到redis
+                redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
+            } finally {
+                lock.unlock();
+            }
+        }
+        InterProcessMutex lock = new InterProcessMutex(client, "/curator/lock");
+        try {
+            lock.acquire();
+            //1、先查询库存
+            Integer stock = (Integer) redisTemplate.opsForValue().get(killGoodCount);
+            if (stock <= 0) {
+                logger.info("--------stock not enough---------");
+                return false;
+            }
+            //2、减库存
+            if (redisTemplate.opsForValue().increment(killGoodCount, -1) >= 0) {
+                redisTemplate.opsForSet().add(KillConstants.KILLGOOD_USER, killId + userId);
+                return true;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (lock.isAcquiredInThisProcess()) {
+                try {
+                    lock.release();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
         return false;
     }
@@ -538,46 +601,6 @@ public class KillGoodsService {
         return false;
     }
 
-    public boolean secKillByRedissonLockByLua(int killId, String userId) {
-        Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
-        if (member) {
-            logger.info("--------userId:" + userId + "--has secKilled");
-            return false;
-        }
-        final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
-        RLock lock = redissonClient.getLock("store_lock_cn_order");
-        if (!redisTemplate.hasKey(killGoodCount)) {
-            // 获取锁,支持过期解锁功能 2秒钟以后自动解锁
-            lock.lock(2, TimeUnit.SECONDS);
-            try {
-                // 获取初始化库存
-                KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
-                // 将库存设置到redis
-                redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
-            } finally {
-                lock.unlock();
-            }
-        }
-        lock.lock(2, TimeUnit.SECONDS);
-        try {
-            //1、先查询库存
-            Integer stock = (Integer) redisTemplate.opsForValue().get(killGoodCount);
-            if (stock <= 0) {
-                logger.info("--------stock not enough---------");
-                return false;
-            }
-            //2、减库存
-            if (redisTemplate.opsForValue().increment(killGoodCount, -1) >= 0) {
-                redisTemplate.opsForSet().add(KillConstants.KILLGOOD_USER, killId + userId);
-                return true;
-            }
-        } finally {
-            lock.unlock();
-        }
-        return false;
-    }
-
-
     public boolean secKillByRedLock(int killId, String userId) {
         Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
         if (member) {
@@ -586,7 +609,7 @@ public class KillGoodsService {
         }
         final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
 
-        long stock = stock(killGoodCount, 1,STOCK_LUA);
+        long stock = stock(killGoodCount, 1, STOCK_LUA);
         // 初始化库存
         if (stock == UNINITIALIZED_STOCK) {
             String resourceName = "STORE_REDLOCK_KEY";
@@ -599,14 +622,14 @@ public class KillGoodsService {
                 // 获取锁,支持过期解锁功能 2秒钟以后自动解锁
                 redLock.lock(2, TimeUnit.SECONDS);
                 // 双重验证，避免并发时重复回源到数据库
-                stock = stock(killGoodCount, 1,STOCK_LUA);
+                stock = stock(killGoodCount, 1, STOCK_LUA);
                 if (stock == UNINITIALIZED_STOCK) {
                     // 获取初始化库存
                     KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
                     // 将库存设置到redis
                     redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
                     // 调一次扣库存的操作
-                    stock = stock(killGoodCount, 1,STOCK_LUA);
+                    stock = stock(killGoodCount, 1, STOCK_LUA);
                 }
             } catch (Exception e) {
                 logger.error(e.getMessage(), e);
@@ -623,53 +646,53 @@ public class KillGoodsService {
         return flag;
     }
 
-    public boolean secKillByLock(int killId, String userId) {
-        Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
-        if (member) {
-            logger.info("--------userId:" + userId + "--has secKilled");
-            return false;
-        }
-        final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
-
-        long stock = stock(killGoodCount, 1,STOCK_LUA);
-        // 初始化库存
-        if (stock == UNINITIALIZED_STOCK) {
-            RedisLock redisLock = new RedisLock(redisTemplate, REDIS_LOCK);
-            Timer timer = null;
-            try {
-                // 获取锁
-                if (redisLock.tryLock()) {
-                    //锁续命
-                    timer = continueLock(REDIS_LOCK);
-                    // 双重验证，避免并发时重复回源到数据库
-                    stock = stock(killGoodCount, 1,STOCK_LUA);
-                    if (stock == UNINITIALIZED_STOCK) {
-                        // 获取初始化库存
-                        KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
-                        // 将库存设置到redis
-                        redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
-                        // 调一次扣库存的操作
-                        stock = stock(killGoodCount, 1,STOCK_LUA);
-                    }
-                }
-            } catch (Exception e) {
-                logger.error(e.getMessage(), e);
-            } finally {
-                if (timer != null) {
-                    timer.cancel();
-                }
-                redisLock.unlock();
+    /*    public boolean secKillByLock(int killId, String userId) {
+            Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
+            if (member) {
+                logger.info("--------userId:" + userId + "--has secKilled");
+                return false;
             }
+            final String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
 
-        }
-        boolean flag = stock >= 0;
-        if (flag) {
-            //秒杀成功，缓存秒杀用户和商品
-            redisTemplate.opsForSet().add(KillConstants.KILLGOOD_USER, killId + userId);
-        }
-        return flag;
-    }
-/*    public boolean secKillByLock(int killId, String userId) {
+            long stock = stock(killGoodCount, 1,STOCK_LUA);
+            // 初始化库存
+            if (stock == UNINITIALIZED_STOCK) {
+                RedisLock redisLock = new RedisLock(redisTemplate, REDIS_LOCK);
+                Timer timer = null;
+                try {
+                    // 获取锁
+                    if (redisLock.tryLock()) {
+                        //锁续命
+                        timer = continueLock(REDIS_LOCK);
+                        // 双重验证，避免并发时重复回源到数据库
+                        stock = stock(killGoodCount, 1,STOCK_LUA);
+                        if (stock == UNINITIALIZED_STOCK) {
+                            // 获取初始化库存
+                            KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
+                            // 将库存设置到redis
+                            redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount().intValue(), 60 * 60, TimeUnit.SECONDS);
+                            // 调一次扣库存的操作
+                            stock = stock(killGoodCount, 1,STOCK_LUA);
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.error(e.getMessage(), e);
+                } finally {
+                    if (timer != null) {
+                        timer.cancel();
+                    }
+                    redisLock.unlock();
+                }
+
+            }
+            boolean flag = stock >= 0;
+            if (flag) {
+                //秒杀成功，缓存秒杀用户和商品
+                redisTemplate.opsForSet().add(KillConstants.KILLGOOD_USER, killId + userId);
+            }
+            return flag;
+        }*/
+    public boolean secKillByLock(int killId, String userId) {
         //判断用户是否已经秒杀过
         Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
         if (member) {
@@ -678,22 +701,42 @@ public class KillGoodsService {
         }
         String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
         //返回的数值,执行了lua脚本
-        Long stock = stock(killGoodCount, 1);
+        Long stock = stock(killGoodCount, 1, STOCK_LUA);
         if (stock == UNINITIALIZED_STOCK) {
-            //???有大量请求，请求数据库了？？
-            //todo 这里考虑加一个分布式锁
-            KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
-            redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount(), 60 * 60, TimeUnit.SECONDS);
-            //再次去执行lua脚本，扣减库存
-            stock = stock(killGoodCount, 1);
+            Timer timer = null;
+            RedisLock redisLock = new RedisLock(redisTemplate, REDIS_LOCK);
+            try {
+                //如果竞争锁成功  如果其他线程没竞争锁成功，这里是阻塞的
+                if (redisLock.tryLock()) {
+                    //锁续命
+                    timer = continueLock(REDIS_LOCK);
+
+                    stock = stock(killGoodCount, 1, STOCK_LUA);
+                    if (stock == UNINITIALIZED_STOCK) {
+                        KillGoodsPrice killGoodsPrice = iKillSpecManageService.selectByPrimaryKey(killId);
+                        redisTemplate.opsForValue().set(killGoodCount, killGoodsPrice.getKillCount(), 60 * 60, TimeUnit.SECONDS);
+                        //再次去执行lua脚本，扣减库存
+                        stock = stock(killGoodCount, 1, STOCK_LUA);
+                    }
+                }
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+            } finally {
+                if (timer != null) {
+                    timer.cancel();
+                }
+                //释放锁 。自己加的锁不能让别人释放，自己只能释放自己的锁
+                //这里要进行一个value值的比较，只要自己的value值相等才能释放
+                redisLock.unlock();
+            }
         }
         //如果是这种情况，秒杀成功
         boolean flag = stock >= 0;
-        if(flag) {
+        if (flag) {
             redisTemplate.opsForSet().add(KillConstants.KILLED_GOOD_USER + killId, userId);
         }
         return flag;
-    }*/
+    }
 
     private Timer continueLock(String lockKey) {
         Timer timer = new Timer();
@@ -714,7 +757,7 @@ public class KillGoodsService {
      * @param num 扣减库存数量
      * @return 扣减之后剩余的库存【-3:库存未初始化; -2:库存不足; -1:不限库存; 大于等于0:扣减库存之后的剩余库存】
      */
-    public Long stock(String key, int num,String script) {
+    public Long stock(String key, int num, String script) {
         // 脚本里的KEYS参数
         List<String> keys = new ArrayList<>();
         keys.add(key);
@@ -813,20 +856,20 @@ public class KillGoodsService {
         }
 
         //秒杀成功，缓存秒杀用户和商品
-        redisTemplate.opsForSet().add(KillConstants.KILLGOOD_USER, killId + userId);
+        redisTemplate.opsForSet().add(KillConstants.KILLED_GOOD_USER + killId, userId);
         return true;
     }
 
     public boolean chkKillOrder(String killId, String userId) {
         //校验用户和商品是否有缓存，无则表明当前是非法请求
-        boolean isKilld = redisTemplate.opsForSet().isMember(KillConstants.KILLGOOD_USER, killId + userId);
+        boolean isKilld = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
         if (isKilld) {
-            redisTemplate.opsForSet().remove(KillConstants.KILLGOOD_USER, killId + userId);
+            redisTemplate.opsForSet().remove(KillConstants.KILLED_GOOD_USER + killId, userId);
         }
         return isKilld;
     }
 
-    public String submitOrder(Long addressId, int killId, String userId) {
+/*    public String submitOrder(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();
@@ -839,7 +882,7 @@ public class KillGoodsService {
         //订单有效时间3秒
         String kill_order_user = KillConstants.KILL_ORDER_USER + killId + userId;
         valueOperations.set(kill_order_user, KillConstants.KILL_ORDER_USER_UNDO, 3000, TimeUnit.MILLISECONDS);
-        /*同步转异步，发送到消息队列*/
+        *//*同步转异步，发送到消息队列*//*
         secKillSender.send(vo);
 
         String orderId = "";
@@ -859,6 +902,29 @@ public class KillGoodsService {
             e.printStackTrace();
         }
 
+        return null;
+    }*/
+
+    public String submitOrder(Long addressId, int killId, String userId) {
+        KillGoodsSpecPriceDetailVo killGoods = detail(killId);
+
+        KillOrderVo vo = new KillOrderVo();
+        vo.setUserId(userId);
+        vo.setKillGoodsSpecPriceDetailVo(killGoods);
+        vo.setAddressId(addressId);
+
+//        ValueOperations<String, String> valueOperations = stringRedisTemplate.opsForValue();
+
+        //订单有效时间3秒
+//        String kill_order_user = KillConstants.KILL_ORDER_USER + killId + userId;
+//        valueOperations.set(kill_order_user, KillConstants.KILL_ORDER_USER_UNDO, 3000, TimeUnit.MILLISECONDS);
+        /*同步转异步，发送到消息队列*/
+        try {
+            String result = secKillSender.sendAndReceive(vo);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
