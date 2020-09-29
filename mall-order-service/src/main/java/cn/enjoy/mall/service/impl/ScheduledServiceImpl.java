@@ -42,12 +42,12 @@ public class ScheduledServiceImpl implements IScheduledService {
                    List<HotSellingGoods> hotSellingGoodsList = new ArrayList<>();
                    //获取热门商品信息
                    hotSellingGoodsList = scheduledMapper.hotProduct(5);
-                   scheduledMapper.deleteByAll();
+//                   scheduledMapper.deleteByAll();
                    //使用redis统计商品的销量
                    redisTemplate.delete(RedisKey.GOODS_SALE_NUM);
                    for(HotSellingGoods hotSellingGoods : hotSellingGoodsList){
                        //System.out.println("ID:"+map.get("goods_id").toString()+",num:"+map.get("salessum"));
-                       scheduledMapper.insert(hotSellingGoods);
+//                       scheduledMapper.insert(hotSellingGoods);
                        redisTemplate.opsForZSet().incrementScore(RedisKey.GOODS_SALE_NUM,hotSellingGoods.getGoodsId()+"",hotSellingGoods.getSalesSum());
                    }
                }finally {
