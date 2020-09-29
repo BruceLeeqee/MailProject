@@ -145,10 +145,74 @@ public class OrderServiceImpl implements IKillOrderService {
         UserAddress userAddress = userAddressMapper.selectByPrimaryKey(addressId);
         BeanUtils.copyProperties(userAddress, order);
         order.setUserId(userId);
-
+//        redisTemplate.opsForValue().set(order.getOrderId(),order);
         //新增订单
         orderMapper.insert(order);
         Long orderId = order.getOrderId();
+        BigDecimal totalAmount = new BigDecimal(0);
+        //从mongodb的购物车中获取所购物品
+        List<OrderGoods> orderGoodsList = new ArrayList<>();
+        GoodsVo goodsVo = goodsDao.findOneBySpecGoodsId(killGoods.getSpecGoodsId());
+
+        //创建的订单商品
+        OrderGoods orderGoods = new OrderGoods();
+        orderGoods.setRecId(defaultUidGenerator.getUID());
+        orderGoods.setOrderType("K");
+        orderGoods.setOrderId(orderId);
+        BeanUtils.copyProperties(goodsVo.getBase(), orderGoods);
+        orderGoods.setPromType(true);
+        orderGoods.setPromId(killGoods.getId());
+        orderGoods.setGoodsNum((short) 1);
+        orderGoods.setGoodsPrice(killGoods.getPrice());
+        orderGoods.setSpecKey(killGoods.getKey());
+        orderGoods.setSpecKeyName(killGoods.getKeyName());
+        orderGoods.setSpecGoodsId(killGoods.getSpecGoodsId());
+        orderGoods.setOriginalImg(killGoods.getOriginalImg());
+        orderGoodsList.add(orderGoods);
+        totalAmount = totalAmount.add(killGoods.getPrice());
+        order.setGoodsPrice(totalAmount);
+        order.setShippingPrice(new BigDecimal(0));
+        order.setOrderAmount(totalAmount.add(order.getShippingPrice()));
+        order.setTotalAmount(totalAmount.add(order.getShippingPrice()));
+
+        //修改订单
+        orderMapper.updateByPrimaryKeySelective(order);
+
+        //保存订单产品信息
+        orderGoodsMapper.insertBatch(orderGoodsList);
+        //订单日志
+        orderActionService.save(order, "创建秒杀订单", userId);
+
+        if (redisTemplate.hasKey(userId)) {
+            //清空用于分页的缓存
+            redisTemplate.delete(userId);
+        }
+        return orderId;
+    }
+
+    @Transactional
+    public Long killOrder(Long addressId, KillGoodsSpecPriceDetailVo killGoods, String userId,Long orderId) {
+        //创建一个订单
+        Order order = new Order();
+//        order.setOrderType("K");
+        //从SequenceGenerator中获取订单的变化
+        order.setOrderId(orderId);
+        order.setOrderSn(sequenceGenerator.getOrderNo());
+        order.setAddTime(System.currentTimeMillis());
+        //设置订单的状态为未确定订单
+        order.setOrderStatus(OrderStatus.UNCONFIRMED.getCode());
+        //未支付
+        order.setPayStatus(PayStatus.UNPAID.getCode());
+        //未发货
+        order.setShippingStatus(ShippingStatus.UNSHIPPED.getCode());
+        //获取发货地址
+        UserAddress userAddress = userAddressMapper.selectByPrimaryKey(addressId);
+        BeanUtils.copyProperties(userAddress, order);
+        order.setUserId(userId);
+
+        redisTemplate.opsForValue().set(orderId,order);
+        //新增订单
+        orderMapper.insert(order);
         BigDecimal totalAmount = new BigDecimal(0);
         //从mongodb的购物车中获取所购物品
         List<OrderGoods> orderGoodsList = new ArrayList<>();
