@@ -48,7 +48,7 @@ public class RabbitConfig {
         connectionFactory.setPassword(password);
         connectionFactory.setVirtualHost(virtualHost);
         /** 如果要进行消息回调，则这里必须要设置为true */
-        connectionFactory.setPublisherConfirms(publisherConfirms);
+//        connectionFactory.setPublisherConfirms(publisherConfirms);
         return connectionFactory;
     }
 
@@ -60,21 +60,26 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate newRabbitTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
-        template.setMandatory(true);
-        template.setConfirmCallback(confirmCallback());
-        template.setReturnCallback(returnCallback());
+//        template.setMandatory(true);
+//        template.setConfirmCallback(confirmCallback());
+//        template.setReturnCallback(returnCallback());
+        //不使用临时队列
+        template.setUseTemporaryReplyQueues(false);
+        template.setReplyAddress("amq.rabbitmq.reply-to");
+        template.setUserCorrelationId(true);
+        template.setReplyTimeout(10000);
         return template;
     }
 
 
     @Bean
     public Queue queueSecKillMessage() {
-        return new Queue("order.seckill.producer");
+        return new Queue("order.seckill.producer",true,false,false);
     }
 
     @Bean
     public DirectExchange exchange() {
-        return new DirectExchange(EXCHANGE_SECKILL);
+        return new DirectExchange(EXCHANGE_SECKILL,true,false);
     }
 
     @Bean
@@ -90,7 +95,6 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate.ConfirmCallback confirmCallback(){
         return new RabbitTemplate.ConfirmCallback(){
-
             @Override
             public void confirm(CorrelationData correlationData,
                                 boolean ack, String cause) {
@@ -107,7 +111,6 @@ public class RabbitConfig {
     @Bean
     public RabbitTemplate.ReturnCallback returnCallback(){
         return new RabbitTemplate.ReturnCallback(){
-
             @Override
             public void returnedMessage(Message message,
                                         int replyCode,
