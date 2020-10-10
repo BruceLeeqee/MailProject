@@ -2,13 +2,21 @@ package cn.enjoy.mall.web.service;
 
 import cn.enjoy.core.utils.GridModel;
 import cn.enjoy.mall.constant.KillConstants;
+import cn.enjoy.mall.constant.OrderStatus;
+import cn.enjoy.mall.constant.PayStatus;
+import cn.enjoy.mall.constant.ShippingStatus;
 import cn.enjoy.mall.lock.RedisLock;
 import cn.enjoy.mall.model.KillGoodsPrice;
+import cn.enjoy.mall.model.Order;
+import cn.enjoy.mall.model.OrderGoods;
+import cn.enjoy.mall.model.UserAddress;
 import cn.enjoy.mall.service.IKillOrderService;
+import cn.enjoy.mall.service.IUserAddressService;
 import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import cn.enjoy.mall.vo.KillGoodsSpecPriceDetailVo;
 import cn.enjoy.mall.vo.KillOrderVo;
 import com.alibaba.fastjson.JSONObject;
+import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
@@ -20,6 +28,8 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -62,6 +72,9 @@ public class KillGoodsService {
     private IKillSpecManageService killSpecManageService;
 
     @Autowired
+    private IUserAddressService userAddressService;
+
+    @Autowired
     private CacheManager cacheManager;
 
     @Autowired
@@ -77,6 +90,8 @@ public class KillGoodsService {
     public static final String STOCK_LUA;
 
     public static String STOCK_LUA_1 = "";
+
+    public static String STOCK_LUA_INCR = "";
 
     @Autowired
     @Qualifier("redissonClient")
@@ -97,6 +112,9 @@ public class KillGoodsService {
     private RLock lock;
     //setNX
     public static String REDIS_LOCK = "stock:lock";
+
+    @Autowired
+    private DefaultUidGenerator defaultUidGenerator;
 
     @PostConstruct
     public void initLock() {
@@ -135,16 +153,32 @@ public class KillGoodsService {
         STOCK_LUA = sb.toString();
 
         StringBuilder sb1 = new StringBuilder();
-        sb.append("if (redis.call('exists', KEYS[1]) == 1) then");
-        sb.append("    local stock = tonumber(redis.call('get', KEYS[1]));");
-        sb.append("    local num = tonumber(ARGV[1]);");
-        sb.append("    if (stock >= num) then");
-        sb.append("        return redis.call('incrby', KEYS[1], 0 - num);");
-        sb.append("    end;");
-        sb.append("    return -2;");
-        sb.append("end;");
-        sb.append("return -3;");
+        sb1.append("if (redis.call('exists', KEYS[1]) == 1) then");
+        sb1.append("    local stock = tonumber(redis.call('get', KEYS[1]));");
+        sb1.append("    local num = tonumber(ARGV[1]);");
+        sb1.append("    if (stock >= num) then");
+        sb1.append("        return redis.call('incrby', KEYS[1], 0 - num);");
+        sb1.append("    end;");
+        sb1.append("    return -2;");
+        sb1.append("end;");
+        sb1.append("return -3;");
         STOCK_LUA_1 = sb1.toString();
+
+        StringBuilder sb2 = new StringBuilder();
+        sb2.append("if (redis.call('exists', KEYS[1]) == 1) then");
+        sb2.append("    local stock = tonumber(redis.call('get', KEYS[1]));");
+        sb2.append("    local num = tonumber(ARGV[1]);");
+        sb2.append("    if (stock >= 0) then");
+        sb2.append("        return redis.call('incrby', KEYS[1], num);");
+        sb2.append("    end;");
+        sb2.append("    return -2;");
+        sb2.append("end;");
+        sb2.append("return -3;");
+        STOCK_LUA_INCR = sb2.toString();
+    }
+
+    public static void main(String[] args) {
+        System.out.println(STOCK_LUA);
     }
 
     int i = 0;
@@ -349,13 +383,14 @@ public class KillGoodsService {
 
     /**
      * 所有请求不处理，单纯的丢到本地队列里面去
-    * @param
-    * @author Jack
-    * @date 2020/9/28
-    * @throws Exception
-    * @return
-    * @version
-    */
+     *
+     * @param
+     * @return
+     * @throws Exception
+     * @author Jack
+     * @date 2020/9/28
+     * @version
+     */
     public boolean secKillByQueue(int killId, String userId) {
         Boolean member = redisTemplate.opsForSet().isMember(KillConstants.KILLED_GOOD_USER + killId, userId);
         if (member) {
@@ -869,7 +904,9 @@ public class KillGoodsService {
         return isKilld;
     }
 
-/*    public String submitOrder(Long addressId, int killId, String userId) {
+/*
+    version 1
+    public String submitOrder(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();
@@ -905,7 +942,9 @@ public class KillGoodsService {
         return null;
     }*/
 
-    public String submitOrder(Long addressId, int killId, String userId) {
+/*
+        version 2
+       public String submitOrder(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();
@@ -918,7 +957,7 @@ public class KillGoodsService {
         //订单有效时间3秒
 //        String kill_order_user = KillConstants.KILL_ORDER_USER + killId + userId;
 //        valueOperations.set(kill_order_user, KillConstants.KILL_ORDER_USER_UNDO, 3000, TimeUnit.MILLISECONDS);
-        /*同步转异步，发送到消息队列*/
+        *//*同步转异步，发送到消息队列*//*
         try {
             String result = secKillSender.sendAndReceive(vo);
             return result;
@@ -926,6 +965,63 @@ public class KillGoodsService {
             e.printStackTrace();
         }
         return null;
+    }*/
+
+    @Resource
+    private SequenceGenerator sequenceGenerator;
+
+    public String submitOrder(Long addressId, int killId, String userId) {
+        KillGoodsSpecPriceDetailVo killGoods = detail(killId);
+
+        KillOrderVo vo = new KillOrderVo();
+        vo.setUserId(userId);
+        vo.setKillGoodsSpecPriceDetailVo(killGoods);
+        vo.setAddressId(addressId);
+        Long orderId = defaultUidGenerator.getUID();
+        vo.setOrderId(orderId);
+        try {
+            CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
+            secKillSender.send(vo,correlationData);
+            //消息发送以后order存redis，给前端查询用户订单信息，因为这时候消息可能还没消费，
+            //前端需要快速查询到订单信息
+            setOrderToRedis(vo,orderId,userId);
+            return orderId.toString();
+        } catch (Exception e) {
+            //如果异常了，库存要+1，并且秒杀失败
+            e.printStackTrace();
+            String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
+            //返回的数值,执行了lua脚本
+            Long stock = stock(killGoodCount, 1, STOCK_LUA_INCR);
+            if(stock > 0) {
+                log.info("---------增加库存成功---stock:" + stock);
+            }
+        }
+        return null;
+    }
+
+    private void setOrderToRedis(KillOrderVo vo,Long orderId,String userId) {
+        Order order = new Order();
+        order.setOrderId(orderId);
+        order.setOrderSn(sequenceGenerator.getOrderNo());
+        order.setAddTime(System.currentTimeMillis());
+        //设置订单的状态为未确定订单
+        order.setOrderStatus(OrderStatus.UNCONFIRMED.getCode());
+        //未支付
+        order.setPayStatus(PayStatus.UNPAID.getCode());
+        //未发货
+        order.setShippingStatus(ShippingStatus.UNSHIPPED.getCode());
+        //获取发货地址
+        Map map = new HashMap();
+        map.put("addressId",vo.getAddressId());
+        List<UserAddress> userAddresss = userAddressService.selectById(map);
+        BeanUtils.copyProperties(userAddresss.get(0), order);
+        order.setUserId(userId);
+        OrderGoods orderGoods = new OrderGoods();
+        orderGoods.setGoodsName(vo.getKillGoodsSpecPriceDetailVo().getGoodsName());
+        List<OrderGoods> list = new ArrayList<>();
+        list.add(orderGoods);
+        order.setOrderGoodsList(list);
+        redisTemplate.opsForValue().set(orderId+"",order);
     }
 
     public String submitOrderByDb(Long addressId, int killId, String userId) {

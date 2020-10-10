@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * 缓存预热，把商品数据加载到mongodb中
+ *
  * @Classname PreLoadGoodsToMongo
  * @Description TODO
  * @Author Jack
@@ -37,8 +38,10 @@ public class PreLoadGoodsToMongo implements ApplicationListener<ContextRefreshed
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        loadGoodsToMongo();
-        loadCategory();
+        new Thread(() -> {
+            loadGoodsToMongo();
+            loadCategory();
+        }).start();
     }
 
     private void loadGoodsToMongo() {

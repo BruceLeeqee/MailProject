@@ -18,6 +18,7 @@ import cn.enjoy.mall.service.*;
 import cn.enjoy.mall.vo.GoodsVo;
 import cn.enjoy.mall.vo.OrderCreateVo;
 import cn.enjoy.mall.vo.ShoppingGoodsVo;
+import com.alibaba.fastjson.JSONObject;
 import com.baidu.fsg.uid.impl.CachedUidGenerator;
 import com.baidu.fsg.uid.impl.DefaultUidGenerator;
 import lombok.extern.slf4j.Slf4j;
@@ -391,6 +392,12 @@ public class OrderServiceImpl implements IOrderService {
     //@RequestMapping(value = "/selectMyOrderDetail", method = RequestMethod.POST)
     @Override
     public Order selectMyOrderDetail(Long orderId, String userId) {
+        //先查询缓存
+        Object o = redisTemplate.opsForValue().get(orderId+"");
+        if(o != null) {
+            return JSONObject.parseObject(o.toString(), Order.class);
+        }
+
         Order order = orderMapper.selectByPrimaryKey(orderId);
         if (order != null) {
             if (StringUtils.isEmpty(userId) || !userId.equals(order.getUserId())) {

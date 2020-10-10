@@ -1,10 +1,10 @@
 package cn.enjoy.config;
 
+import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
@@ -19,7 +19,7 @@ public class RedisConfig {
         template.setConnectionFactory(factory);
 
         //使用jdk的序列化
-        template.setValueSerializer(new JdkSerializationRedisSerializer());
+        template.setValueSerializer(new FastJsonRedisSerializer<>(Object.class));
         //使用StringRedisSerializer来序列化和反序列化redis的key值
         template.setKeySerializer(new StringRedisSerializer());
         template.afterPropertiesSet();

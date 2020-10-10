@@ -1,18 +1,21 @@
 package cn.enjoy.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.AcknowledgeMode;
+import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.listener.RabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.retry.backoff.ExponentialBackOffPolicy;
 import org.springframework.retry.policy.SimpleRetryPolicy;
 import org.springframework.retry.support.RetryTemplate;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *@author Jack老师   享学课堂 https://enjoy.ke.qq.com
@@ -21,6 +24,56 @@ import java.util.List;
 @Slf4j
 @Configuration
 public class RabbitConfig {
+
+    public final static String EXCHANGE_SECKILL = "order.seckill.delay.exchange";
+    public final static String KEY_SECKILL = "order.seckill.delay.routingkey";
+
+    public final static String EXCHANGE_SECKILL_DEAD = "order.seckill.dead.exchange";
+    public final static String KEY_SECKILL_DEAD = "order.seckill.dead.routingkey";
+
+    @Bean(name = "queueDelayMessage")
+    public Queue queueDelayMessage() {
+        Map<String,Object> arguments = new HashMap<>();
+        arguments.put("x-message-ttl",1000 * 60 * 10);
+//        arguments.put("x-expires",1000 * 60);
+//        arguments.put("x-max-length",10000);
+//        arguments.put("x-max-length-bytes",50*1024);
+        arguments.put("x-dead-letter-exchange",EXCHANGE_SECKILL_DEAD);
+        arguments.put("x-dead-letter-routing-key",KEY_SECKILL_DEAD);
+        return new Queue("order.seckill.delay.queue", true, false, false,arguments);
+    }
+
+    @Bean(name = "exchange")
+    public DirectExchange exchange() {
+        return new DirectExchange(EXCHANGE_SECKILL, true, false);
+    }
+
+    @Bean
+    public Binding bindingSecKillExchangeMessage(@Qualifier("queueDelayMessage") Queue queueMessage,
+                                                 @Qualifier("exchange") DirectExchange exchange) {
+        return BindingBuilder
+                .bind(queueMessage)
+                .to(exchange)
+                .with(KEY_SECKILL);
+    }
+
+    @Bean(name = "deadqueueMessage")
+    public Queue deadqueueMessage() {
+        return new Queue("order.seckill.dead.queue",true);
+    }
+
+    @Bean(name = "deadexchange")
+    public DirectExchange deadexchange() {
+        return new DirectExchange(EXCHANGE_SECKILL_DEAD,true,false);
+    }
+
+    @Bean
+    Binding bindingDeadExchangeMessage(@Qualifier("deadqueueMessage") Queue deadqueueMessage,
+                                       @Qualifier("deadexchange") DirectExchange deadexchange) {
+        return BindingBuilder.bind(deadqueueMessage).to(deadexchange).
+                with(KEY_SECKILL_DEAD);
+    }
+
 
     @Bean
     public RabbitListenerContainerFactory<?> rabbitListenerContainerFactory(ConnectionFactory connectionFactory, List<SimpleMessageListenerContainer> list) {

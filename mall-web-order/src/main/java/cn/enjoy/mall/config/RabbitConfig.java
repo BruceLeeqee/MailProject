@@ -1,10 +1,12 @@
 package cn.enjoy.mall.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.amqp.core.*;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.connection.CorrelationData;
 import org.springframework.amqp.rabbit.core.RabbitAdmin;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,7 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- *类说明：消息队列配置
+ * 类说明：消息队列配置
  */
 @Slf4j
 @Configuration
@@ -39,47 +41,59 @@ public class RabbitConfig {
     @Value("${spring.rabbitmq.publisher-confirms}")
     private boolean publisherConfirms;
 
+    @Value("${spring.rabbitmq.publisher-returns}")
+    private boolean publisherReturns;
+
     @Bean
     public ConnectionFactory connectionFactory() {
 
         CachingConnectionFactory connectionFactory = new CachingConnectionFactory();
-        connectionFactory.setAddresses(addresses+":"+port);
+        connectionFactory.setAddresses(addresses + ":" + port);
         connectionFactory.setUsername(username);
         connectionFactory.setPassword(password);
         connectionFactory.setVirtualHost(virtualHost);
         /** 如果要进行消息回调，则这里必须要设置为true */
 //        connectionFactory.setPublisherConfirms(publisherConfirms);
+//        connectionFactory.setPublisherReturns(publisherReturns);
         return connectionFactory;
     }
 
     @Bean
-    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory){
+    public RabbitAdmin rabbitAdmin(ConnectionFactory connectionFactory) {
         return new RabbitAdmin(connectionFactory);
     }
 
     @Bean
     public RabbitTemplate newRabbitTemplate() {
         RabbitTemplate template = new RabbitTemplate(connectionFactory());
-//        template.setMandatory(true);
-//        template.setConfirmCallback(confirmCallback());
-//        template.setReturnCallback(returnCallback());
+        template.setConfirmCallback((correlationData, ack, cause) -> {
+            if (ack) {
+                log.info("消息成功发送到Exchange" + correlationData.getId());
+            } else {
+                log.info("消息发送到Exchange失败, {}, cause: {}", correlationData, cause);
+            }
+        });
+        template.setMandatory(true);
+        template.setReturnCallback((message, replyCode, replyText, exchange, routingKey) -> {
+            log.info("消息从Exchange路由到Queue失败: exchange: {}, route: {}, replyCode: {}, replyText: {}, message: {}", exchange, routingKey, replyCode, replyText, message);
+        });
         //不使用临时队列
-        template.setUseTemporaryReplyQueues(false);
-        template.setReplyAddress("amq.rabbitmq.reply-to");
-        template.setUserCorrelationId(true);
-        template.setReplyTimeout(10000);
+//        template.setUseTemporaryReplyQueues(false);
+//        template.setReplyAddress("amq.rabbitmq.reply-to");
+//        template.setUserCorrelationId(true);
+//        template.setReplyTimeout(10000);
         return template;
     }
 
 
     @Bean
     public Queue queueSecKillMessage() {
-        return new Queue("order.seckill.producer",true,false,false);
+        return new Queue("order.seckill.producer", true, false, false);
     }
 
     @Bean
     public DirectExchange exchange() {
-        return new DirectExchange(EXCHANGE_SECKILL,true,false);
+        return new DirectExchange(EXCHANGE_SECKILL, true, false);
     }
 
     @Bean
@@ -92,9 +106,9 @@ public class RabbitConfig {
 
 
     //===============生产者发送确认==========
-    @Bean
-    public RabbitTemplate.ConfirmCallback confirmCallback(){
-        return new RabbitTemplate.ConfirmCallback(){
+/*    @Bean
+    public RabbitTemplate.ConfirmCallback confirmCallback() {
+        return new RabbitTemplate.ConfirmCallback() {
             @Override
             public void confirm(CorrelationData correlationData,
                                 boolean ack, String cause) {
@@ -102,15 +116,15 @@ public class RabbitConfig {
                     log.info("发送者确认发送给mq成功");
                 } else {
                     //处理失败的消息
-                    log.info("发送者发送给mq失败,考虑重发:"+cause);
+                    log.info("发送者发送给mq失败,考虑重发:" + cause);
                 }
             }
         };
-    }
+    }*/
 
-    @Bean
-    public RabbitTemplate.ReturnCallback returnCallback(){
-        return new RabbitTemplate.ReturnCallback(){
+/*    @Bean
+    public RabbitTemplate.ReturnCallback returnCallback() {
+        return new RabbitTemplate.ReturnCallback() {
             @Override
             public void returnedMessage(Message message,
                                         int replyCode,
@@ -118,13 +132,13 @@ public class RabbitConfig {
                                         String exchange,
                                         String routingKey) {
                 log.info("无法路由的消息，需要考虑另外处理。");
-                log.info("Returned replyText："+replyText);
-                log.info("Returned exchange："+exchange);
-                log.info("Returned routingKey："+routingKey);
-                String msgJson  = new String(message.getBody());
-                log.info("Returned Message："+msgJson);
+                log.info("Returned replyText：" + replyText);
+                log.info("Returned exchange：" + exchange);
+                log.info("Returned routingKey：" + routingKey);
+                String msgJson = new String(message.getBody());
+                log.info("Returned Message：" + msgJson);
             }
         };
-    }
+    }*/
 
 }

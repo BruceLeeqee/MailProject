@@ -8,6 +8,7 @@ public class KillOrderVo implements Serializable{
     private KillGoodsSpecPriceDetailVo killGoodsSpecPriceDetailVo;
     private Long addressId;
     private String userId;
+    private Long orderId;
 
     public KillGoodsSpecPriceDetailVo getKillGoodsSpecPriceDetailVo() {
         return killGoodsSpecPriceDetailVo;
@@ -31,5 +32,13 @@ public class KillOrderVo implements Serializable{
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 }

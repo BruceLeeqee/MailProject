@@ -1,6 +1,6 @@
-package cn.enjoy.mall.web.service;
+package cn.enjoy.kill.service.mq;
 
-import cn.enjoy.mall.config.RabbitConfig;
+import cn.enjoy.config.RabbitConfig;
 import cn.enjoy.mall.vo.KillOrderVo;
 import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
