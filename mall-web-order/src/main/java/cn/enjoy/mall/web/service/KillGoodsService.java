@@ -43,6 +43,7 @@ import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
@@ -1000,6 +1001,7 @@ public class KillGoodsService {
     }
 
     private void setOrderToRedis(KillOrderVo vo,Long orderId,String userId) {
+        BigDecimal totalAmount = new BigDecimal(0);
         Order order = new Order();
         order.setOrderId(orderId);
         order.setOrderSn(sequenceGenerator.getOrderNo());
@@ -1018,9 +1020,15 @@ public class KillGoodsService {
         order.setUserId(userId);
         OrderGoods orderGoods = new OrderGoods();
         orderGoods.setGoodsName(vo.getKillGoodsSpecPriceDetailVo().getGoodsName());
+        orderGoods.setGoodsPrice(vo.getKillGoodsSpecPriceDetailVo().getPrice());
         List<OrderGoods> list = new ArrayList<>();
         list.add(orderGoods);
         order.setOrderGoodsList(list);
+        totalAmount = totalAmount.add(vo.getKillGoodsSpecPriceDetailVo().getPrice());
+        order.setGoodsPrice(totalAmount);
+        order.setShippingPrice(new BigDecimal(0));
+        order.setOrderAmount(totalAmount.add(order.getShippingPrice()));
+        order.setTotalAmount(totalAmount.add(order.getShippingPrice()));
         redisTemplate.opsForValue().set(orderId+"",order);
     }
 
