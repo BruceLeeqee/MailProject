@@ -66,6 +66,7 @@ spring:
     password: admin
     publisher-confirms: true
     virtual-host: /
+    publisher-returns: true
   application:
     name: mall-web-order
   main:
