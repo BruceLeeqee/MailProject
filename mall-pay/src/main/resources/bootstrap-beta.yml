@@ -28,6 +28,8 @@ druid-master:
   maxPoolPreparedStatementPerConnectionSize: 20
   filters: stat,wall
   connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+mybatis:
+  mapper-locations: classpath*:mapping/**/*.xml
 zookeeper:
   url: zookeeper://94.191.83.120:2181
 spring:
