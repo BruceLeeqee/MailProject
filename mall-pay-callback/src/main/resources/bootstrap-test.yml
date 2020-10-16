@@ -73,7 +73,7 @@ spring:
   kafka:
     bootstrap-servers: 106.52.62.38:9092
   application:
-    name: mall-pay-service
+    name: mall-pay-callback
   rabbitmq:
     host: 94.191.83.120
     port: 5672
