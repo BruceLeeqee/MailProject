@@ -177,6 +177,7 @@ public class NotifyController {
         messageLog.setMessageId(defaultUidGenerator.getUID());
         messageLog.setMessage(actionId);
         messageLog.setStatus(0);
+        messageLog.setTryCount(0);
         Long now = System.currentTimeMillis();
         messageLog.setCreateTime(now);
         messageLog.setUpdateTime(now);
