@@ -210,7 +210,7 @@ public class OrderServiceImpl implements IKillOrderService {
         BeanUtils.copyProperties(userAddress, order);
         order.setUserId(userId);
 
-        redisTemplate.opsForValue().set(orderId,order);
+//        redisTemplate.opsForValue().set(orderId,order);
         //新增订单
         orderMapper.insert(order);
         BigDecimal totalAmount = new BigDecimal(0);
