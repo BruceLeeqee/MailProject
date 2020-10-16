@@ -139,7 +139,7 @@ public class SecKillReceiver {
                 KillOrderVo vo = JSON.parseObject(msg, KillOrderVo.class);
                 Long orderId = orderService.killOrder(vo);
                 //把订单信息存储到缓存中
-                setOrderToRedis(vo);
+//                setOrderToRedis(vo);
                 //发送消息到延迟队列
                 secKillSender.send(vo);
                 log.info("UserReceiver>>>>>>消息已消费");

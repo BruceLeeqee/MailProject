@@ -983,7 +983,7 @@ public class KillGoodsService {
             secKillSender.send(vo, correlationData);
             //消息发送以后order存redis，给前端查询用户订单信息，因为这时候消息可能还没消费，
             //前端需要快速查询到订单信息
-//            setOrderToRedis(vo, orderId, userId);
+            setOrderToRedis(vo, orderId, userId);
             return orderId.toString();
         } catch (Exception e) {
             //如果异常了，库存要+1，并且秒杀失败
