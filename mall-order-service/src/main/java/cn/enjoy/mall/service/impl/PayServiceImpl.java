@@ -71,13 +71,14 @@ public class PayServiceImpl implements IPayService {
     @Transactional
     @Override
     public Map<String, String> doPrePay(Long orderId, String payCode, BigDecimal payAmount, String userId) {
-
+        log.info("---------orderId:" + orderId+"--payCode:" + payCode + "--payAmount:" + payAmount + "--userId" + userId);
         Order order = orderMapper.selectByPrimaryKey(orderId);
         //如果查询不到订单，则是秒杀订单
         if (order == null) {
             log.info("-----------killPayService.doPrePay--------");
             return killPayService.doPrePay(orderId, payCode, payAmount, userId);
         }
+        log.info("-----normalOrder-------");
         Map<String, String> return_map = new HashMap<>();
         if (payAmount.compareTo(order.getOrderAmount()) != 0) {
             return_map.put("result_code", "fail");
