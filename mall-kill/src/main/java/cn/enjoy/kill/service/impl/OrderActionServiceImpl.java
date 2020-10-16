@@ -229,4 +229,9 @@ public class OrderActionServiceImpl implements IKillOrderActionService {
     public List<OrderAction> queryByOrderId(Long orderId) {
         return orderActionMapper.queryByOrderId(orderId);
     }
+
+    @Override
+    public OrderAction queryByActionId(Long actionId) {
+        return orderActionMapper.selectByPrimaryKey(actionId);
+    }
 }

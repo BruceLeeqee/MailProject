@@ -1,8 +1,15 @@
 package cn.enjoy.kill.service.mq;
 
+import cn.enjoy.kill.service.impl.SequenceGenerator;
 import cn.enjoy.mall.constant.KillConstants;
+import cn.enjoy.mall.constant.OrderStatus;
+import cn.enjoy.mall.constant.PayStatus;
+import cn.enjoy.mall.constant.ShippingStatus;
 import cn.enjoy.mall.model.Order;
+import cn.enjoy.mall.model.OrderGoods;
+import cn.enjoy.mall.model.UserAddress;
 import cn.enjoy.mall.service.IKillOrderService;
+import cn.enjoy.mall.service.IUserAddressService;
 import cn.enjoy.mall.vo.KillOrderVo;
 import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
@@ -10,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.connection.RedisConnection;
@@ -22,7 +30,9 @@ import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisCluster;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -127,15 +137,9 @@ public class SecKillReceiver {
             log.info("UserReceiver>>>>>>>接收到消息:" + msg);
             try {
                 KillOrderVo vo = JSON.parseObject(msg, KillOrderVo.class);
-//                String kill_order_user = KillConstants.KILL_ORDER_USER + vo.getKillGoodsSpecPriceDetailVo().getId() + vo.getUserId();
-//                if (null != stringRedisTemplate.opsForValue().get(kill_order_user)){//未超时，则业务处理
                 Long orderId = orderService.killOrder(vo);
-//                    String oldstr = stringRedisTemplate.opsForValue().getAndSet(kill_order_user,String.valueOf(orderId));
-//                    if (null == oldstr){//已超时，生产端已拒绝
-//                        orderService.cancel(orderId);
-//                        stringRedisTemplate.delete(kill_order_user);
-//                    }
-//                }
+                //把订单信息存储到缓存中
+                setOrderToRedis(vo);
                 //发送消息到延迟队列
                 secKillSender.send(vo);
                 log.info("UserReceiver>>>>>>消息已消费");
@@ -185,9 +189,9 @@ public class SecKillReceiver {
         }
     }
 
-/*    @RabbitListener(queues = "order.seckill.producer"*//*,errorHandler = "rabbitConsumerListenerErrorHandler"*//*)
-    @RabbitHandler // 此注解加上之后可以接受对象型消息
-    public String process(Message message, Channel channel, @Headers Map<String, Object> headers) throws Exception {
+    //@RabbitListener(queues = "order.seckill.producer"/*,errorHandler = "rabbitConsumerListenerErrorHandler"*/)
+    //@RabbitHandler // 此注解加上之后可以接受对象型消息
+    public String processCallback(Message message, Channel channel, @Headers Map<String, Object> headers) throws Exception {
         try {
             String msg = new String(message.getBody());
             log.info("UserReceiver>>>>>>>接收到消息:" + msg);
@@ -215,9 +219,8 @@ public class SecKillReceiver {
             log.info(e.getMessage());
         }
         return "";
-    }*/
+    }
 
-/*    @Override
     public void onMessage(Message message, Channel channel) throws Exception {
         try {
             String msg = new String(message.getBody());
@@ -248,7 +251,44 @@ public class SecKillReceiver {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
+    }
 
-    }*/
+    @Resource
+    private SequenceGenerator sequenceGenerator;
+
+    @Autowired
+    private IUserAddressService userAddressService;
+
+    private void setOrderToRedis(KillOrderVo vo) {
+        BigDecimal totalAmount = new BigDecimal(0);
+        Order order = new Order();
+        order.setOrderId(vo.getOrderId());
+        order.setOrderSn(sequenceGenerator.getOrderNo());
+        order.setAddTime(System.currentTimeMillis());
+        //设置订单的状态为未确定订单
+        order.setOrderStatus(OrderStatus.UNCONFIRMED.getCode());
+        //未支付
+        order.setPayStatus(PayStatus.UNPAID.getCode());
+        //未发货
+        order.setShippingStatus(ShippingStatus.UNSHIPPED.getCode());
+        //获取发货地址
+        Map map = new HashMap();
+        map.put("addressId", vo.getAddressId());
+        List<UserAddress> userAddresss = userAddressService.selectById(map);
+        BeanUtils.copyProperties(userAddresss.get(0), order);
+        order.setUserId(vo.getUserId());
+        OrderGoods orderGoods = new OrderGoods();
+        orderGoods.setGoodsName(vo.getKillGoodsSpecPriceDetailVo().getGoodsName());
+        orderGoods.setGoodsPrice(vo.getKillGoodsSpecPriceDetailVo().getPrice());
+        List<OrderGoods> list = new ArrayList<>();
+        list.add(orderGoods);
+        order.setOrderGoodsList(list);
+        totalAmount = totalAmount.add(vo.getKillGoodsSpecPriceDetailVo().getPrice());
+        order.setGoodsPrice(totalAmount);
+        order.setShippingPrice(new BigDecimal(0));
+        order.setOrderAmount(totalAmount.add(order.getShippingPrice()));
+        order.setTotalAmount(totalAmount.add(order.getShippingPrice()));
+        redisTemplate.opsForValue().set(vo.getOrderId() + "", order);
+    }
 }
 

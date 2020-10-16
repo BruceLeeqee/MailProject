@@ -5,10 +5,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.enjoy</groupId>
-    <artifactId>mall-pay</artifactId>
+    <artifactId>mall-pay-callback</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>mall-pay</name>
+    <name>mall-pay-callback</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
@@ -178,31 +178,22 @@
             <artifactId>jsqlparser</artifactId>
             <version>0.9</version>
         </dependency>
-        <!--美团id生成-->
-        <!--<dependency>
-            <artifactId>leaf-boot-starter</artifactId>
-            <groupId>com.sankuai.inf.leaf</groupId>
-            <version>1.0.1-RELEASE</version>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-alibaba-seata</artifactId>
+            <version>2.1.0.RELEASE</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>seata-all</artifactId>
+                    <groupId>io.seata</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-framework</artifactId>
-            <version>2.12.0</version>
+            <groupId>io.seata</groupId>
+            <artifactId>seata-all</artifactId>
+            <version>${seata.version}</version>
         </dependency>
-        &lt;!&ndash; 这个jar包的curator封装了很多zookeeper的功能 &ndash;&gt;
-        <dependency>
-            <groupId>org.apache.curator</groupId>
-            <artifactId>curator-recipes</artifactId>
-            <version>2.11.0</version>
-        </dependency>-->
-        <!--美团id生成-->
-        <!--百度id生成-->
-        <dependency>
-            <groupId>cn.enjoy</groupId>
-            <artifactId>baidu-id-starter</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <!--百度id生成-->
         <dependency>
             <groupId>com.101tec</groupId>
             <artifactId>zkclient</artifactId>
@@ -212,11 +203,6 @@
             <groupId>io.github.yedaxia</groupId>
             <artifactId>japidocs</artifactId>
             <version>1.4.2</version>
-        </dependency>
-        <dependency>
-            <groupId>org.redisson</groupId>
-            <artifactId>redisson</artifactId>
-            <version>3.10.6</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -245,13 +231,13 @@
     </dependencyManagement>
 
     <build>
-        <finalName>mall-pay</finalName>
+        <finalName>mall-pay-callback</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <mainClass>cn.enjoy.PayServiceApp</mainClass>
+                    <mainClass>cn.enjoy.PayServiceCallbackApp</mainClass>
                 </configuration>
             </plugin>
             <plugin>

@@ -14,8 +14,11 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
- * @author Ray
- * @date 2018/2/1.
+ * @Classname PayServiceCallbackApp
+ * @Description TODO
+ * @Author Jack
+ * Date 2020/10/14 17:59
+ * Version 1.0
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableEurekaClient
@@ -23,9 +26,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients(basePackages = {"cn.enjoy.mall.feign"})
 @MapperScan("cn.enjoy.dao")
 @EnableScheduling
-public class PayServiceApp {
+public class PayServiceCallbackApp {
     public static void main(String[] args) {
-         SpringApplication.run(PayServiceApp.class, args);
+        SpringApplication.run(PayServiceCallbackApp.class,args);
     }
 
     @Bean(name = IntegrationContextUtils.INTEGRATION_DATATYPE_CHANNEL_MESSAGE_CONVERTER_BEAN_NAME)

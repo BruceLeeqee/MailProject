@@ -102,7 +102,7 @@ public class PayServiceImpl implements IPayService {
         orderMapper.updateByPrimaryKeySelective(order);
         String orderStr = JSONObject.toJSONString(order);
         Long action_id = orderActionService.savePre(orderStr, null, "微信-预支付订单", userId, "微信-预支付订单");
-        Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(action_id), payAmount, userId);
+        Map<String, String> map = iWxPayService.unifiedorder(String.valueOf(action_id), payAmount, userId,"N");
         orderActionService.updatePre(action_id, map);
         return map;
     }

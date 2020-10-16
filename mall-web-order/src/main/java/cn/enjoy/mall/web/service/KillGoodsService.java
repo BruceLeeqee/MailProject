@@ -905,9 +905,8 @@ public class KillGoodsService {
         return isKilld;
     }
 
-/*
-    version 1
-    public String submitOrder(Long addressId, int killId, String userId) {
+    //version 1
+    public String submitOrder1(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();
@@ -920,7 +919,7 @@ public class KillGoodsService {
         //订单有效时间3秒
         String kill_order_user = KillConstants.KILL_ORDER_USER + killId + userId;
         valueOperations.set(kill_order_user, KillConstants.KILL_ORDER_USER_UNDO, 3000, TimeUnit.MILLISECONDS);
-        *//*同步转异步，发送到消息队列*//*
+        //同步转异步，发送到消息队列
         secKillSender.send(vo);
 
         String orderId = "";
@@ -941,11 +940,10 @@ public class KillGoodsService {
         }
 
         return null;
-    }*/
+    }
 
-/*
-        version 2
-       public String submitOrder(Long addressId, int killId, String userId) {
+    //version 2
+    public String submitOrder2(Long addressId, int killId, String userId) {
         KillGoodsSpecPriceDetailVo killGoods = detail(killId);
 
         KillOrderVo vo = new KillOrderVo();
@@ -958,15 +956,15 @@ public class KillGoodsService {
         //订单有效时间3秒
 //        String kill_order_user = KillConstants.KILL_ORDER_USER + killId + userId;
 //        valueOperations.set(kill_order_user, KillConstants.KILL_ORDER_USER_UNDO, 3000, TimeUnit.MILLISECONDS);
-        *//*同步转异步，发送到消息队列*//*
+        //同步转异步，发送到消息队列
         try {
-            String result = secKillSender.sendAndReceive(vo);
-            return result;
+            String orderId = secKillSender.sendAndReceive(vo);
+            return orderId;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
-    }*/
+    }
 
     @Resource
     private SequenceGenerator sequenceGenerator;
@@ -982,10 +980,10 @@ public class KillGoodsService {
         vo.setOrderId(orderId);
         try {
             CorrelationData correlationData = new CorrelationData(UUID.randomUUID().toString());
-            secKillSender.send(vo,correlationData);
+            secKillSender.send(vo, correlationData);
             //消息发送以后order存redis，给前端查询用户订单信息，因为这时候消息可能还没消费，
             //前端需要快速查询到订单信息
-            setOrderToRedis(vo,orderId,userId);
+//            setOrderToRedis(vo, orderId, userId);
             return orderId.toString();
         } catch (Exception e) {
             //如果异常了，库存要+1，并且秒杀失败
@@ -993,14 +991,15 @@ public class KillGoodsService {
             String killGoodCount = KillConstants.KILL_GOOD_COUNT + killId;
             //返回的数值,执行了lua脚本
             Long stock = stock(killGoodCount, 1, STOCK_LUA_INCR);
-            if(stock > 0) {
+            if (stock > 0) {
                 log.info("---------增加库存成功---stock:" + stock);
             }
         }
+
         return null;
     }
 
-    private void setOrderToRedis(KillOrderVo vo,Long orderId,String userId) {
+    private void setOrderToRedis(KillOrderVo vo, Long orderId, String userId) {
         BigDecimal totalAmount = new BigDecimal(0);
         Order order = new Order();
         order.setOrderId(orderId);
@@ -1014,7 +1013,7 @@ public class KillGoodsService {
         order.setShippingStatus(ShippingStatus.UNSHIPPED.getCode());
         //获取发货地址
         Map map = new HashMap();
-        map.put("addressId",vo.getAddressId());
+        map.put("addressId", vo.getAddressId());
         List<UserAddress> userAddresss = userAddressService.selectById(map);
         BeanUtils.copyProperties(userAddresss.get(0), order);
         order.setUserId(userId);
@@ -1029,7 +1028,7 @@ public class KillGoodsService {
         order.setShippingPrice(new BigDecimal(0));
         order.setOrderAmount(totalAmount.add(order.getShippingPrice()));
         order.setTotalAmount(totalAmount.add(order.getShippingPrice()));
-        redisTemplate.opsForValue().set(orderId+"",order);
+        redisTemplate.opsForValue().set(orderId + "", order);
     }
 
     public String submitOrderByDb(Long addressId, int killId, String userId) {

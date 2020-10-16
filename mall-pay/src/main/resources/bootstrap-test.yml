@@ -11,6 +11,27 @@ dfs:
 #  wap_url: https://pay.qq.com
 #  spbill_create_ip: 127.0.0.1
 
+druid-master:
+  jdbcUrl: jdbc:mysql://106.52.62.38:3310/pay?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  username: root
+  password: 123456
+  driver-class-name: com.mysql.jdbc.Driver
+  minIdle: 2
+  maxActive: 10
+  maxWait: 60000
+  timeBetweenEvictionRunsMillis: 60000
+  minEvictableIdleTimeMillis: 300000
+  validationQuery: SELECT 1 FROM DUAL
+  testWhileIdle: true
+  testOnBorrow: false
+  testOnReturn: false
+  poolPreparedStatements: true
+  maxPoolPreparedStatementPerConnectionSize: 20
+  filters: stat,wall
+  connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+mybatis:
+  mapper-locations: classpath*:mapping/**/*.xml
 zookeeper:
   url: zookeeper://94.191.83.120:2181
 spring:
@@ -46,9 +67,6 @@ spring:
     bus:
       refresh:
         enabled: true
-    alibaba:
-      seata:
-        tx-service-group: pay_tx_group
   kafka:
     bootstrap-servers: 106.52.62.38:9092
   application:
@@ -59,7 +77,11 @@ spring:
     username: admin
     password: admin
     publisher-confirms: true
+    publisher-returns: true
     virtual-host: /
+    listener:
+      simple:
+        acknowledge-mode: manual
   main:
     allow-bean-definition-overriding: true
 

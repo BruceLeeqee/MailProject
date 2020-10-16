@@ -269,7 +269,7 @@ public class OrderServiceImpl implements IKillOrderService {
     @Override
     public Long killOrder(KillOrderVo killOrderVo) {
         return this.killOrder(killOrderVo.getAddressId(),
-                killOrderVo.getKillGoodsSpecPriceDetailVo(), killOrderVo.getUserId());
+                killOrderVo.getKillGoodsSpecPriceDetailVo(), killOrderVo.getUserId(),killOrderVo.getOrderId());
     }
 
     /**

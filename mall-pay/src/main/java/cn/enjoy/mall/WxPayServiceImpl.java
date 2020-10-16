@@ -72,7 +72,7 @@ public class WxPayServiceImpl implements IWxPayService {
     */
     //@RequestMapping(value = "/unifiedorder", method = RequestMethod.POST)
     @Override
-    public Map<String, String> unifiedorder(String actionId, BigDecimal payAmount, String userId) {
+    public Map<String, String> unifiedorder(String actionId, BigDecimal payAmount, String userId,String orderType) {
         Map<String, String> reqData = new HashMap<>();
         try {
             WXPay wxPay = new WXPay(wxPayConfig);
@@ -84,7 +84,7 @@ public class WxPayServiceImpl implements IWxPayService {
             reqData.put("spbill_create_ip", getSpbill_create_ip());
             reqData.put("notify_url", notify_url);
             reqData.put("trade_type", "NATIVE");
-
+            reqData.put("attach", orderType);
             logger.info("--------unifiedorder:" + JSONObject.toJSONString(reqData));
             //调官方sdk统一下单方法
             Map<String, String> result = wxPay.unifiedOrder(reqData);

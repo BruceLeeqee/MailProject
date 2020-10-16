@@ -11,7 +11,7 @@ dfs:
 #  wap_url: https://pay.qq.com
 #  spbill_create_ip: 127.0.0.1
 druid-master:
-  jdbcUrl: jdbc:mysql://106.52.62.38:3310/pay?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl: jdbc:mysql://106.52.62.38:3311/paycallback?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   username: root
   password: 123456
   driver-class-name: com.mysql.jdbc.Driver
@@ -63,6 +63,9 @@ spring:
     bus:
       refresh:
         enabled: true
+    alibaba:
+      seata:
+        tx-service-group: pay_tx_group
   kafka:
     bootstrap-servers: 106.52.62.38:9092
   application:

@@ -5,13 +5,14 @@ dfs:
 #wx:
 #  appId: wx59a7e2633f445ef7
 #  mchId: 1534472621
-#  key: 61vVGojsSJ1BitNdagaysOthKVSZ3uLs
+#  key: f4b7a6885e121bd8cbc1664ceabf5cce
 #  certPath:
 #  notify_url: http://thesunbig.imwork.net/wx/notify
 #  wap_url: https://pay.qq.com
 #  spbill_create_ip: 127.0.0.1
+
 druid-master:
-  jdbcUrl: jdbc:mysql://106.52.62.38:3310/pay?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
+  jdbcUrl: jdbc:mysql://106.52.62.38:3311/paycallback?useUnicode=true&characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&useSSL=false
   username: root
   password: 123456
   driver-class-name: com.mysql.jdbc.Driver
@@ -28,6 +29,9 @@ druid-master:
   maxPoolPreparedStatementPerConnectionSize: 20
   filters: stat,wall
   connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+
+mybatis:
+  mapper-locations: classpath*:mapping/**/*.xml
 zookeeper:
   url: zookeeper://94.191.83.120:2181
 spring:
@@ -63,6 +67,9 @@ spring:
     bus:
       refresh:
         enabled: true
+    alibaba:
+      seata:
+        tx-service-group: pay_tx_group
   kafka:
     bootstrap-servers: 106.52.62.38:9092
   application:
@@ -80,6 +87,8 @@ spring:
         acknowledge-mode: manual
   main:
     allow-bean-definition-overriding: true
+  aop:
+    proxy-target-class: false
 
 eureka:
   client:
@@ -87,11 +96,11 @@ eureka:
       defaultZone: http://admin:admin@eureka.h:8763/eureka/
     register-with-eureka: true
     fetch-registry: true
-  instance:
+  #instance:
     #hostname:
     #ip-address: 94.191.83.120
-    prefer-ip-address: true
-    instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
+    #prefer-ip-address: true
+    #instance-id: ${eureka.instance.ip-address}:${spring.application.name}:${server.port}
 
 hystrix:
   command:
@@ -118,6 +127,72 @@ management:
     web:
       exposure:
         include: "*"
+
+#seata:
+#  enabled: true
+#  application-id: mall-pay
+#  tx-service-group: pay_tx_group
+#  enable-auto-data-source-proxy: true
+#  use-jdk-proxy: false
+#  excludes-for-auto-proxying: firstClassNameForExclude,secondClassNameForExclude
+#  client:
+#    rm:
+#      async-commit-buffer-limit: 1000
+#      report-retry-count: 5
+#      table-meta-check-enable: false
+#      report-success-enable: false
+#      saga-branch-register-enable: false
+#      lock:
+#        retry-interval: 10
+#        retry-times: 30
+#        retry-policy-branch-rollback-on-conflict: true
+#    tm:
+#      degrade-check: false
+#      degrade-check-period: 2000
+#      degrade-check-allow-times: 10
+#      commit-retry-count: 5
+#      rollback-retry-count: 5
+#    undo:
+#      data-validation: true
+#      log-serialization: jackson
+#      log-table: undo_log
+#      only-care-update-columns: true
+#    log:
+#      exceptionRate: 100
+##  service:
+##    vgroup-mapping:
+##      pay_tx_group: default
+##    grouplist:
+##      default: 127.0.0.1:8091
+##    enable-degrade: false
+##    disable-global-transaction: false
+#  transport:
+#    shutdown:
+#      wait: 3
+#    thread-factory:
+#      boss-thread-prefix: NettyBoss
+#      worker-thread-prefix: NettyServerNIOWorker
+#      server-executor-thread-prefix: NettyServerBizHandler
+#      share-boss-worker: false
+#      client-selector-thread-prefix: NettyClientSelector
+#      client-selector-thread-size: 1
+#      client-worker-thread-prefix: NettyClientWorkerThread
+#      worker-thread-size: default
+#      boss-thread-size: 1
+#    type: TCP
+#    server: NIO
+#    heartbeat: true
+#    serialization: seata
+#    compressor: none
+#    enable-client-batch-send-request: true
+#  config:
+#    type: file
+#  registry:
+#    redis:
+#      server-addr: 106.52.62.38:6379
+#      db: 0
+#      password: 123456
+#      timeout: 0
 logging:
   level:
     org:

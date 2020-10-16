@@ -1,5 +1,6 @@
 package cn.enjoy.mall.service;
 
+import cn.enjoy.dao.MessageLogCallbackMapper;
 import cn.enjoy.mall.model.*;
 import cn.enjoy.mall.service.manage.IKillSpecManageService;
 import io.seata.spring.annotation.GlobalTransactional;
@@ -45,9 +46,12 @@ public class PayCompleteServiceImpl implements PayCompleteService {
     @Autowired
     private IKillPayService iKillPayService;
 
+    @Autowired
+    private MessageLogCallbackMapper messageLogCallbackMapper;
+
     @GlobalTransactional
     @Override
-    public void payCompleteBusiness(String actionId) {
+    public void payCompleteBusiness(String actionId,MessageLog messageLog) {
         //1、根据订单id查询是什么订单
 //        Order order = orderService.selectOrderDetail(Long.valueOf(orderId));
         OrderAction orderAction = orderActionService.queryByActionId(Long.valueOf(actionId));
@@ -87,5 +91,7 @@ public class PayCompleteServiceImpl implements PayCompleteService {
             //扣减库存
             killSpecManageService.updateBySpecGoodsId(killGoodsPrice);
         }
+        //消费成功后，把记录存储到本地消息表
+        messageLogCallbackMapper.insertC(messageLog);
     }
 }

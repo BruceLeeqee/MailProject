@@ -12,5 +12,5 @@ public interface IWxPayService {
 
     @RequestMapping(value = "/unifiedorder", method = RequestMethod.POST)
     Map<String, String> unifiedorder(@RequestParam("actionId") String actionId, @RequestParam("payAmount") BigDecimal payAmount,
-                                     @RequestParam("userId") String userId);
+                                     @RequestParam("userId") String userId,@RequestParam("orderType") String orderType);
 }
